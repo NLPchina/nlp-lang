@@ -1,4 +1,4 @@
-package org.nlpcn.commons.lang.tire.splitWord;
+package org.nlpcn.commons.lang.tire;
 
 
 import org.nlpcn.commons.lang.tire.domain.SmartForest;

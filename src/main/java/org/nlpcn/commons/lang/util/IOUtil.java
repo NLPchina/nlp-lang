@@ -226,7 +226,7 @@ public class IOUtil {
 			hm = new HashMap<K, V>();
 			String[] split = null;
 			while (iteartor.hasNext()) {
-				String readLine = iteartor.readLine();
+				String readLine = iteartor.next();
 				split = readLine.split("\t");
 				hm.put((K) ReflectUtil.conversion(split[0], key),
 						(V) ReflectUtil.conversion(split[1], value));

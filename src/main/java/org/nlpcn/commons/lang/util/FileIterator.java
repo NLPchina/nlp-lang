@@ -4,13 +4,14 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Iterator;
 
 /**
  * 文件迭代器
  *
  * @author ansj
  */
-public class FileIterator {
+public class FileIterator implements Iterator<String> {
 	String temp = null;
 	private BufferedReader br = null;
 
@@ -19,6 +20,7 @@ public class FileIterator {
 		br = IOUtil.getReader(path, charEncoding);
 	}
 
+	@Override
 	public boolean hasNext() {
 		if (temp == null) {
 			try {
@@ -37,7 +39,7 @@ public class FileIterator {
 		}
 	}
 
-	public String readLine() {
+	private String readLine() {
 		try {
 			if (temp == null) {
 				temp = br.readLine();
@@ -60,5 +62,15 @@ public class FileIterator {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+	}
+
+	@Override
+	public String next() {
+		return readLine();
+	}
+
+	@Override
+	public void remove() {
+		throw new RuntimeException("file iteartor can not remove ") ;
 	}
 }

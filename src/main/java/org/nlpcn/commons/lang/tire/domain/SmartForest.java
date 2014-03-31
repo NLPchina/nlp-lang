@@ -1,6 +1,6 @@
 package org.nlpcn.commons.lang.tire.domain;
 
-import org.nlpcn.commons.lang.tire.splitWord.SmartGetWord;
+import org.nlpcn.commons.lang.tire.SmartGetWord;
 
 import java.util.Arrays;
 

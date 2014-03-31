@@ -1,7 +1,7 @@
 package org.nlpcn.commons.lang.tire.domain;
 
 
-import org.nlpcn.commons.lang.tire.splitWord.GetWord;
+import org.nlpcn.commons.lang.tire.GetWord;
 
 public class Forest implements WoodInterface {
 	private WoodInterface[] chars = new WoodInterface[65536];
