@@ -2,9 +2,7 @@ package org.nlpcn.commons.lang.occurrence;
 
 import org.nlpcn.commons.lang.util.MapCount;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 词语共现计算工具,愚人节快乐
@@ -16,42 +14,46 @@ public class Occurrence {
 
 	private Map<String, Count> word2Mc = new HashMap<String, Count>();
 
+	private Map<Integer, String> idWordMap = new HashMap<Integer, String>();
+
 	private MapCount<String> ww2Mc = new MapCount<String>();
 
 	private static final String CONN = "\u0000";
 
-	public void add(List<String> words) {
+	public void add(List<Element> words) {
 		Count count = null;
-		for (String word : words) {
-			if ((count = word2Mc.get(word)) != null) {
+		for (Element word : words) {
+			if ((count = word2Mc.get(word.getName())) != null) {
 				count.upCount();
 			} else {
-				word2Mc.put(word, new Count());
+				count = new Count(word.getNature());
+				word2Mc.put(word.getName(), count);
+				idWordMap.put(count.id, word.getName());
 			}
 
 		}
 
-		String str1 = null;
-		String str2 = null;
+		Element e1 = null;
+		Element e2 = null;
 		Count count1 = null;
 		Count count2 = null;
 		for (int i = 0; i < words.size() - 1; i++) {
-			str1 = words.get(i);
-			count1 = word2Mc.get(st1);
+			e1 = words.get(i);
+			count1 = word2Mc.get(e1.getName());
 			for (int j = i + 1; j < words.size(); j++) {
-				str2 = words.get(j);
-				count2 = word2Mc.get(st2);
+				e2 = words.get(j);
+				count2 = word2Mc.get(e2.getName());
 				if (count1.id == count2.id) {
 					continue;
 				}
 
 				if (count1.id < count2.id) {
-					ww2Mc.add(str1 + CONN + str2);
+					ww2Mc.add(e1.getName() + CONN + e2.getName());
 				} else {
-					ww2Mc.add(str2 + CONN + str1);
+					ww2Mc.add(e2.getName() + CONN + e2.getName());
 				}
-				count1.upRelation();
-				count2.upRelation();
+				count1.upRelation(count2.id);
+				count2.upRelation(count1.id);
 			}
 		}
 	}
@@ -60,7 +62,6 @@ public class Occurrence {
 	 * 保存模型
 	 */
 	public void saveModel(String filePath) {
-
 	}
 
 
@@ -75,9 +76,12 @@ public class Occurrence {
 		int id = 0;
 		int count = 1; //这个词
 		int relationCount; //这个词和其他词共同出现多少次
+		String nature;
 
+		Set<Integer> relationSet = new HashSet<Integer>();
 
-		public Count() {
+		public Count(String nature) {
+			this.nature = nature;
 			seqId++;
 			this.id = seqId;
 		}
@@ -87,9 +91,11 @@ public class Occurrence {
 			this.count++;
 		}
 
-		public void upRelation() {
+		public void upRelation(int rId) {
 			this.relationCount++;
+			this.relationSet.add(rId);
 		}
+
 
 		@Override
 		public String toString() {
