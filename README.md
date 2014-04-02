@@ -9,3 +9,4 @@ nlp-lang
 * √ tire树结构组件
 * X 词共现统计组件
 * X 字符编码检测组件
+* bloomfilter
