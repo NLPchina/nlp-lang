@@ -8,5 +8,10 @@ nlp-lang
 * √ 简繁体转换组件
 * √ tire树结构组件
 * X 词共现统计组件
-* X 字符编码检测组件
-* bloomfilter
+* √ 字符编码检测组件
+* √ bloomfilter
+* X 指纹去重
+* X 垃圾内容
+* X tf，idf统计
+* X 文本断句
+* X 文本相似度计算
