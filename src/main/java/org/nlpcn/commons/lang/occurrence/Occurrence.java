@@ -2,6 +2,10 @@ package org.nlpcn.commons.lang.occurrence;
 
 import org.nlpcn.commons.lang.util.MapCount;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -61,7 +65,21 @@ public class Occurrence {
 	/**
 	 * 保存模型
 	 */
-	public void saveModel(String filePath) {
+	public void saveModel(String filePath) throws IOException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(filePath))) ;
+		writeMap(bw,idWordMap) ;
+		writeMap(bw,word2Mc) ;
+		writeMap(bw,ww2Mc.get()) ;
+
+	}
+
+	private void writeMap(BufferedWriter bw, Map<?, ?> map) throws IOException {
+		bw.write(word2Mc.size());
+		bw.newLine();
+		for(Map.Entry entry : word2Mc.entrySet()){
+			bw.write(entry.getKey()+"\t"+entry.getValue());
+			bw.newLine();
+		}
 	}
 
 
