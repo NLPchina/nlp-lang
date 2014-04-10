@@ -93,7 +93,6 @@ public class Occurrence implements Serializable {
 		if ((distance = ww2Mc.get().get(word1 + CONN + word2)) != null) {
 			return distance;
 		}
-
 		if ((distance = ww2Mc.get().get(word2 + CONN + word1)) != null) {
 			return distance;
 		}
