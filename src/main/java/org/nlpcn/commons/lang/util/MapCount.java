@@ -1,5 +1,6 @@
 package org.nlpcn.commons.lang.util;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -10,7 +11,7 @@ import java.util.Map.Entry;
  * @param <T>
  * @author ansj
  */
-public class MapCount<T> {
+public class MapCount<T> implements Serializable {
 	private HashMap<T, Integer> hm = null;
 
 	public MapCount() {
