@@ -8,8 +8,12 @@ import java.util.Set;
  * Created by ansj on 4/10/14.
  */
 public class Count implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	int id = 0;
-	int count = 1; //这个词
+	double score = 1; //这个词
 	int relationCount; //这个词和其他词共同出现多少次
 	String nature;
 
@@ -21,8 +25,8 @@ public class Count implements Serializable {
 	}
 
 
-	public void upCount() {
-		this.count++;
+	public void upScore() {
+		this.score++;
 	}
 
 	public void upRelation(int rId) {
@@ -33,6 +37,6 @@ public class Count implements Serializable {
 
 	@Override
 	public String toString() {
-		return this.id + "\t" + this.count + "\t" + this.relationCount;
+		return this.id + "\t" + this.score + "\t" + this.relationCount;
 	}
 }

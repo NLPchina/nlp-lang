@@ -1,30 +1,18 @@
 package org.nlpcn.commons.lang.occurrence;
 
+import org.nlpcn.commons.lang.util.CollectionUtil;
 import org.nlpcn.commons.lang.util.MapCount;
 
 import java.io.*;
 import java.util.*;
+import java.util.Map.Entry;
 
 /**
- * 词语共现计算工具,愚人节快乐
- * Created by ansj on 4/1/14.
+ * 词语共现计算工具,愚人节快乐 Created by ansj on 4/1/14.
  */
 public class Occurrence implements Serializable {
 
-	public static void main(String[] args) throws Exception {
-//		Occurrence occ = new Occurrence();
-//		Set<String> all = new HashSet<String>();
-//		all.add("ansj");
-//		all.add("sun");
-//		all.add("cq");
-//		occ.addWords(all);
-//
-//		occ.saveModel("aaa");
-
-		Occurrence occ = loadModel("aaa");
-		System.out.println(occ.distance("ansj", "aa"));
-	}
-
+	private static final long serialVersionUID = 1L;
 
 	private int seqId = 0;
 
@@ -48,7 +36,7 @@ public class Occurrence implements Serializable {
 		Count count = null;
 		for (Element word : words) {
 			if ((count = word2Mc.get(word.getName())) != null) {
-				count.upCount();
+				count.upScore();
 			} else {
 				count = new Count(word.getNature(), seqId++);
 				word2Mc.put(word.getName(), count);
@@ -82,14 +70,13 @@ public class Occurrence implements Serializable {
 		}
 	}
 
-
 	/**
 	 * 得到两个词的距离
-	 *
+	 * 
 	 * @return
 	 */
-	private Integer distance(String word1, String word2) {
-		Integer distance = null;
+	public double distance(String word1, String word2) {
+		Double distance = null;
 		if ((distance = ww2Mc.get().get(word1 + CONN + word2)) != null) {
 			return distance;
 		}
@@ -100,21 +87,61 @@ public class Occurrence implements Serializable {
 	}
 
 	/**
+	 * 得到两个词的距离
+	 * 
+	 * @return
+	 */
+	public List<Entry<String, Double>> distance(String word) {
+		Count count = word2Mc.get(word);
+
+		if (count == null)
+			return null;
+
+		Map<String, Double> map = new HashMap<String, Double>();
+		String word2 = null;
+		for (Integer id : count.relationSet) {
+			word2 = idWordMap.get(id);
+			map.put(word2, distance(word, word2)*word2Mc.get(word2).score);
+		}
+		return CollectionUtil.sortMapByValue(map, 1);
+	}
+	
+	/**
+	 * tf/idf 计算分数
+	 */
+	public void computeTFIDF(){
+		int size = word2Mc.size() ;
+		Count count = null ;
+		for (Entry<String, Count> element : word2Mc.entrySet()) {
+			count = element.getValue() ;
+			count.score = Math.log((size+count.score)/count.score) ;
+		}
+	}
+
+	/**
 	 * 保存模型
 	 */
 	public void saveModel(String filePath) throws IOException {
 		ObjectOutput oot = new ObjectOutputStream(new FileOutputStream(filePath));
 		oot.writeObject(this);
+		oot.flush();
+		oot.close();
 	}
-
 
 	/**
 	 * 读取模型
 	 */
 	public static Occurrence loadModel(String filePath) throws IOException, ClassNotFoundException {
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath));
-		return (Occurrence) ois.readObject();
+		ObjectInputStream ois = null;
+		try {
+			ois = new ObjectInputStream(new FileInputStream(filePath));
 
+			return (Occurrence) ois.readObject();
+		} finally {
+			if (ois != null) {
+				ois.close();
+			}
+		}
 	}
 
 }

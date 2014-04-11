@@ -8,7 +8,7 @@ public class CollectionUtil {
 	 *
 	 * @return
 	 */
-	public static <K, V> List<Map.Entry<K, V>> sortMapByValue(HashMap<K, V> map, final int sort) {
+	public static <K, V> List<Map.Entry<K, V>> sortMapByValue(Map<K, V> map, final int sort) {
 		List<Map.Entry<K, V>> orderList = new ArrayList<Map.Entry<K, V>>(map.entrySet());
 		Collections.sort(orderList, new Comparator<Map.Entry<K, V>>() {
 			@Override

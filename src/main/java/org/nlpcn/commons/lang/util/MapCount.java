@@ -12,14 +12,19 @@ import java.util.Map.Entry;
  * @author ansj
  */
 public class MapCount<T> implements Serializable {
-	private HashMap<T, Integer> hm = null;
+	private static final long serialVersionUID = 1L;
+	private HashMap<T, Double> hm = null;
 
 	public MapCount() {
-		hm = new HashMap<T, Integer>();
+		hm = new HashMap<T, Double>();
+	}
+	
+	public MapCount(HashMap<T, Double> hm) {
+		this.hm = hm;
 	}
 
 	public MapCount(int initialCapacity) {
-		hm = new HashMap<T, Integer>(initialCapacity);
+		hm = new HashMap<T, Double>(initialCapacity);
 	}
 
 	public static void main(String[] args) {
@@ -33,11 +38,11 @@ public class MapCount<T> implements Serializable {
 	 * @param n
 	 */
 	public void add(T t, int n) {
-		Integer integer = null;
-		if ((integer = hm.get(t)) != null) {
-			hm.put(t, integer + n);
+		Double value = null;
+		if ((value = hm.get(t)) != null) {
+			hm.put(t, value + n);
 		} else {
-			hm.put(t, n);
+			hm.put(t, Double.valueOf(n));
 		}
 	}
 
@@ -73,7 +78,7 @@ public class MapCount<T> implements Serializable {
 	 *
 	 * @return
 	 */
-	public HashMap<T, Integer> get() {
+	public HashMap<T, Double> get() {
 		return this.hm;
 	}
 
@@ -83,9 +88,9 @@ public class MapCount<T> implements Serializable {
 	 * @return
 	 */
 	public String getDic() {
-		Iterator<Entry<T, Integer>> iterator = this.hm.entrySet().iterator();
+		Iterator<Entry<T, Double>> iterator = this.hm.entrySet().iterator();
 		StringBuilder sb = new StringBuilder();
-		Entry<T, Integer> next = null;
+		Entry<T, Double> next = null;
 		while (iterator.hasNext()) {
 			next = iterator.next();
 			sb.append(next.getKey());
