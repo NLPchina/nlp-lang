@@ -13,69 +13,68 @@ import java.io.InputStreamReader;
  * @author Ansj
  */
 public class BloomFilter {
-	
-	private static int length = 5 ;
-	
-	Filter[] filters = new Filter[length] ;
-	
-	
+
+	private static int length = 5;
+
+	Filter[] filters = new Filter[length];
+
 	public BloomFilter(int m) throws Exception {
-		float mNum = m/5 ;
-		long size = (long) (1L*mNum*1024*1024*8) ;
-		filters[0] = new JavaFilter(size) ;
-		filters[1] = new PHPFilter(size) ;
-		filters[2] = new JSFilter(size) ;
-		filters[3] = new PJWFilter(size) ;
-		filters[4] = new SDBMFilter(size) ;
+		float mNum = m / 5;
+		long size = (long) (1L * mNum * 1024 * 1024 * 8);
+		filters[0] = new JavaFilter(size);
+		filters[1] = new PHPFilter(size);
+		filters[2] = new JSFilter(size);
+		filters[3] = new PJWFilter(size);
+		filters[4] = new SDBMFilter(size);
 	}
-	
-	public void add(String str){
+
+	public void add(String str) {
 		for (int i = 0; i < length; i++) {
-			filters[i].add(str) ;
+			filters[i].add(str);
 		}
 	}
-	
-	public boolean contains(String str){
+
+	public boolean contains(String str) {
 		for (int i = 0; i < length; i++) {
-			if(filters[i].contains(str)){
-				return true ;
+			if (!filters[i].contains(str)) {
+				return false;
 			}
 		}
-		return false ;
+		return true;
 	}
-	
-	public boolean containsAndAdd(String str){
-		boolean flag = true ;
-		for (int i = 0; i < length; i++) {
-			flag = flag&&filters[i].containsAndAdd(str) ;
+
+	public boolean containsAndAdd(String str) {
+		boolean flag = this.contains(str) ;
+		if(!flag){
+			this.add(str);
 		}
 		return flag ;
 	}
 
 	public static void main(String[] args) throws Exception {
-		BloomFilter bf = new BloomFilter(32) ;
-		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("D:\\Users\\caiqing\\workspace\\CQ\\library\\dictionary-utf8.TXT"),"UTF-8")) ;
-		String str = null ;
+		BloomFilter bf = new BloomFilter(32);
+		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("D:\\Users\\caiqing\\workspace\\CQ\\library\\dictionary-utf8.TXT"), "UTF-8"));
+		String str = null;
 		System.out.println("begin");
-		long start = System.currentTimeMillis() ;
-		while((str=br.readLine())!=null){
-			if(bf.containsAndAdd(str)){
-				System.out.println("containsAndAdd:"+str);
+		long start = System.currentTimeMillis();
+		while ((str = br.readLine()) != null) {
+			if (bf.containsAndAdd(str)) {
+				System.out.println("containsAndAdd:" + str);
 			}
 		}
-		
-		br.close() ;
-		
-		br = new BufferedReader(new InputStreamReader(new FileInputStream("D:\\Users\\caiqing\\workspace\\CQ\\library\\dictionary-utf8.TXT"),"UTF-8")) ;
-			System.out.println("begin-find");
-			start = System.currentTimeMillis() ;
-			while((str=br.readLine())!=null){
-				if(!bf.contains(str)){
-					System.out.println("contains:"+str);
-				}
+
+		br.close();
+
+		br = new BufferedReader(new InputStreamReader(new FileInputStream("D:\\Users\\caiqing\\workspace\\CQ\\library\\dictionary-utf8.TXT"), "UTF-8"));
+		System.out.println("begin-find");
+		start = System.currentTimeMillis();
+		while ((str = br.readLine()) != null) {
+			if (!bf.contains(str)) {
+				System.out.println("contains:" + str);
 			}
-			
-		System.out.println(System.currentTimeMillis()-start);
-		br.close() ;
+		}
+
+		System.out.println(System.currentTimeMillis() - start);
+		br.close();
 	}
 }
