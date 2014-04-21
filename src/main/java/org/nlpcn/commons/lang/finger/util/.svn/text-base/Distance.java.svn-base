@@ -1,0 +1,122 @@
+package net.csdn.util;
+import net.csdn.service.FingerprintService;
+
+//文本相似度计算-Levenshtein 
+public class Distance {
+
+    public static void main(String[] args) {
+	Distance distance = new Distance();
+	String str1 = "改门觉得开个实体店的话,解码";
+	String str2 = "外援伊洛努表现不佳。";
+	double like = like("改门觉得开个实体店的话,解码","外援伊洛努表现不佳。") ;
+	System.out.println(like);
+
+	
+    }
+
+    public static double like(String str1, String str2) {
+	Distance distance = new Distance();
+	int i = distance.LD(str1, str2);
+	
+	return (1 -  i / (double) (str1.length() + str2.length()));
+    }
+
+    // ****************************
+    // Get minimum of three values
+    // ****************************
+
+    private int Minimum(int a, int b, int c) {
+	int mi;
+
+	mi = a;
+	if (b < mi) {
+	    mi = b;
+	}
+	if (c < mi) {
+	    mi = c;
+	}
+	return mi;
+
+    }
+
+    // *****************************
+    // Compute Levenshtein distance
+    // *****************************
+
+    public int LD(String s, String t) {
+	// 构建一个二维数据
+	int d[][]; // matrix
+	// s的长度
+	int n; // length of s
+	       // t的长度
+	int m; // length of t
+	       // s的偏移量
+	int i; // iterates through s
+	       // t的偏移量
+	int j; // iterates through t
+	       // s偏移量所在的char
+	char s_i; // ith character of s
+	// t偏移量所在的char
+	char t_j; // jth character of t
+	// 临时变量对比差值
+	int cost; // cost
+
+	// Step 1
+
+	n = s.length();
+	m = t.length();
+	// 当n为0时.则变化为m所有的值
+	if (n == 0) {
+	    return m;
+	}
+	// 同上
+	if (m == 0) {
+	    return n;
+	}
+
+	d = new int[n + 1][m + 1];
+
+	// Step 2 将数组首行首列添加内容.为当前行号列号
+
+	for (i = 0; i <= n; i++) {
+	    d[i][0] = i;
+	}
+
+	for (j = 0; j <= m; j++) {
+	    d[0][j] = j;
+	}
+
+	// Step 3
+
+	for (i = 1; i <= n; i++) {
+
+	    s_i = s.charAt(i - 1);
+
+	    // Step 4
+	    // 判断i位置的值和 t的每个字的差值
+	    for (j = 1; j <= m; j++) {
+
+		t_j = t.charAt(j - 1);
+
+		// Step 5
+		if (s_i == t_j) {
+		    cost = 0;
+		} else {
+		    cost = 1;
+		}
+
+		// Step 6
+		// 在数组的
+		d[i][j] = Minimum(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+
+	    }
+
+	}
+
+	// Step 7
+	// 取得最右面最下面的值就是文本的想速度了
+	return d[n][m];
+
+    }
+
+}
