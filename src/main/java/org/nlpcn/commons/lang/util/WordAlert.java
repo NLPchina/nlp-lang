@@ -253,6 +253,12 @@ public class WordAlert {
 		return sb.toString();
 	}
 
+	/**
+	 * 将一个字符串标准化
+	 * 
+	 * @param str
+	 * @return
+	 */
 	public static char[] alertStr(String str) {
 		char[] chars = new char[str.length()];
 		char c = 0;
@@ -267,9 +273,43 @@ public class WordAlert {
 		return chars;
 	}
 
+	/**
+	 * 判断一个字符串是否是english
+	 * 
+	 * @param word
+	 * @return
+	 */
+	public static boolean isEnglish(String word) {
+		int length = word.length();
+		char c;
+		for (int i = 0; i < length; i++) {
+			c = word.charAt(i);
+			if ((c >= 'a' && c <= 'z') || (c >= MIN_LOWER && c <= MAX_LOWER) || (c >= MIN_UPPER && c <= MAX_UPPER) || (c >= MIN_UPPER_E && c <= MAX_UPPER_E) ) {
+			} else {
+				return false;
+			}
+		}
+		return true;
+	}
 
-
-
+	/**
+	 * 判断一个字符串是否是数字
+	 * 
+	 * @param word
+	 * @return
+	 */
+	public static boolean isNumber(String word) {
+		char c = 0;
+		int len = word.length();
+		for (int i = 0; i < len; i++) {
+			c = word.charAt(i);
+			if ((c >= '0' && c <= '9') || c >= MIN_UPPER_N && c <= MAX_UPPER_N || c == '.') {
+			} else {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	/**
 	 * 将一个char标准化
@@ -279,6 +319,10 @@ public class WordAlert {
 	 */
 	public static char CharCover(char c) {
 		return CHARCOVER[c];
+	}
+
+	public static void main(String[] args) {
+		System.out.println(WordAlert.isEnglish("abc"));
 	}
 
 }

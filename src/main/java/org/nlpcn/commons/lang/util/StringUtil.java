@@ -150,10 +150,6 @@ public class StringUtil {
 		return chars;
 	}
 
-	public static void main(String[] args) {
-		System.out.println(rmHtmlTag("c+++++++++"));
-	}
-
 	public static boolean isBlank(char[] chars) {
 		// TODO Auto-generated method stub
 		int strLen;
