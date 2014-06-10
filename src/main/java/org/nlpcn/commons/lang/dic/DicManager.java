@@ -1,6 +1,7 @@
 package org.nlpcn.commons.lang.dic;
 
 import org.nlpcn.commons.lang.tire.domain.Forest;
+import org.nlpcn.commons.lang.tire.domain.SmartForest;
 import org.nlpcn.commons.lang.tire.domain.Value;
 import org.nlpcn.commons.lang.tire.library.Library;
 import org.nlpcn.commons.lang.util.IOUtil;
@@ -18,9 +19,44 @@ public class DicManager {
 	/**
 	 * 违禁词辞典
 	 */
-	public static final Forest F2J_FOREST = init(null, DicManager.class.getResourceAsStream("fan2jian.dic"));
+	private static Forest f2jForest = null;
 
-	public static final Forest J2F_FOREST = initRev(null, DicManager.class.getResourceAsStream("fan2jian.dic"));
+	private static Forest j2fForest = null;
+
+	private static SmartForest<String[]> pinyinForest = null;
+	
+	
+
+	private static SmartForest<String[]> initPinyin() {
+		BufferedReader reader = null;
+		try {
+			reader = IOUtil.getReader(DicManager.class.getResourceAsStream("/pinyin.dic"), IOUtil.UTF8);
+			SmartForest<String[]> forest = new SmartForest<String[]>();
+			String temp = null;
+			String[] strs = null;
+			while ((temp = reader.readLine()) != null) {
+				strs = temp.split("\t");
+				if (strs.length != 2) {
+					throw new RuntimeException("error arg by init pinyin \t" + strs.length);
+				}
+				forest.add(strs[0], strs[1].split(" "));
+			}
+			return forest;
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
 
 	private static Forest initRev(String dicName, InputStream is) {
 		BufferedReader reader = null;
@@ -30,9 +66,8 @@ public class DicManager {
 			String temp = null;
 			String[] strs = null;
 			while ((temp = reader.readLine()) != null) {
-				strs = temp.split("\t");
+				strs = temp.trim().split("\t");
 				if (strs.length != 2) {
-					System.out.println(temp);
 					throw new RuntimeException("error arg by init " + dicName + "\t" + strs.length);
 				}
 				Library.insertWord(forest, new Value(strs[1], strs[0]));
@@ -54,19 +89,8 @@ public class DicManager {
 		return null;
 	}
 
-
 	private static Forest init(String dicName, InputStream is) {
 		return init(dicName, new BufferedReader(new InputStreamReader(is)));
-	}
-
-	private static Forest init(String dicName, String path) {
-		try {
-			return init(dicName, new BufferedReader(new InputStreamReader(new FileInputStream(path))));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
 	}
 
 	private static Forest init(String dicName, BufferedReader br) {
@@ -89,7 +113,7 @@ public class DicManager {
 
 	/**
 	 * 构建一个tire书辞典
-	 *
+	 * 
 	 * @param dicName
 	 * @param filePath
 	 * @return
@@ -109,10 +133,9 @@ public class DicManager {
 		return forest;
 	}
 
-
 	/**
 	 * 从内存中移除
-	 *
+	 * 
 	 * @param dicName
 	 * @return
 	 */
@@ -122,11 +145,47 @@ public class DicManager {
 
 	/**
 	 * 获得一本辞典
-	 *
+	 * 
 	 * @param dicName
 	 * @return
 	 */
 	public static Forest getForest(String dicName) {
 		return forestMap.get(dicName);
 	}
+
+	/**
+	 * 得到繁体转简体词典
+	 * 
+	 * @return
+	 */
+	public static Forest getF2jForest() {
+		if (f2jForest == null) {
+			f2jForest = init(null, DicManager.class.getResourceAsStream("/fan2jian.dic"));
+		}
+		return f2jForest;
+	}
+
+	/**
+	 * 得到简体转繁体词典
+	 * 
+	 * @return
+	 */
+	public static Forest getJ2fForest() {
+		if(j2fForest==null){
+			j2fForest = initRev(null, DicManager.class.getResourceAsStream("/fan2jian.dic")) ;
+		}
+		return j2fForest;
+	}
+	
+	/**
+	 * 得到拼音词典
+	 * @return
+	 */
+	public static SmartForest<String[]> getPinyinForest(){
+		if(pinyinForest==null){
+			pinyinForest = initPinyin() ;
+		}
+		return pinyinForest ;
+	}
+
 }
