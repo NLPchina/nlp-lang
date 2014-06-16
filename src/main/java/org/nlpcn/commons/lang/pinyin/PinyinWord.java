@@ -6,7 +6,12 @@ public class PinyinWord {
 
 	PinyinWord(String pinyinStr) {
 		this.py = pinyinStr.substring(0, pinyinStr.length() - 1);
-		this.tone = Integer.parseInt(pinyinStr.substring(pinyinStr.length() - 1));
+		char c = pinyinStr.charAt(pinyinStr.length() - 1);
+		if (c >= '0' && c <= '9') {
+			this.tone = Integer.parseInt(String.valueOf(c));
+		} else {
+			this.py = pinyinStr;
+		}
 	}
 
 	public PinyinWord(char c) {
