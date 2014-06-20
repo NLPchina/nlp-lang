@@ -7,7 +7,7 @@
 	<packaging>jar</packaging>
 	<name>nlp-lang</name>
 	<version>0.1</version>
-	<description>basic TEXT mNLP process util  ! </description>
+	<description>basic TEXT NLP process util  ! </description>
 	<url>https://github.com/ansjsun/ansj_seg</url>
 
 
