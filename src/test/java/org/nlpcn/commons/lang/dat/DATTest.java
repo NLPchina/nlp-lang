@@ -18,7 +18,7 @@ public class DATTest {
 	@Test
 	public void loadTest() throws Exception {
 		long start = System.currentTimeMillis();
-		DoubleTireArray load = DoubleTireArray.load("/home/ansj/公共的/pinyin.obj");
+		DoubleArrayTire load = DoubleArrayTire.load("/home/ansj/公共的/pinyin.obj");
 		System.out.println(load.getItem("龙麝"));
 		System.out.println("load obj use time " + (System.currentTimeMillis() - start));
 	}
@@ -26,7 +26,7 @@ public class DATTest {
 	@Test
 	public void loadTextTest() throws Exception {
 		long start = System.currentTimeMillis();
-		DoubleTireArray load = DoubleTireArray.loadText("/home/ansj/公共的/pinyin.dat");
+		DoubleArrayTire load = DoubleArrayTire.loadText("/home/ansj/公共的/pinyin.dat");
 		System.out.println(load.getItem("龙麝"));
 		System.out.println("load obj use time " + (System.currentTimeMillis() - start));
 	}

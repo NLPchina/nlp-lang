@@ -16,15 +16,15 @@ import org.nlpcn.commons.lang.util.StringUtil;
  * @author ansj
  * 
  */
-public class DoubleTireArray {
+public class DoubleArrayTire {
 
 	private Item[] dat = null;
 
-	private DoubleTireArray() {
+	private DoubleArrayTire() {
 	}
 
-	public static DoubleTireArray load(String filePath) throws FileNotFoundException, IOException, ClassNotFoundException {
-		DoubleTireArray obj = new DoubleTireArray();
+	public static DoubleArrayTire load(String filePath) throws FileNotFoundException, IOException, ClassNotFoundException {
+		DoubleArrayTire obj = new DoubleArrayTire();
 		ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filePath)));
 		try {
 			obj.dat = new Item[ois.readInt()];
@@ -50,8 +50,8 @@ public class DoubleTireArray {
 	 * @throws IllegalAccessException
 	 * @throws InstantiationException
 	 */
-	public static DoubleTireArray loadText(String filePath, Class<? extends Item> cla) throws InstantiationException, IllegalAccessException {
-		DoubleTireArray obj = new DoubleTireArray();
+	public static DoubleArrayTire loadText(String filePath, Class<? extends Item> cla) throws InstantiationException, IllegalAccessException {
+		DoubleArrayTire obj = new DoubleArrayTire();
 		FileIterator it = IOUtil.instanceFileIterator(filePath, IOUtil.UTF8);
 		String temp = it.next();
 		obj.dat = new Item[Integer.parseInt(temp)];
@@ -73,7 +73,7 @@ public class DoubleTireArray {
 	 * @throws IllegalAccessException
 	 * @throws InstantiationException
 	 */
-	public static DoubleTireArray loadText(String filePath) throws InstantiationException, IllegalAccessException {
+	public static DoubleArrayTire loadText(String filePath) throws InstantiationException, IllegalAccessException {
 		return loadText(filePath, BasicItem.class);
 	}
 
