@@ -1,7 +1,9 @@
 package org.nlpcn.commons.lang.index;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -48,6 +50,16 @@ public class MemoryIndex<T> {
 
 	}
 
+	/**
+	 * 搜索提示
+	 * 
+	 * @param value
+	 *            返回内容
+	 * @param score
+	 *            分数
+	 * @param fields
+	 *            提示内容
+	 */
 	public void addItem(T value, Double score, String... fields) {
 		Set<String> result = null;
 
@@ -170,31 +182,101 @@ public class MemoryIndex<T> {
 		public T getValue() {
 			return t;
 		}
-		
+
 		@Override
-		public String toString(){
-			return t.toString() ;
+		public String toString() {
+			return t.toString();
 		}
 
 	}
-	
+
 	/**
 	 * 将字符串转换为全拼
+	 * 
 	 * @param str
 	 * @return
 	 */
-	public String str2QP(String str){
+	public String str2QP(String str) {
 		List<PinyinWord> list = Pinyin.str2Pinyin(str);
 		StringBuilder sb = new StringBuilder();
 		for (PinyinWord pinyinWord : list) {
 			sb.append(pinyinWord.py);
 		}
-		return sb.toString() ;
+		return sb.toString();
 	}
-	
 
-	public TreeSet<Entry> suggest(String key) {
-		return index.get(key);
+	public List<T> suggest(String key) {
+		if (StringUtil.isBlank(key)) {
+			return Collections.emptyList();
+		}
+
+		key = key.replace("\\s", "");
+
+		List<T> result = new LinkedList<T>();
+		TreeSet<Entry> treeSet = index.get(key);
+		if (treeSet == null) {
+			return result;
+		}
+
+		for (Entry entry : treeSet) {
+			result.add(entry.t);
+		}
+		return result;
+	}
+
+	/**
+	 * 类似模糊查询。支持错别字，
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public List<T> smartSuggest(String key) {
+
+		if (StringUtil.isBlank(key)) {
+			return Collections.emptyList();
+		}
+
+		key = key.replace("\\s", "");
+
+		List<T> result = suggest(key);
+
+		Set<T> sets = new HashSet<T>();
+		sets.addAll(result);
+
+		if (result.size() < size) {
+			// 尝试全拼
+			List<T> suggest = suggest(str2QP(key));
+			for (T t : suggest) {
+				if (sets.contains(t)) {
+					continue;
+				} else {
+					sets.add(t);
+					result.add(t);
+				}
+			}
+		}
+
+		sets.addAll(result);
+
+		if (result.size() < size) {
+			// 尝试首字母拼音
+			List<T> suggest = suggest(new String(Pinyin.str2FirstCharArr(key)));
+			for (T t : suggest) {
+				if (sets.contains(t)) {
+					continue;
+				} else {
+					sets.add(t);
+					result.add(t);
+				}
+			}
+
+		}
+
+		if (result.size() <= size) {
+			return result;
+		}
+
+		return result.subList(0, size);
 	}
 
 }
