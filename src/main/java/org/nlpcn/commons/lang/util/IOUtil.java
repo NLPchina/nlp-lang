@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 /**
  * java 一个简单的io操作
- *
+ * 
  * @author ansj
  */
 public class IOUtil {
@@ -26,22 +26,17 @@ public class IOUtil {
 		return null;
 	}
 
-	public static BufferedReader getReader(String path, String charEncoding)
-			throws FileNotFoundException,
-			UnsupportedEncodingException {
+	public static BufferedReader getReader(String path, String charEncoding) throws FileNotFoundException, UnsupportedEncodingException {
 		return getReader(new File(path), charEncoding);
 	}
 
-	private static BufferedReader getReader(File file, String charEncoding)
-			throws FileNotFoundException,
-			UnsupportedEncodingException {
+	private static BufferedReader getReader(File file, String charEncoding) throws FileNotFoundException, UnsupportedEncodingException {
 		// TODO Auto-generated method stub
 		InputStream is = new FileInputStream(file);
 		return new BufferedReader(new InputStreamReader(is, charEncoding));
 	}
 
-	public static RandomAccessFile getRandomAccessFile(String path, String charEncoding)
-			throws FileNotFoundException {
+	public static RandomAccessFile getRandomAccessFile(String path, String charEncoding) throws FileNotFoundException {
 		InputStream is = getInputStream(path);
 		if (is != null) {
 			return new RandomAccessFile(new File(path), "r");
@@ -64,8 +59,7 @@ public class IOUtil {
 		}
 	}
 
-	public static BufferedReader getReader(InputStream inputStream, String charEncoding)
-			throws UnsupportedEncodingException {
+	public static BufferedReader getReader(InputStream inputStream, String charEncoding) throws UnsupportedEncodingException {
 		return new BufferedReader(new InputStreamReader(inputStream, charEncoding));
 	}
 
@@ -125,14 +119,13 @@ public class IOUtil {
 
 	/**
 	 * 将一个对象序列化到硬盘中
-	 *
+	 * 
 	 * @param string
 	 * @param hm
 	 * @throws java.io.IOException
 	 * @throws java.io.FileNotFoundException
 	 */
-	public static void WriterObj(String path, Serializable hm) throws FileNotFoundException,
-			IOException {
+	public static void WriterObj(String path, Serializable hm) throws FileNotFoundException, IOException {
 		// TODO Auto-generated method stub
 		ObjectOutputStream objectOutputStream = null;
 		try {
@@ -147,7 +140,7 @@ public class IOUtil {
 
 	/**
 	 * 关闭字符流
-	 *
+	 * 
 	 * @param reader
 	 */
 	public static void close(Reader reader) {
@@ -162,7 +155,7 @@ public class IOUtil {
 
 	/**
 	 * 关闭字节流
-	 *
+	 * 
 	 * @param is
 	 */
 	public static void close(InputStream is) {
@@ -177,7 +170,7 @@ public class IOUtil {
 
 	/**
 	 * 关闭字节流
-	 *
+	 * 
 	 * @param is
 	 */
 	public static void close(OutputStream os) {
@@ -194,7 +187,17 @@ public class IOUtil {
 
 	public static FileIterator instanceFileIterator(String path, String charEncoding) {
 		try {
-			return new FileIterator(path, charEncoding);
+			return instanceFileIterator(IOUtil.getInputStream(path), charEncoding);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static FileIterator instanceFileIterator(InputStream is, String charEncoding) {
+		try {
+			return new FileIterator(is, charEncoding);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -207,7 +210,7 @@ public class IOUtil {
 
 	/**
 	 * 加载一个文件到hashMap
-	 *
+	 * 
 	 * @param path
 	 * @param charEncoding
 	 * @param key
@@ -215,9 +218,8 @@ public class IOUtil {
 	 * @return
 	 * @throws java.io.UnsupportedEncodingException
 	 */
-	@SuppressWarnings({"unchecked"})
-	public static <K, V> HashMap<K, V> loadMap(String path, String charEncoding, Class<K> key,
-											   Class<V> value) throws UnsupportedEncodingException {
+	@SuppressWarnings({ "unchecked" })
+	public static <K, V> HashMap<K, V> loadMap(String path, String charEncoding, Class<K> key, Class<V> value) throws UnsupportedEncodingException {
 
 		FileIterator iteartor = null;
 		HashMap<K, V> hm = null;
@@ -228,8 +230,7 @@ public class IOUtil {
 			while (iteartor.hasNext()) {
 				String readLine = iteartor.next();
 				split = readLine.split("\t");
-				hm.put((K) ReflectUtil.conversion(split[0], key),
-						(V) ReflectUtil.conversion(split[1], value));
+				hm.put((K) ReflectUtil.conversion(split[0], key), (V) ReflectUtil.conversion(split[1], value));
 			}
 		} finally {
 			iteartor.close();
@@ -237,8 +238,7 @@ public class IOUtil {
 		return hm;
 	}
 
-	public static <K, V> void writeMap(Map<K, V> hm, String path, String charEncoding)
-			throws IOException {
+	public static <K, V> void writeMap(Map<K, V> hm, String path, String charEncoding) throws IOException {
 		Iterator<Entry<K, V>> iterator = hm.entrySet().iterator();
 		FileOutputStream fos = null;
 		Entry<K, V> next = null;
@@ -257,19 +257,17 @@ public class IOUtil {
 		}
 	}
 
-	public static List<String> readFile2List(String path, String charEncoding)
-			throws UnsupportedEncodingException, FileNotFoundException {
+	public static List<String> readFile2List(String path, String charEncoding) throws UnsupportedEncodingException, FileNotFoundException {
 		return readFile2List(getReader(path, charEncoding));
 	}
 
-	public static List<String> readFile2List(File file, String charEncoding)
-			throws FileNotFoundException, UnsupportedEncodingException {
+	public static List<String> readFile2List(File file, String charEncoding) throws FileNotFoundException, UnsupportedEncodingException {
 		return readFile2List(getReader(file, charEncoding));
 	}
 
 	/**
 	 * 从一个字符流读取文件到list.
-	 *
+	 * 
 	 * @param br
 	 * @return
 	 * @throws java.io.IOException
@@ -296,8 +294,7 @@ public class IOUtil {
 	}
 
 	public static void main(String[] args) throws UnsupportedEncodingException {
-		HashMap<String, Integer> loadMap = loadMap(
-				"/Users/ansj/git/ansj_seg/library/userLibrary/userLibrary.dic", "utf-8", null, null);
+		HashMap<String, Integer> loadMap = loadMap("/Users/ansj/git/ansj_seg/library/userLibrary/userLibrary.dic", "utf-8", null, null);
 		System.out.println(loadMap.get("淘宝"));
 	}
 }

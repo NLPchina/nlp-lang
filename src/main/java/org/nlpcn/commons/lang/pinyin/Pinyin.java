@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.nlpcn.commons.lang.dic.DicManager;
-import org.nlpcn.commons.lang.jianfan.JianFan;
 import org.nlpcn.commons.lang.tire.SmartGetWord;
 import org.nlpcn.commons.lang.tire.domain.SmartForest;
 import org.nlpcn.commons.lang.util.StringUtil;
@@ -41,7 +40,7 @@ public class Pinyin {
 			return Collections.emptyList();
 		}
 
-		SmartGetWord<String[]> sgw = new SmartGetWord<String[]>(PINYIN_FOREST, JianFan.f2J(str));
+		SmartGetWord<String[]> sgw = new SmartGetWord<String[]>(PINYIN_FOREST, str);
 
 		int beginOffe = 0;
 		int wordOffe = 0;

@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public abstract class Item implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	public int index;
 	public String name;
 	public int base = 65536;
@@ -36,7 +36,13 @@ public abstract class Item implements Serializable {
 
 	/**
 	 * 以文本格式序列化的显示
+	 * 
 	 * @return
 	 */
 	public abstract String toText();
+
+	@Override
+	public String toString() {
+		return toText();
+	}
 }

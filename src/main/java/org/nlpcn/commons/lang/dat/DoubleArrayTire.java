@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 
 import org.nlpcn.commons.lang.util.FileIterator;
@@ -20,6 +21,8 @@ public class DoubleArrayTire {
 
 	private Item[] dat = null;
 
+	public int arrayLength;
+
 	private DoubleArrayTire() {
 	}
 
@@ -29,9 +32,9 @@ public class DoubleArrayTire {
 		try {
 			obj.dat = new Item[ois.readInt()];
 
-			int len = ois.readInt();
+			obj.arrayLength = ois.readInt();
 			Item item = null;
-			for (int i = 0; i < len; i++) {
+			for (int i = 0; i < obj.arrayLength; i++) {
 				item = (Item) ois.readObject();
 				obj.dat[item.index] = item;
 			}
@@ -51,10 +54,23 @@ public class DoubleArrayTire {
 	 * @throws InstantiationException
 	 */
 	public static DoubleArrayTire loadText(String filePath, Class<? extends Item> cla) throws InstantiationException, IllegalAccessException {
+		return loadText(IOUtil.getInputStream(filePath), cla);
+	}
+
+	/**
+	 * 从文本中加载模型
+	 * 
+	 * @param filePath
+	 * @return
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 */
+	public static DoubleArrayTire loadText(InputStream is, Class<? extends Item> cla) throws InstantiationException, IllegalAccessException {
 		DoubleArrayTire obj = new DoubleArrayTire();
-		FileIterator it = IOUtil.instanceFileIterator(filePath, IOUtil.UTF8);
+		FileIterator it = IOUtil.instanceFileIterator(is, IOUtil.UTF8);
 		String temp = it.next();
-		obj.dat = new Item[Integer.parseInt(temp)];
+		obj.arrayLength = Integer.parseInt(temp);
+		obj.dat = new Item[obj.arrayLength];
 		Item item = null;
 		while (it.hasNext()) {
 			temp = it.next();
@@ -93,23 +109,12 @@ public class DoubleArrayTire {
 	 * @return
 	 */
 	public int getId(String str) {
-		if (StringUtil.isBlank(str)) {
-			return 0;
+		Item item = getItem(str) ;
+		if(item==null){
+			return 0 ;
+		}else{
+			return item.index ;
 		}
-		int baseValue = str.charAt(0);
-		int checkValue = 0;
-		Item item = null;
-		for (int i = 1; i < str.length(); i++) {
-			checkValue = baseValue;
-			item = dat[baseValue];
-			baseValue = item.base + str.charAt(i);
-			if (baseValue > dat.length - 1)
-				return 0;
-			if (item.check != -1 && item.check != checkValue) {
-				return 0;
-			}
-		}
-		return baseValue;
 	}
 
 	/**
@@ -120,10 +125,37 @@ public class DoubleArrayTire {
 	 */
 	@SuppressWarnings("unchecked")
 	public <T extends Item> T getItem(String str) {
-		int id = getId(str);
-		if (id <= 0) {
+		if (StringUtil.isBlank(str)) {
 			return null;
 		}
+		if (str.length() == 1) {
+			return (T) dat[str.charAt(0)];
+		}
+
+		int checkValue = 0;
+		Item item = dat[str.charAt(0)];
+		if(item==null){
+			return null ;
+		}
+		for (int i = 1; i < str.length(); i++) {
+			checkValue = item.index;
+			if (item.base + str.charAt(i) > dat.length - 1)
+				return null;
+			
+			item = dat[item.base + str.charAt(i)];
+			if (item == null) {
+				return null;
+			}
+			if (item.check != -1 && item.check != checkValue) {
+				return null;
+			}
+		}
+		return (T) item;
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends Item> T getItem(int id) {
 		return (T) dat[id];
 	}
+
 }

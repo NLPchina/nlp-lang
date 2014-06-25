@@ -3,21 +3,25 @@ package org.nlpcn.commons.lang.util;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 
 /**
  * 文件迭代器
- *
+ * 
  * @author ansj
  */
 public class FileIterator implements Iterator<String> {
 	String temp = null;
 	private BufferedReader br = null;
 
-	protected FileIterator(String path, String charEncoding) throws UnsupportedEncodingException,
-			FileNotFoundException {
+	protected FileIterator(String path, String charEncoding) throws UnsupportedEncodingException, FileNotFoundException {
 		br = IOUtil.getReader(path, charEncoding);
+	}
+
+	protected FileIterator(InputStream is, String charEncoding) throws UnsupportedEncodingException, FileNotFoundException {
+		br = IOUtil.getReader(is, charEncoding);
 	}
 
 	@Override
@@ -71,6 +75,6 @@ public class FileIterator implements Iterator<String> {
 
 	@Override
 	public void remove() {
-		throw new RuntimeException("file iteartor can not remove ") ;
+		throw new RuntimeException("file iteartor can not remove ");
 	}
 }
