@@ -34,6 +34,7 @@ public class MemoryIndexTest {
 		//增加到索引中
 		mi.addItem(temp, temp ,quanpin,jianpinpin);
 
+		//搜索提示
 		System.out.println(mi.suggest("zg"));
 		System.out.println(mi.suggest("zhongguo"));
 		System.out.println(mi.suggest("中国"));

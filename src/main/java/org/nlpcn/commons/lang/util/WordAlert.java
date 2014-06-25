@@ -39,7 +39,7 @@ public class WordAlert {
 	 */
 	public static final int UPPER_GAP_E = -32;
 	/**
-	 * 这个就是(int)'0'
+	 * 这个就是(int)'０'
 	 */
 	public static final int MIN_UPPER_N = 65296;
 	/**
