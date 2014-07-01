@@ -19,7 +19,7 @@ public class FingerprintService {
     private static Forest forest = null;
     static {
         try {
-            forest = Library.makeForest(DicManager.class.getResourceAsStream("finger.dic"));
+            forest = Library.makeForest(DicManager.class.getResourceAsStream("/finger.dic"));
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -51,30 +51,4 @@ public class BloomFilter {
 		return flag ;
 	}
 
-	public static void main(String[] args) throws Exception {
-		BloomFilter bf = new BloomFilter(32);
-		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("D:\\Users\\caiqing\\workspace\\CQ\\library\\dictionary-utf8.TXT"), "UTF-8"));
-		String str = null;
-		System.out.println("begin");
-		long start = System.currentTimeMillis();
-		while ((str = br.readLine()) != null) {
-			if (bf.containsAndAdd(str)) {
-				System.out.println("containsAndAdd:" + str);
-			}
-		}
-
-		br.close();
-
-		br = new BufferedReader(new InputStreamReader(new FileInputStream("D:\\Users\\caiqing\\workspace\\CQ\\library\\dictionary-utf8.TXT"), "UTF-8"));
-		System.out.println("begin-find");
-		start = System.currentTimeMillis();
-		while ((str = br.readLine()) != null) {
-			if (!bf.contains(str)) {
-				System.out.println("contains:" + str);
-			}
-		}
-
-		System.out.println(System.currentTimeMillis() - start);
-		br.close();
-	}
 }
