@@ -1,6 +1,9 @@
 nlp-lang
 ========
 
+文档地址:http://www.nlpcn.org/docs/7 
+部分演示:http://www.nlpcn.org/demo
+
 #### 这个项目是一个基本包.封装了大多数nlp项目中常用工具
 
 > 工具
