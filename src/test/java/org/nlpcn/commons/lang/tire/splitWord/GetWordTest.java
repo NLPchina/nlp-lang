@@ -17,12 +17,13 @@ public class GetWordTest {
 		 * 词典的构造.一行一个词后面是参数.可以从文件读取.可以是read流.
 		 */
 		long start = System.currentTimeMillis();
-		String dic = "android\t10\nc\t100\nC++\t10\nc++\t5\nc#\t100\nVC++\t100".toLowerCase();
+		String dic = "android\t10\t孙健\nc\t100\nC++\t10\nc++\t5\nc#\t100\nVC++\t100".toLowerCase();
+		System.out.println(dic);
 		Forest forest = Library.makeForest(new BufferedReader(new StringReader(dic)));
 		/**
 		 * 删除一个单词
 		 */
-		Library.insertWord(forest, "中国");
+		Library.removeWord(forest, "中国");
 		/**
 		 * 增加一个新词
 		 */
@@ -35,7 +36,8 @@ public class GetWordTest {
 
 			String temp = null;
 			while ((temp = udg.getFrontWords()) != null) {
-				System.out.println(temp + "\t\t" + udg.getParam(0) + "\t\t" + udg.getParam(2));
+				System.out.println(temp + "\t\t" + udg.getParam(0) + "\t\t" + udg.getParam(1));
+				System.out.println(udg.offe);
 			}
 		}
 		System.out.println(System.currentTimeMillis() - start);

@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 /**
  * 用map做的计数器.
- *
+ * 
  * @param <T>
  * @author ansj
  */
@@ -18,7 +18,7 @@ public class MapCount<T> implements Serializable {
 	public MapCount() {
 		hm = new HashMap<T, Double>();
 	}
-	
+
 	public MapCount(HashMap<T, Double> hm) {
 		this.hm = hm;
 	}
@@ -27,17 +27,13 @@ public class MapCount<T> implements Serializable {
 		hm = new HashMap<T, Double>(initialCapacity);
 	}
 
-	public static void main(String[] args) {
-		System.out.println(Long.MAX_VALUE);
-	}
-
 	/**
 	 * 增加一个元素
-	 *
+	 * 
 	 * @param t
 	 * @param n
 	 */
-	public void add(T t, int n) {
+	public void add(T t, double n) {
 		Double value = null;
 		if ((value = hm.get(t)) != null) {
 			hm.put(t, value + n);
@@ -47,8 +43,17 @@ public class MapCount<T> implements Serializable {
 	}
 
 	/**
+	 * 兼容旧的api
+	 * @param t
+	 * @param n
+	 */
+	public void add(T t, int n) {
+		add(t, (double) n);
+	}
+
+	/**
 	 * 计数增加.默认为1
-	 *
+	 * 
 	 * @param t
 	 */
 	public void add(T t) {
@@ -57,7 +62,7 @@ public class MapCount<T> implements Serializable {
 
 	/**
 	 * map的大小
-	 *
+	 * 
 	 * @return
 	 */
 	public int size() {
@@ -66,7 +71,7 @@ public class MapCount<T> implements Serializable {
 
 	/**
 	 * 删除一个元素
-	 *
+	 * 
 	 * @param t
 	 */
 	public void remove(T t) {
@@ -75,7 +80,7 @@ public class MapCount<T> implements Serializable {
 
 	/**
 	 * 得道内部的map
-	 *
+	 * 
 	 * @return
 	 */
 	public HashMap<T, Double> get() {
@@ -84,7 +89,7 @@ public class MapCount<T> implements Serializable {
 
 	/**
 	 * 将map序列化为词典格式
-	 *
+	 * 
 	 * @return
 	 */
 	public String getDic() {

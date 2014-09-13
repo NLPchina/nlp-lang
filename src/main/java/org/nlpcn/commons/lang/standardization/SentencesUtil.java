@@ -5,13 +5,15 @@ import java.util.List;
 
 /**
  * 文本断句
+ * 
  * @author ansj
- *
+ * 
  */
 public class SentencesUtil {
 	public List<String> toSentenceList(String content) {
-		return toSentenceList(content.toCharArray()) ;
+		return toSentenceList(content.toCharArray());
 	}
+
 	public List<String> toSentenceList(char[] chars) {
 
 		StringBuilder sb = new StringBuilder();
@@ -31,28 +33,18 @@ public class SentencesUtil {
 					sb = new StringBuilder();
 				}
 				break;
-			case ' ':
-			case '	':
-			case ' ':
-			case '。':
+			case '…':
 				insertIntoList(sb, sentences);
-				sb = new StringBuilder();
+				sb = new StringBuilder("…");
 				break;
+			case '\t':
+			case '。':
 			case ';':
 			case '；':
-				insertIntoList(sb, sentences);
-				sb = new StringBuilder();
-				break;
 			case '!':
 			case '！':
-				insertIntoList(sb, sentences);
-				sb = new StringBuilder();
-				break;
 			case '?':
 			case '？':
-				insertIntoList(sb, sentences);
-				sb = new StringBuilder();
-				break;
 			case '\n':
 			case '\r':
 				insertIntoList(sb, sentences);
@@ -67,12 +59,12 @@ public class SentencesUtil {
 
 		return sentences;
 	}
-	
+
 	private void insertIntoList(StringBuilder sb, List<String> sentences) {
 		String content = sb.toString().trim();
 		if (content.length() > 0) {
 			sentences.add(content);
 		}
 	}
-	
+
 }
