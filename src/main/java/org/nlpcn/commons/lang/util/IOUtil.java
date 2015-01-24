@@ -59,14 +59,33 @@ public class IOUtil {
 		}
 	}
 
+	/**
+	 * 将输入流转化为字节流
+	 * @param inputStream
+	 * @param charEncoding
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
 	public static BufferedReader getReader(InputStream inputStream, String charEncoding) throws UnsupportedEncodingException {
 		return new BufferedReader(new InputStreamReader(inputStream, charEncoding));
 	}
 
+	/**
+	 * 读取文件获得正文
+	 * @param path
+	 * @param charEncoding
+	 * @return
+	 */
 	public static String getContent(String path, String charEncoding) {
 		return getContent(new File(path), charEncoding);
 	}
 
+	/**
+	 * 从流中读取正文内容
+	 * @param is
+	 * @param charEncoding
+	 * @return
+	 */
 	public static String getContent(InputStream is, String charEncoding) {
 		BufferedReader reader = null;
 		try {
@@ -80,7 +99,6 @@ public class IOUtil {
 				try {
 					reader.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -88,31 +106,41 @@ public class IOUtil {
 		return "";
 	}
 
+	/**
+	 * 从文件中读取正文内容
+	 * @param file
+	 * @param charEncoding
+	 * @return
+	 */
 	public static String getContent(File file, String charEncoding) {
 		InputStream is = null;
 		try {
 			is = new FileInputStream(file);
 			return getContent(is, charEncoding);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			try {
-				is.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			close(is);
 		}
 		return "";
 	}
 
+	/**
+	 *
+	 * @param reader
+	 * @return
+	 * @throws IOException
+	 */
 	public static String getContent(BufferedReader reader) throws IOException {
 		StringBuilder sb = new StringBuilder();
-		String temp = null;
-		while ((temp = reader.readLine()) != null) {
-			sb.append(temp);
-			sb.append("\n");
+		try {
+			String temp = null;
+			while ((temp = reader.readLine()) != null) {
+				sb.append(temp);
+				sb.append("\n");
+			}
+		}finally {
+			close(reader);
 		}
 		return sb.toString();
 	}
@@ -163,7 +191,6 @@ public class IOUtil {
 			if (is != null)
 				is.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -280,21 +307,15 @@ public class IOUtil {
 				all.add(temp);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
 				br.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		return all;
 	}
 
-	public static void main(String[] args) throws UnsupportedEncodingException {
-		HashMap<String, Integer> loadMap = loadMap("/Users/ansj/git/ansj_seg/library/userLibrary/userLibrary.dic", "utf-8", null, null);
-		System.out.println(loadMap.get("淘宝"));
-	}
 }
