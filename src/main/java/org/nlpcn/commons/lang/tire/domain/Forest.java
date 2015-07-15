@@ -86,7 +86,7 @@ public class Forest extends AbstractWood<String[], Branch> {
 
     @Override
     protected int getBranchIndex(char c, Integer maxSize) {
-        return this.getBranchIndexByAnsjArrays(c, maxSize);
+        throw new UnsupportedOperationException();
     }
 
     @Override

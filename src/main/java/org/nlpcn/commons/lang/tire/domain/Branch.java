@@ -29,7 +29,7 @@ public class Branch extends AbstractWood<String[], Branch> {
 
     @Override
     protected int getBranchIndex(char c, Integer maxSize) {
-        return this.getBranchIndexByAnsjArrays(c, maxSize);
+        return this.getBranchIndexByAnsjArrays(c);
     }
 
     @Override

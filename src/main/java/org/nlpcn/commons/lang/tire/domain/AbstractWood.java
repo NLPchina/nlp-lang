@@ -57,11 +57,9 @@ public abstract class AbstractWood<P, B extends AbstractWood<P, B>> implements W
 
     abstract protected int getBranchIndex(final char c, final Integer maxSize);
 
-    protected int getBranchIndexByAnsjArrays(final char c, final Integer maxSize) {
+    protected int getBranchIndexByAnsjArrays(final char c) {
         if (this.branches == null) {
             return -1;
-        } else if (maxSize != null && this.branches.length == maxSize) {
-            return c;
         } else {
             return AnsjArrays.binarySearch(this.branches, c);
         }

@@ -54,10 +54,12 @@ public class SmartForest<P> extends AbstractWood<P, SmartForest<P>> {
         return getBranch(keyWord.toCharArray());
     }
 
+    @SuppressWarnings("unchecked")
     public void addBranch(final String keyWord, final P param) {
         this.addBranchOfSameType((Class<SmartForest<P>>) this.getClass(), keyWord, param, MAX_SIZE, false);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public SmartForest<P> addBranch(final SmartForest<P> b) {
         if (branches == null) {
