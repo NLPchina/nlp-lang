@@ -13,13 +13,13 @@ public class DATTest {
         dat.saveText("/tmp/pinyin.dat");
         long start = System.currentTimeMillis();
         DoubleArrayTire load = DoubleArrayTire.loadText("/tmp/pinyin.dat");
-        System.out.println(load.getItem("龙麝").toString());
+        System.out.println(load.getItem("龙麝"));
         System.out.println("load obj use time " + (System.currentTimeMillis() - start));
 
         dat.save("/tmp/pinyin.obj");
         start = System.currentTimeMillis();
         load = DoubleArrayTire.load("/tmp/pinyin.obj");
-        System.out.println(load.getItem("龙麝").toString());
+        System.out.println(load.getItem("龙麝"));
         System.out.println("load obj use time " + (System.currentTimeMillis() - start));
     }
 }
