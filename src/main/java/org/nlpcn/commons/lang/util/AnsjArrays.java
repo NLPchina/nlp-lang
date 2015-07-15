@@ -12,11 +12,11 @@ public class AnsjArrays {
 	/**
 	 * 二分法查找.摘抄了jdk的东西..只不过把他的自动装箱功能给去掉了
 	 *
-	 * @param branches
-	 * @param c
-	 * @return
+	 * @param branches branches
+	 * @param c        char
+	 * @return idx
 	 */
-	public static int binarySearch(WoodInterface[] branches, char c) {
+	public static <T extends WoodInterface> int binarySearch(T[] branches, char c) {
 		int high = branches.length - 1;
 		if (branches.length < 1) {
 			return high;

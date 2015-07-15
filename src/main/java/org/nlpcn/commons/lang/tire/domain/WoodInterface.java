@@ -1,23 +1,24 @@
 package org.nlpcn.commons.lang.tire.domain;
 
-public abstract interface WoodInterface {
-	public abstract WoodInterface add(WoodInterface paramWoodInterface);
+public interface WoodInterface<P, B> {
 
-	public abstract WoodInterface get(char paramChar);
+    B addBranch(B branch);
 
-	public abstract boolean contains(char paramChar);
+    B getBranch(char ch);
 
-	public abstract int compareTo(char paramChar);
+    byte getStatus();
 
-	public abstract boolean equals(char paramChar);
+    void setStatus(int status);
 
-	public abstract byte getStatus();
+    char getC();
 
-	public abstract void setStatus(int paramInt);
+    boolean contains(char paramChar);
 
-	public abstract char getC();
+    int compareTo(char paramChar);
 
-	public abstract String[] getParams();
+    boolean equals(char paramChar);
 
-	public abstract void setParam(String[] paramArrayOfString);
+    P getParam();
+
+    void setParam(P param);
 }

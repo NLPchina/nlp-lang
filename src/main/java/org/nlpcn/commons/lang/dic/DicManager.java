@@ -14,7 +14,7 @@ import java.util.HashMap;
  */
 public class DicManager {
 
-	private static final HashMap<String, Forest> forestMap = new HashMap<String, Forest>();
+	private static final HashMap<String, Forest> forestMap = new HashMap<>();
 
 	/**
 	 * 违禁词辞典
@@ -24,14 +24,12 @@ public class DicManager {
 	private static Forest j2fForest = null;
 
 	private static SmartForest<String[]> pinyinForest = null;
-	
-	
 
 	private static SmartForest<String[]> initPinyin() {
 		BufferedReader reader = null;
 		try {
 			reader = IOUtil.getReader(DicManager.class.getResourceAsStream("/pinyin.dic"), IOUtil.UTF8);
-			SmartForest<String[]> forest = new SmartForest<String[]>();
+			SmartForest<String[]> forest = new SmartForest<>();
 			String temp = null;
 			String[] strs = null;
 			while ((temp = reader.readLine()) != null) {
@@ -39,7 +37,7 @@ public class DicManager {
 				if (strs.length != 2) {
 					throw new RuntimeException("error arg by init pinyin \t" + strs.length);
 				}
-				forest.add(strs[0], strs[1].split(" "));
+				forest.addBranch(strs[0], strs[1].split(" "));
 			}
 			return forest;
 		} catch (UnsupportedEncodingException e) {
@@ -115,7 +113,7 @@ public class DicManager {
 	 * 构建一个tire书辞典
 	 * 
 	 * @param dicName
-	 * @param filePath
+	 * @param dicName
 	 * @return
 	 * @throws Exception
 	 */
@@ -187,5 +185,4 @@ public class DicManager {
 		}
 		return pinyinForest ;
 	}
-
 }

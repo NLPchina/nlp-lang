@@ -6,10 +6,9 @@
 	<artifactId>nlp-lang</artifactId>
 	<packaging>jar</packaging>
 	<name>nlp-lang</name>
-	<version>0.3</version>
-	<description>basic TEXT NLP process util  ! </description>
+	<version>0.3.1</version>
+	<description>basic TEXT NLP process util !</description>
 	<url>https://github.com/ansjsun/ansj_seg</url>
-
 
 	<licenses>
 		<license>
@@ -19,59 +18,49 @@
 		</license>
 	</licenses>
 
-	<scm>
+	<!--scm>
 		<connection>scm:git:git@github.com:NLPchina/nlp-lang.git</connection>
 		<developerConnection>scm:git:git@github.com:NLPchina/nlp-lang.git</developerConnection>
 		<url>http://www.nlpcn.org</url>
 	</scm>
-
-
-
-	<developers>
-		<developer>
-			<id>ansj</id>
-			<name>ansj</name>
-			<email>ansj-sun@163.com</email>
-		</developer>
-	</developers>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-
-
 	<distributionManagement>
 		<repository>
 			<id>mvn-repo</id>
 			<url>scpexe://ansj/home/mvn-repo/ROOT</url>
 		</repository>
 	</distributionManagement>
-
 	<repositories>
 		<repository>
 			<id>mvn-repo</id>
 			<url>http://maven.ansj.org/</url>
 		</repository>
 	</repositories>
+	<developers>
+		<developer>
+			<id>ansj</id>
+			<name>ansj</name>
+			<email>ansj-sun@163.com</email>
+		</developer>
+	</developers-->
 
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+	<scm>
+		<connection>scm:git:git@home1-public.github.com:home1-public/nlp-lang.git</connection>
+		<developerConnection>scm:git:git@home1-public.github.com:home1-public/nlp-lang.git</developerConnection>
+		<url>http://www.nlpcn.org</url>
+	</scm>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
 	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>3.3</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.8</source>
+					<target>1.8</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
@@ -88,13 +77,27 @@
 			</plugin>
 		</plugins>
 
-
 		<extensions>
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-ssh-external</artifactId>
-				<version>1.0-beta-6</version>
+				<version>2.9</version>
 			</extension>
 		</extensions>
 	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.4</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>
