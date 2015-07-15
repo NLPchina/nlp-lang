@@ -8,18 +8,18 @@ public class DATTest {
 	@Test
 	public void testMakeSaveAndLoad() throws Exception {
 		DATMaker dat = new DATMaker();
-		dat.maker(mainResources("pinyin.dic"));
+		dat.maker(testResources("test_pinyin.dic"));
 
-        dat.saveText("/tmp/pinyin.dat");
+        dat.saveText("/tmp/test_pinyin.dat");
         long start = System.currentTimeMillis();
-        DoubleArrayTire load = DoubleArrayTire.loadText("/tmp/pinyin.dat");
-        System.out.println(load.getItem("龙麝").toString());
+        DoubleArrayTire load = DoubleArrayTire.loadText("/tmp/test_pinyin.dat");
+        System.out.println("" + load.getItem("龙麝"));
         System.out.println("load obj use time " + (System.currentTimeMillis() - start));
 
-        dat.save("/tmp/pinyin.obj");
+        dat.save("/tmp/test_pinyin.obj");
         start = System.currentTimeMillis();
-        load = DoubleArrayTire.load("/tmp/pinyin.obj");
-        System.out.println(load.getItem("龙麝").toString());
+        load = DoubleArrayTire.load("/tmp/test_pinyin.obj");
+        System.out.println("" + load.getItem("龙麝"));
         System.out.println("load obj use time " + (System.currentTimeMillis() - start));
 	}
 }

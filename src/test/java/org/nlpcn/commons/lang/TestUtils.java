@@ -10,4 +10,10 @@ public class TestUtils {
                 + "/src/main/resources"
                 + (file.startsWith("/") ? file : "/" + file);
     }
+
+    public static String testResources(final String file) {
+        return System.getProperties().getProperty("user.dir")
+                + "/src/test/resources"
+                + (file.startsWith("/") ? file : "/" + file);
+    }
 }
