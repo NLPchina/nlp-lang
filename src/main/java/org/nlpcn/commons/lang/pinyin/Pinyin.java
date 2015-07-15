@@ -42,8 +42,8 @@ public class Pinyin {
 
         int beginOffe = 0;
         int wordOffe = 0;
-        String word = null;
-        String[] strs = null;
+        String word;
+        String[] strs;
         List<PinyinWord> result = new ArrayList<>();
 
         while ((word = sgw.getFrontWords()) != null) {
