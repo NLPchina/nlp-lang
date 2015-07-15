@@ -46,15 +46,69 @@
 	<scm>
 		<connection>scm:git:git@home1-public.github.com:home1-public/nlp-lang.git</connection>
 		<developerConnection>scm:git:git@home1-public.github.com:home1-public/nlp-lang.git</developerConnection>
-		<url>http://www.nlpcn.org</url>
+		<url>git@home1-public.github.com:home1-public/nlp-lang.git</url>
+		<!--url>https://github.com/home1-public/nlp-lang</url-->
 	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<github.global.server>home1-public</github.global.server>
 	</properties>
+
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<url>file://${user.home}/ws/home1-public/mvn-repo/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<url>file://${user.home}/ws/home1-public/mvn-repo/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<repositories>
+		<repository>
+			<id>home1-public-mvn-repo</id>
+			<url>https://raw.githubusercontent.com/home1-public/mvn-repo/mvn-repo/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.12</version>
+				<configuration>
+					<message>Maven artifacts for ${project.version}</message>
+					<noJekyll>true</noJekyll>
+					<outputDirectory>${user.home}/ws/home1-public/mvn-repo</outputDirectory>
+					<branch>refs/heads/mvn-repo</branch>
+					<includes>
+						<include>releases/**/*</include>
+						<include>snapshots/**/*</include>
+					</includes>
+					<excludes>
+						<exclued>**/.DS_Store</exclued>
+						<exclued>**/.git</exclued>
+					</excludes>
+					<repositoryName>mvn-repo</repositoryName>
+					<repositoryOwner>home1-public</repositoryOwner>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.3</version>
@@ -78,11 +132,16 @@
 		</plugins>
 
 		<extensions>
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-ssh-external</artifactId>
-				<version>2.9</version>
-			</extension>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-webdav-jackrabbit</artifactId>
+                <version>2.9</version>
+            </extension>
+            <!--extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh-external</artifactId>
+                <version>2.9</version>
+            </extension-->
 		</extensions>
 	</build>
 
