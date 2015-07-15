@@ -94,7 +94,7 @@ public abstract class AbstractWood<P, B extends AbstractWood<P, B>> implements W
 
     protected B onAddBranchThatExists(final B b, final int idx, final boolean append) {
         this.branch = this.branches[idx];
-        switch (branch.getStatus()) {
+        switch (b.getStatus()) {
             case -1:
                 this.branch.setStatus(1);
                 break;
