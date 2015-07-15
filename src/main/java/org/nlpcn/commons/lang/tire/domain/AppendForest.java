@@ -16,6 +16,11 @@ public class AppendForest<P> extends AbstractWood<List<P>, AppendForest<P>> {
     public AppendForest() {
     }
 
+    // for search
+    private AppendForest(final char c) {
+        this.c = c;
+    }
+
     public AppendForest(char c, int status, List<P> param) {
         this.c = c;
         this.status = (byte) status;
@@ -66,6 +71,16 @@ public class AppendForest<P> extends AbstractWood<List<P>, AppendForest<P>> {
     @Override
     public AppendForest<P> addBranch(final AppendForest<P> branch) {
         return this.addBranch((Class<AppendForest<P>>) this.getClass(), branch, false);
+    }
+
+    @Override
+    protected int getBranchIndex(char c, Integer maxSize) {
+        return this.getBranchIndexByJdkArrays(c, maxSize);
+    }
+
+    @Override
+    protected AppendForest<P> forSearch(char c) {
+        return new AppendForest<>(c);
     }
 
     @Override

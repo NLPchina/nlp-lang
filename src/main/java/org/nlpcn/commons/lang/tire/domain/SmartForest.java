@@ -16,6 +16,11 @@ public class SmartForest<P> extends AbstractWood<P, SmartForest<P>> {
     public SmartForest() {
     }
 
+    // for search
+    private SmartForest(final char c) {
+        this.c = c;
+    }
+
     // 首位直接数组定位
     @SuppressWarnings("unchecked")
     public SmartForest(final double rate) {
@@ -54,30 +59,31 @@ public class SmartForest<P> extends AbstractWood<P, SmartForest<P>> {
     }
 
     @Override
-    public SmartForest<P> addBranch(final SmartForest<P> branch) {
+    public SmartForest<P> addBranch(final SmartForest<P> b) {
         if (branches == null) {
             branches = new SmartForest[0];
         }
-        int idx = getBranchIndex(branch.getC(), MAX_SIZE);
+        int idx = getBranchIndex(b.getC(), MAX_SIZE);
         if (idx >= 0) {
             if (this.branches[idx] == null) {
-                this.branches[idx] = branch;
+                this.branches[idx] = b;
             }
-            return this.onAddBranchThatExists(idx, false);
+            return this.onAddBranchThatExists(b, idx, false);
         } else {
-            return this.onAddBranchThatNotExists(idx);
+            return this.onAddBranchThatNotExists((Class<SmartForest<P>>) b.getClass(), b, idx);
         }
     }
 
     @SuppressWarnings("unchecked")
-    protected SmartForest<P> onAddBranchThatNotExists(final int idx) {
+    @Override
+    protected SmartForest<P> onAddBranchThatNotExists(final Class<SmartForest<P>> branchType, final SmartForest<P> b, final int idx) {
         // 如果数组内元素接近于最大值直接数组定位，rate是内存和速度的一个平衡
         if (this.branches != null && this.branches.length >= MAX_SIZE * rate) {
             SmartForest<P>[] tempBranches = new SmartForest[MAX_SIZE];
-            for (final SmartForest<P> b : this.branches) {
-                tempBranches[b.getC()] = b;
+            for (final SmartForest<P> element : this.branches) {
+                tempBranches[element.getC()] = element;
             }
-            tempBranches[this.branch.getC()] = this.branch;
+            tempBranches[b.getC()] = b;
             this.branches = null;
             this.branches = tempBranches;
         } else {
@@ -85,10 +91,20 @@ public class SmartForest<P> extends AbstractWood<P, SmartForest<P>> {
             int insert = -(idx + 1);
             System.arraycopy(this.branches, 0, newBranches, 0, insert);
             System.arraycopy(this.branches, insert, newBranches, insert + 1, this.branches.length - insert);
-            newBranches[insert] = this.branch;
+            newBranches[insert] = b;
             this.branches = newBranches;
         }
-        return this.branch;
+        return b;
+    }
+
+    @Override
+    protected int getBranchIndex(final char c, final Integer maxSize) {
+        return this.getBranchIndexByJdkArrays(c, maxSize);
+    }
+
+    @Override
+    protected SmartForest<P> forSearch(final char c) {
+        return new SmartForest<>(c);
     }
 
     @Override

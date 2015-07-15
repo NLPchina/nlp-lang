@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.nlpcn.commons.lang.util.AnsjArrays;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public abstract class AbstractWood<P, B extends AbstractWood<P, B>> implements WoodInterface<P, B> {
 
@@ -54,7 +55,9 @@ public abstract class AbstractWood<P, B extends AbstractWood<P, B>> implements W
         return b;
     }
 
-    protected int getBranchIndex(final char c, final Integer maxSize) {
+    abstract protected int getBranchIndex(final char c, final Integer maxSize);
+
+    protected int getBranchIndexByAnsjArrays(final char c, final Integer maxSize) {
         if (this.branches == null) {
             return -1;
         } else if (maxSize != null && this.branches.length == maxSize) {
@@ -64,24 +67,36 @@ public abstract class AbstractWood<P, B extends AbstractWood<P, B>> implements W
         }
     }
 
-    /**
-     * 增加子页节点
-     */
-    protected B addBranch(final Class<B> branchType, final B branch, final boolean append) {
+    protected int getBranchIndexByJdkArrays(final char c, final Integer maxSize) {
         if (this.branches == null) {
-            this.branches = newArray(branchType, 0);
-        }
-        int idx = getBranchIndex(branch.getC(), null);
-        if (idx >= 0) {
-            return this.onAddBranchThatExists(idx, append);
+            return -1;
+        } else if (maxSize != null && this.branches.length == maxSize) {
+            return c;
         } else {
-            return this.onAddBranchThatNotExists(branchType, idx);
+            return Arrays.binarySearch(this.branches, forSearch(c));
         }
     }
 
-    protected B onAddBranchThatExists(final int idx, final boolean append) {
+    abstract protected B forSearch(final char c);
+
+    /**
+     * 增加子页节点
+     */
+    protected B addBranch(final Class<B> branchType, final B b, final boolean append) {
+        if (this.branches == null) {
+            this.branches = newArray(branchType, 0);
+        }
+        int idx = getBranchIndex(b.getC(), null);
+        if (idx >= 0) {
+            return this.onAddBranchThatExists(b, idx, append);
+        } else {
+            return this.onAddBranchThatNotExists(branchType, b, idx);
+        }
+    }
+
+    protected B onAddBranchThatExists(final B b, final int idx, final boolean append) {
         this.branch = this.branches[idx];
-        switch (this.branch.getStatus()) {
+        switch (branch.getStatus()) {
             case -1:
                 this.branch.setStatus(1);
                 break;
@@ -94,21 +109,21 @@ public abstract class AbstractWood<P, B extends AbstractWood<P, B>> implements W
                 if (this.branch.getStatus() != 3) {
                     this.branch.setStatus(2);
                 }
-                this.onNatureIdentified(this.branch.getParam(), append);
+                this.onNatureIdentified(b.getParam(), append);
         }
         return this.branch;
     }
 
     abstract protected void onNatureIdentified(final P param, final boolean append);
 
-    protected B onAddBranchThatNotExists(final Class<B> branchType, final int idx) {
-        B[] newBranches = newArray(branchType, this.branches.length + 1);
-        int insert = -(idx + 1);
+    protected B onAddBranchThatNotExists(final Class<B> branchType, final B b, final int idx) {
+        final B[] newBranches = newArray(branchType, this.branches.length + 1);
+        final int insert = -(idx + 1);
         System.arraycopy(this.branches, 0, newBranches, 0, insert);
         System.arraycopy(this.branches, insert, newBranches, insert + 1, this.branches.length - insert);
-        newBranches[insert] = this.branch;
+        newBranches[insert] = b;
         this.branches = newBranches;
-        return branch;
+        return b;
     }
 
     /**

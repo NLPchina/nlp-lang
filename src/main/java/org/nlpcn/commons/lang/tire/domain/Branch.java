@@ -28,6 +28,16 @@ public class Branch extends AbstractWood<String[], Branch> {
     }
 
     @Override
+    protected int getBranchIndex(char c, Integer maxSize) {
+        return this.getBranchIndexByAnsjArrays(c, maxSize);
+    }
+
+    @Override
+    protected Branch forSearch(char c) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void onNatureIdentified(final String[] param, final boolean append) {
         this.branch.setParam(param);
     }

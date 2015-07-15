@@ -1,6 +1,6 @@
 package org.nlpcn.commons.lang.tire.domain;
 
-public interface WoodInterface<P, B> {
+public interface WoodInterface<P, B> extends Comparable<B> {
 
     B addBranch(B branch);
 
