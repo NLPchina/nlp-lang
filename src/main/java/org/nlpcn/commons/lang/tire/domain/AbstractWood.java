@@ -35,7 +35,7 @@ public abstract class AbstractWood<P, B extends AbstractWood<P, B>> implements W
             return null;
         }
         final int idx = this.getBranchIndex(c, maxSize);
-        return idx > 0 ? this.branches[idx] : null;
+        return idx >= 0 ? this.branches[idx] : null;
     }
 
     /**
