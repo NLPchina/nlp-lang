@@ -24,7 +24,7 @@ public class Branch extends AbstractWood<String[], Branch> {
 
     @Override
     public Branch addBranch(final Branch branch) {
-        return this.addBranch(Branch.class, branch, false);
+        return this.addBranch(Branch.class, branch, null, false);
     }
 
     @Override

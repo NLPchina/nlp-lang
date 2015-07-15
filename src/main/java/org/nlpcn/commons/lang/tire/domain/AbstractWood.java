@@ -80,11 +80,11 @@ public abstract class AbstractWood<P, B extends AbstractWood<P, B>> implements W
     /**
      * 增加子页节点
      */
-    protected B addBranch(final Class<B> branchType, final B b, final boolean append) {
+    protected B addBranch(final Class<B> branchType, final B b, final Integer maxSize, final boolean append) {
         if (this.branches == null) {
             this.branches = newArray(branchType, 0);
         }
-        int idx = getBranchIndex(b.getC(), null);
+        int idx = getBranchIndex(b.getC(), maxSize);
         if (idx >= 0) {
             return this.onAddBranchThatExists(b, idx, append);
         } else {
@@ -132,9 +132,9 @@ public abstract class AbstractWood<P, B extends AbstractWood<P, B>> implements W
         B b = (B) this;
         for (int i = 0; i < keyWord.length(); i++) {
             if (keyWord.length() != i + 1) {
-                b.addBranch(branchType, this.newBranch(keyWord.charAt(i), 1, null), append);
+                b.addBranch(branchType, this.newBranch(keyWord.charAt(i), 1, null), maxSize, append);
             } else {
-                b.addBranch(branchType, this.newBranch(keyWord.charAt(i), 3, param), append);
+                b.addBranch(branchType, this.newBranch(keyWord.charAt(i), 3, param), maxSize, append);
             }
             b = b.branches[b.getBranchIndex(keyWord.charAt(i), maxSize)];
         }

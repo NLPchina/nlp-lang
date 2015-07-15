@@ -69,8 +69,8 @@ public class AppendForest<P> extends AbstractWood<List<P>, AppendForest<P>> {
     }
 
     @Override
-    public AppendForest<P> addBranch(final AppendForest<P> branch) {
-        return this.addBranch((Class<AppendForest<P>>) this.getClass(), branch, false);
+    public AppendForest<P> addBranch(final AppendForest<P> b) {
+        return this.addBranch((Class<AppendForest<P>>) this.getClass(), b, null, false);
     }
 
     @Override

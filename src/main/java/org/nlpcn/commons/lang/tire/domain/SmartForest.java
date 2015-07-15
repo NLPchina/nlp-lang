@@ -62,18 +62,15 @@ public class SmartForest<P> extends AbstractWood<P, SmartForest<P>> {
     @SuppressWarnings("unchecked")
     @Override
     public SmartForest<P> addBranch(final SmartForest<P> b) {
-        if (branches == null) {
-            branches = new SmartForest[0];
+        return this.addBranch((Class<SmartForest<P>>) this.getClass(), b, MAX_SIZE, false);
+    }
+
+    @Override
+    protected SmartForest<P> onAddBranchThatExists(final SmartForest<P> b, final int idx, final boolean append) {
+        if (this.branches[idx] == null) {
+            this.branches[idx] = b;
         }
-        int idx = getBranchIndex(b.getC(), MAX_SIZE);
-        if (idx >= 0) {
-            if (this.branches[idx] == null) {
-                this.branches[idx] = b;
-            }
-            return this.onAddBranchThatExists(b, idx, false);
-        } else {
-            return this.onAddBranchThatNotExists((Class<SmartForest<P>>) b.getClass(), b, idx);
-        }
+        return super.onAddBranchThatExists(b, idx, append);
     }
 
     @SuppressWarnings("unchecked")
