@@ -6,7 +6,7 @@
 	<artifactId>nlp-lang</artifactId>
 	<packaging>jar</packaging>
 	<name>nlp-lang</name>
-	<version>0.3</version>
+	<version>1.0</version>
 	<description>basic TEXT NLP process util  ! </description>
 	<url>https://github.com/ansjsun/ansj_seg</url>
 
@@ -55,6 +55,13 @@
 	</repositories>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>18.0</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

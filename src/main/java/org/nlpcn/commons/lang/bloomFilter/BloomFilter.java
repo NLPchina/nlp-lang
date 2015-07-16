@@ -1,11 +1,11 @@
 package org.nlpcn.commons.lang.bloomFilter;
 
-import org.nlpcn.commons.lang.bloomFilter.filter.*;
+import org.nlpcn.commons.lang.bloomFilter.filter.JSFilter;
+import org.nlpcn.commons.lang.bloomFilter.filter.JavaFilter;
+import org.nlpcn.commons.lang.bloomFilter.filter.PHPFilter;
+import org.nlpcn.commons.lang.bloomFilter.filter.PJWFilter;
+import org.nlpcn.commons.lang.bloomFilter.filter.SDBMFilter;
 import org.nlpcn.commons.lang.bloomFilter.iface.Filter;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 
 /**
  * BlommFilter 实现 1.构建hash算法 2.散列hash映射到数组的bit位置 3.验证
