@@ -42,6 +42,10 @@ public class SmartForest<P> extends AbstractWood<P, SmartForest<P>> {
         return new SmartGetWord<>(this, chars);
     }
 
+    public SmartGetWord<P> getWord(final String content) {
+        return getWord(content.toCharArray());
+    }
+
     public SmartForest<P> getBranch(final char[] chars) {
         return this.getBranchOfSameType(chars, MAX_SIZE);
     }

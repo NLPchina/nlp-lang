@@ -1,105 +1,99 @@
 package org.nlpcn.commons.lang.pinyin;
 
-import org.nlpcn.commons.lang.dic.DicManager;
-import org.nlpcn.commons.lang.tire.SmartGetWord;
-import org.nlpcn.commons.lang.tire.domain.SmartForest;
-import org.nlpcn.commons.lang.util.StringUtil;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import com.google.common.base.Joiner;
 
 public class Pinyin {
-
-    private static final SmartForest<String[]> PINYIN_FOREST = DicManager.getPinyinForest();
 
     /**
      * 拼音返回
      *
-     * @param str str
-     * @return ['zhong3','guo4']
+     * @param str
+     * @return [chang, jiang, cheng, zhang]
      */
-    public static List<String> pinyinStr(final String str) {
-        return str2Pinyin(str).stream()
-                .map(PinyinWord::toString)
-                .collect(Collectors.toList());
+
+    public static List<String> pinyin(String str) {
+        return PinyinUtil.INSTANCE.convert(str, PinyinFormat.TONELESS_PINYIN_FORMAT);
     }
 
     /**
-     * 拼音解析
+     * 取得每个字的首字符
      *
-     * @param str str
-     * @return pinyinWords
+     * @param str
+     * @return [c, j, c, z]
      */
-    public static List<PinyinWord> str2Pinyin(String str) {
-
-        if (StringUtil.isBlank(str)) {
-            return Collections.emptyList();
-        }
-
-        SmartGetWord<String[]> sgw = new SmartGetWord<>(PINYIN_FOREST, str);
-
-        int beginOffe = 0;
-        int wordOffe = 0;
-        String word;
-        String[] strs;
-        List<PinyinWord> result = new ArrayList<>();
-
-        while ((word = sgw.getFrontWords()) != null) {
-            wordOffe = sgw.offe;
-            if (beginOffe < wordOffe) {
-                for (int i = beginOffe; i < wordOffe; i++) {
-                    result.add(new PinyinWord(str.charAt(i)));
-                }
-            }
-            strs = sgw.getParam();
-            for (String pStr : strs) {
-                result.add(new PinyinWord(pStr));
-            }
-
-            beginOffe = wordOffe + word.length();
-        }
-
-        if (beginOffe < str.length()) {
-            for (int i = beginOffe; i < str.length(); i++) {
-                result.add(new PinyinWord(str.charAt(i)));
-            }
-        }
-
-        return result;
-
+    public static List<String> firstChar(String str) {
+        return PinyinUtil.INSTANCE.convert(str, PinyinFormat.ABBR_PINYIN_FORMAT);
     }
 
     /**
-     * @return 每个字的拼音,不要声调
+     * 取得每个字的帶音標
+     *
+     * @param str
+     * @return [cháng, jiāng, chéng, zhăng]
      */
-    public static List<String> pinyinWithoutTone(final String str) {
-        return str2Pinyin(str).stream()
-                .map(pw -> pw.py)
-                .collect(Collectors.toList());
+    public static List<String> unicodePinyin(String str) {
+        return PinyinUtil.INSTANCE.convert(str, PinyinFormat.UNICODE_PINYIN_FORMAT);
     }
 
     /**
-     * @param str str
-     * @return 取得每个字的首字符
+     * 要音標的拼音
+     *
+     * @param str
+     * @return [chang2, jiang1, cheng2, zhang3]
      */
-    public static char[] str2FirstCharArr(String str) {
-        List<PinyinWord> str2Pinyin = str2Pinyin(str);
-        char[] chars = new char[str2Pinyin.size()];
-        for (int i = 0; i < chars.length; i++) {
-            chars[i] = str2Pinyin.get(i).py.charAt(0);
-        }
-        return chars;
+    public static List<String> tonePinyin(String str) {
+        return PinyinUtil.INSTANCE.convert(str, PinyinFormat.DEFAULT_PINYIN_FORMAT);
+    }
+
+    /**
+     * list 转换为字符串
+     * @param list
+     * @param spearator
+     * @return
+     */
+    public static String list2String(List<String> list, String spearator) {
+        return Joiner.on(spearator).useForNull("NULL").join(list);
+    }
+
+    /**
+     * list 转换为字符串 默认空格
+     * @param list
+     * @return
+     */
+    public static String list2String(List<String> list) {
+        return list2String(list, " ");
     }
 
     /**
      * 动态增加到拼音词典中
      *
-     * @param word    大长今
-     * @param pinyins ['da4', 'chang2' ,'jing1']
+     * @param word
+     *            大长今
+     * @param pinyins
+     *            ['da4', 'chang2' ,'jing1']
      */
     public static void insertPinyin(String word, String[] pinyins) {
-        PINYIN_FOREST.addBranch(word, pinyins);
+        PinyinUtil.INSTANCE.insertPinyin(word, pinyins);
+    }
+
+    /**
+     * list 转换为字符串 默认空格,忽略null
+     * @param list
+     * @return
+     */
+    public static String list2StringSkipNull(List<String> list) {
+        return list2StringSkipNull(list, " ");
+    }
+
+    /**
+     * list 转换为字符串
+     * @param list
+     * @param spearator
+     * @return
+     */
+    public static String list2StringSkipNull(List<String> list, String spearator) {
+        return Joiner.on(spearator).skipNulls().join(list);
     }
 }

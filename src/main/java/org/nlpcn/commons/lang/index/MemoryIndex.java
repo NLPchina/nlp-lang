@@ -10,7 +10,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.nlpcn.commons.lang.pinyin.Pinyin;
-import org.nlpcn.commons.lang.pinyin.PinyinWord;
 import org.nlpcn.commons.lang.util.StringUtil;
 
 public class MemoryIndex<T> {
@@ -190,12 +189,7 @@ public class MemoryIndex<T> {
 	 * @return
 	 */
 	public String str2QP(final String str) {
-		List<PinyinWord> list = Pinyin.str2Pinyin(str);
-		StringBuilder sb = new StringBuilder();
-		for (PinyinWord pinyinWord : list) {
-			sb.append(pinyinWord.py);
-		}
-		return sb.toString();
+		return Pinyin.list2String(Pinyin.pinyin(str),"");
 	}
 
 	public List<T> suggest(String key) {
@@ -252,7 +246,7 @@ public class MemoryIndex<T> {
 
 		if (result.size() < size) {
 			// 尝试首字母拼音
-			List<T> suggest = suggest(new String(Pinyin.str2FirstCharArr(key)));
+			List<T> suggest = suggest(Pinyin.list2String(Pinyin.firstChar(key),""));
 			for (T t : suggest) {
 				if (sets.contains(t)) {
 					continue;

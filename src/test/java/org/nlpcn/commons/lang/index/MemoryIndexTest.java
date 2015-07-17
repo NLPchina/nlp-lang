@@ -29,7 +29,7 @@ public class MemoryIndexTest {
 		
 		//生成各需要建立索引的字段
 		String quanpin = mi.str2QP(temp) ; //zhongguo
-		String jianpinpin = new String(Pinyin.str2FirstCharArr(temp)) ; //zg
+        String jianpinpin = Pinyin.list2String(Pinyin.firstChar(temp), ""); //zg
 		
 		//增加到索引中
 		mi.addItem(temp, temp ,quanpin,jianpinpin);
@@ -43,5 +43,4 @@ public class MemoryIndexTest {
 		System.out.println("init ok use time " + (System.currentTimeMillis() - start));
 
 	}
-
 }

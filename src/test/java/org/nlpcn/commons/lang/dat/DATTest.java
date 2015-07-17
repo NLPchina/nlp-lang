@@ -8,7 +8,7 @@ public class DATTest {
 	@Test
 	public void testMakeSaveAndLoad() throws Exception {
 		DATMaker dat = new DATMaker();
-		dat.maker(mainResources("pinyin.dic"));
+		dat.maker(mainResources("pinyin.txt"));
 
         dat.saveText("/tmp/test_pinyin.dat");
         long start = System.currentTimeMillis();
