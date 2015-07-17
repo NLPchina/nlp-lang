@@ -17,11 +17,11 @@ public abstract class Item implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	protected int index;
 	protected String name;
+    protected byte status;
 	protected int base = 65536;
+	protected int index;
 	protected int check;
-	protected byte status;
 
 	/**
 	 * 从词典中加载如果又特殊需求可重写此构造方法

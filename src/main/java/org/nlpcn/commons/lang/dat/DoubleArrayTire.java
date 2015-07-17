@@ -21,56 +21,6 @@ public class DoubleArrayTire {
     private DoubleArrayTire() {
     }
 
-    @SneakyThrows
-    public static DoubleArrayTire load(final String filePath) {
-        try (final ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filePath)))) {
-            final DoubleArrayTire obj = new DoubleArrayTire();
-            obj.dat = new Item[ois.readInt()];
-            obj.arrayLength = ois.readInt();
-            for (int i = 0; i < obj.arrayLength; i++) {
-                final Item item = (Item) ois.readObject();
-                obj.dat[item.index] = item;
-            }
-            return obj;
-        }
-    }
-
-    /**
-     * 从文本中加载模型
-     */
-    public static DoubleArrayTire loadText(String filePath, Class<? extends Item> cla) {
-        return loadText(IOUtil.getInputStream(filePath), cla);
-    }
-
-    /**
-     * 从文本中加载模型
-     */
-    @SneakyThrows
-    public static DoubleArrayTire loadText(InputStream is, Class<? extends Item> cla) {
-        final DoubleArrayTire obj = new DoubleArrayTire();
-        final FileIterator it = IOUtil.instanceFileIterator(is, IOUtil.UTF8);
-        if(it == null) {
-            throw new FileNotFoundException();
-        }
-        String temp = it.next();
-        obj.arrayLength = Integer.parseInt(temp);
-        obj.dat = new Item[obj.arrayLength];
-        while (it.hasNext()) {
-            temp = it.next();
-            final Item item = cla.newInstance();
-            item.initValue(temp.split("\t"));
-            obj.dat[item.index] = item;
-        }
-        return obj;
-    }
-
-    /**
-     * 从文本中加载模型
-     */
-    public static DoubleArrayTire loadText(String filePath) {
-        return loadText(filePath, BasicItem.class);
-    }
-
     /**
      * 获得dat数组
      */
@@ -121,5 +71,56 @@ public class DoubleArrayTire {
     @SuppressWarnings("unchecked")
     public <T extends Item> T getItem(int id) {
         return (T) dat[id];
+    }
+
+
+    @SneakyThrows
+    public static DoubleArrayTire load(final String filePath) {
+        try (final ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filePath)))) {
+            final DoubleArrayTire instance = new DoubleArrayTire();
+            instance.dat = new Item[ois.readInt()];
+            instance.arrayLength = ois.readInt();
+            for (int i = 0; i < instance.arrayLength; i++) {
+                final Item item = (Item) ois.readObject();
+                instance.dat[item.index] = item;
+            }
+            return instance;
+        }
+    }
+
+    /**
+     * 从文本中加载模型
+     */
+    public static DoubleArrayTire loadText(String filePath, Class<? extends Item> cla) {
+        return loadText(IOUtil.getInputStream(filePath), cla);
+    }
+
+    /**
+     * 从文本中加载模型
+     */
+    @SneakyThrows
+    public static DoubleArrayTire loadText(InputStream is, Class<? extends Item> cla) {
+        final DoubleArrayTire obj = new DoubleArrayTire();
+        final FileIterator it = IOUtil.instanceFileIterator(is, IOUtil.UTF8);
+        if (it == null) {
+            throw new FileNotFoundException();
+        }
+        String temp = it.next();
+        obj.arrayLength = Integer.parseInt(temp);
+        obj.dat = new Item[obj.arrayLength];
+        while (it.hasNext()) {
+            temp = it.next();
+            final Item item = cla.newInstance();
+            item.initValue(temp.split("\t"));
+            obj.dat[item.index] = item;
+        }
+        return obj;
+    }
+
+    /**
+     * 从文本中加载模型
+     */
+    public static DoubleArrayTire loadText(String filePath) {
+        return loadText(filePath, BasicItem.class);
     }
 }
