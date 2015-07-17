@@ -19,7 +19,7 @@ public class FileFinder {
 	public static List<File> fileDir = new ArrayList<File>();
 
 	static{
-		fileDir.add(new File("")) ;
+		fileDir.add(new File("").getAbsoluteFile()) ;
 	}
 
 
@@ -66,7 +66,6 @@ public class FileFinder {
 		if (!file.exists() || !file.canRead()) {
 			return null;
 		}
-
 		if (file.getAbsolutePath().endsWith(lastPath)) {
 			return file;
 		}
@@ -75,7 +74,7 @@ public class FileFinder {
 			File[] listFiles = file.listFiles();
 			if (listFiles != null && listFiles.length > 0) {
 				for (File file2 : listFiles) {
-					File temp = findByFile(file2, lastPath);
+					File temp = findByFile(file2, lastPath);			
 					if (temp != null) {
 						return temp;
 					}
