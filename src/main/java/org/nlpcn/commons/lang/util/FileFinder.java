@@ -66,9 +66,6 @@ public class FileFinder {
 		if (!file.exists() || !file.canRead()) {
 			return null;
 		}
-if(file.getAbsolutePath().contains("library.properties")){
-    System.out.println(file.getAbsolutePath());
-}
 		if (file.getAbsolutePath().endsWith(lastPath)) {
 			return file;
 		}
