@@ -5,7 +5,7 @@ import org.nlpcn.commons.lang.tire.domain.WoodInterface;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
-
+@SuppressWarnings("all")
 public class AnsjArrays {
 	private static final int INSERTIONSORT_THRESHOLD = 7;
 
@@ -16,6 +16,7 @@ public class AnsjArrays {
 	 * @param c        char
 	 * @return idx
 	 */
+	
 	public static <T extends WoodInterface> int binarySearch(T[] branches, char c) {
 		int high = branches.length - 1;
 		if (branches.length < 1) {
