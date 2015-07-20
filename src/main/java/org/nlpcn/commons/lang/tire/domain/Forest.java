@@ -12,8 +12,6 @@ public class Forest extends AbstractWood<String[], Branch> {
         return 0;
     }
 
-    public void setNature(final int nature) {
-    }
 
     /**
      * 得到一个分词对象
