@@ -1,6 +1,5 @@
 package org.nlpcn.commons.lang.dat;
 
-import lombok.SneakyThrows;
 import org.nlpcn.commons.lang.util.FileIterator;
 import org.nlpcn.commons.lang.util.IOUtil;
 import org.nlpcn.commons.lang.util.StringUtil;
@@ -74,8 +73,7 @@ public class DoubleArrayTire {
     }
 
 
-    @SneakyThrows
-    public static DoubleArrayTire load(final String filePath) {
+    public static DoubleArrayTire load(final String filePath) throws FileNotFoundException, IOException, ClassNotFoundException {
         try (final ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filePath)))) {
             final DoubleArrayTire instance = new DoubleArrayTire();
             instance.dat = new Item[ois.readInt()];
@@ -90,16 +88,21 @@ public class DoubleArrayTire {
 
     /**
      * 从文本中加载模型
+     * @throws IllegalAccessException 
+     * @throws InstantiationException 
+     * @throws FileNotFoundException 
      */
-    public static DoubleArrayTire loadText(String filePath, Class<? extends Item> cla) {
+    public static DoubleArrayTire loadText(String filePath, Class<? extends Item> cla) throws FileNotFoundException, InstantiationException, IllegalAccessException {
         return loadText(IOUtil.getInputStream(filePath), cla);
     }
 
     /**
      * 从文本中加载模型
+     * @throws FileNotFoundException 
+     * @throws IllegalAccessException 
+     * @throws InstantiationException 
      */
-    @SneakyThrows
-    public static DoubleArrayTire loadText(InputStream is, Class<? extends Item> cla) {
+    public static DoubleArrayTire loadText(InputStream is, Class<? extends Item> cla) throws FileNotFoundException, InstantiationException, IllegalAccessException {
         final DoubleArrayTire obj = new DoubleArrayTire();
         final FileIterator it = IOUtil.instanceFileIterator(is, IOUtil.UTF8);
         if (it == null) {
@@ -119,8 +122,11 @@ public class DoubleArrayTire {
 
     /**
      * 从文本中加载模型
+     * @throws IllegalAccessException 
+     * @throws InstantiationException 
+     * @throws FileNotFoundException 
      */
-    public static DoubleArrayTire loadText(String filePath) {
+    public static DoubleArrayTire loadText(String filePath) throws FileNotFoundException, InstantiationException, IllegalAccessException {
         return loadText(filePath, BasicItem.class);
     }
 }

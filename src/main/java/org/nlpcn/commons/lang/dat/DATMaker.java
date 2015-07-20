@@ -14,7 +14,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
-import lombok.SneakyThrows;
 import org.nlpcn.commons.lang.tire.domain.SmartForest;
 import org.nlpcn.commons.lang.util.FileIterator;
 import org.nlpcn.commons.lang.util.IOUtil;
@@ -42,9 +41,11 @@ public class DATMaker {
 
     /**
      * 构建用户自定义的dat
+     * @throws FileNotFoundException 
+     * @throws IllegalAccessException 
+     * @throws InstantiationException 
      */
-    @SneakyThrows
-    public void maker(final String dicPath, final Class<? extends Item> cla) {
+    public void maker(final String dicPath, final Class<? extends Item> cla) throws FileNotFoundException, InstantiationException, IllegalAccessException {
         long start = System.currentTimeMillis();
         LOG.info("make basic tire begin !");
 
@@ -185,8 +186,9 @@ public class DATMaker {
 
     /**
      * 将tire树 广度遍历为List
+     * @throws InstantiationException 
      */
-    private List<Item> tree2List(final Class<? extends Item> cla, final SmartForest<Item> forest) {
+    private List<Item> tree2List(final Class<? extends Item> cla, final SmartForest<Item> forest) throws InstantiationException, IllegalAccessException {
         final List<Item> all = new ArrayList<>();
         treeToLibrary(cla, all, forest, "");
         return all;
@@ -194,9 +196,10 @@ public class DATMaker {
 
     /**
      * 广度遍历
+     * @throws IllegalAccessException 
+     * @throws InstantiationException 
      */
-    @SneakyThrows
-    private void treeToLibrary(final Class<? extends Item> cla, final List<Item> all, final SmartForest<Item> sf, final String preStr) {
+    private void treeToLibrary(final Class<? extends Item> cla, final List<Item> all, final SmartForest<Item> sf, final String preStr) throws InstantiationException, IllegalAccessException {
         final SmartForest<Item>[] branches = sf.getBranches();
         if (branches == null) {
             return;
@@ -276,9 +279,9 @@ public class DATMaker {
 
     /**
      * 保存到可阅读的文本.需要重写这个类
+     * @throws IOException 
      */
-    @SneakyThrows
-    public void saveText(final String path) {
+    public void saveText(final String path) throws IOException {
         try (final Writer writer = new FileWriter(new File(path))) {
             writer.write(String.valueOf(datArrLen()));
             writer.write('\n');

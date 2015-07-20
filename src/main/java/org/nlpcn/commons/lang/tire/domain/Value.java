@@ -1,17 +1,12 @@
 package org.nlpcn.commons.lang.tire.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Arrays;
 
-@Setter
-@Getter
 public class Value {
 
     private static final String TAB = "\t";
 
-    private String keyword;
+    private String   keyword;
     private String[] paramers;
 
     public Value(final String keyword, final String... paramers) {
@@ -32,6 +27,15 @@ public class Value {
         } else {
             this.paramers = new String[0];
         }
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+
+    public String[] getParamers() {
+        return paramers;
     }
 
     @Override

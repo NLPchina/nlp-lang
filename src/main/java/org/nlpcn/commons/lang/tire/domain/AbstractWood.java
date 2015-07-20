@@ -1,6 +1,5 @@
 package org.nlpcn.commons.lang.tire.domain;
 
-import lombok.Getter;
 import org.nlpcn.commons.lang.util.AnsjArrays;
 
 import java.lang.reflect.Array;
@@ -10,7 +9,6 @@ public abstract class AbstractWood<P, B extends AbstractWood<P, B>> implements W
 
     protected static final Integer MAX_SIZE = 65536;
 
-    @Getter
     protected B[] branches = null;
     // 单独查找出来的对象
     protected B branch = null;
