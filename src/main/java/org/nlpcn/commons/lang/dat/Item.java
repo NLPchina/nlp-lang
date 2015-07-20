@@ -1,5 +1,8 @@
 package org.nlpcn.commons.lang.dat;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 /**
@@ -8,41 +11,39 @@ import java.io.Serializable;
  * @author ansj
  * 
  */
+@Setter
+@Getter
 public abstract class Item implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
-	public int index;
-	public String name;
-	public int base = 65536;
-	public int check;
-	public byte status;
+
+	protected String name;
+    protected byte status;
+	protected int base = 65536;
+	protected int index;
+	protected int check;
 
 	/**
 	 * 从词典中加载如果又特殊需求可重写此构造方法
 	 * 
-	 * @param split
-	 * @return
+	 * @param split split
 	 */
 	public abstract void init(String[] split);
 
 	/**
 	 * 从生成的词典中加载。应该和toText方法对应
 	 * 
-	 * @param split
-	 * @return
+	 * @param split split
 	 */
-
 	public abstract void initValue(String[] split);
 
 	/**
-	 * 以文本格式序列化的显示
-	 * 
-	 * @return
+	 * @return 以文本格式序列化的显示
 	 */
 	public abstract String toText();
 
 	@Override
 	public String toString() {
-		return toText();
+		return this.toText();
 	}
 }

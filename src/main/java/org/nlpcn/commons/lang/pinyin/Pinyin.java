@@ -8,7 +8,7 @@ public class Pinyin {
 
     /**
      * 拼音返回
-     * 
+     *
      * @param str
      * @return [chang, jiang, cheng, zhang]
      */
@@ -19,7 +19,7 @@ public class Pinyin {
 
     /**
      * 取得每个字的首字符
-     * 
+     *
      * @param str
      * @return [c, j, c, z]
      */
@@ -29,7 +29,7 @@ public class Pinyin {
 
     /**
      * 取得每个字的帶音標
-     * 
+     *
      * @param str
      * @return [cháng, jiāng, chéng, zhăng]
      */
@@ -39,7 +39,7 @@ public class Pinyin {
 
     /**
      * 要音標的拼音
-     * 
+     *
      * @param str
      * @return [chang2, jiang1, cheng2, zhang3]
      */
@@ -68,7 +68,7 @@ public class Pinyin {
 
     /**
      * 动态增加到拼音词典中
-     * 
+     *
      * @param word
      *            大长今
      * @param pinyins
@@ -96,5 +96,4 @@ public class Pinyin {
     public static String list2StringSkipNull(List<String> list, String spearator) {
         return Joiner.on(spearator).skipNulls().join(list);
     }
-
 }

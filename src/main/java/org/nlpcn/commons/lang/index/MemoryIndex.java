@@ -14,27 +14,14 @@ import org.nlpcn.commons.lang.util.StringUtil;
 
 public class MemoryIndex<T> {
 
-	private Map<String, TreeSet<Entry>> index = new HashMap<String, TreeSet<Entry>>();
+	private Map<String, TreeSet<Entry>> index = new HashMap<>();
 
-	private int size = 10;
+	private int size;
 
-	private Model model = Model.ALL;
+	private Model model;
 
-	public static enum Model {
+	public enum Model {
 		ALL, PREX
-	};
-
-	/**
-	 * 倒排hash配置
-	 * 
-	 * @param size
-	 *            返回的条数
-	 * @param model
-	 *            前缀 或者全索引
-	 */
-	public MemoryIndex(int size, Model model) {
-		this.size = size;
-		this.model = model;
 	}
 
 	/**
@@ -45,8 +32,14 @@ public class MemoryIndex<T> {
 	 * @param model
 	 *            前缀 或者全索引
 	 */
-	public MemoryIndex() {
+	public MemoryIndex(final int size, final Model model) {
+		this.size = size;
+		this.model = model;
+	}
 
+	public MemoryIndex() {
+		this.size = 10;
+		this.model = Model.ALL;
 	}
 
 	/**
@@ -75,7 +68,7 @@ public class MemoryIndex<T> {
 			break;
 		}
 
-		TreeSet<Entry> treeSet = null;
+		TreeSet<Entry> treeSet;
 		for (String key : result) {
 			if (StringUtil.isBlank(key)) {
 				continue;
@@ -83,7 +76,7 @@ public class MemoryIndex<T> {
 			treeSet = index.get(key);
 
 			if (treeSet == null) {
-				treeSet = new TreeSet<Entry>();
+				treeSet = new TreeSet<>();
 				index.put(key, treeSet);
 			}
 			treeSet.add(new Entry(value, score(value, score)));
@@ -98,8 +91,8 @@ public class MemoryIndex<T> {
 		addItem(value, null, fields);
 	}
 
-	private Set<String> getAllSplit(String[] fields) {
-		HashSet<String> hs = new HashSet<String>();
+	private Set<String> getAllSplit(final String[] fields) {
+		HashSet<String> hs = new HashSet<>();
 		for (String string : fields) {
 			if (StringUtil.isBlank(string)) {
 				continue;
@@ -114,8 +107,8 @@ public class MemoryIndex<T> {
 		return hs;
 	}
 
-	private Set<String> getPrexSplit(String[] fields) {
-		HashSet<String> hs = new HashSet<String>();
+	private Set<String> getPrexSplit(final String[] fields) {
+		HashSet<String> hs = new HashSet<>();
 		for (String string : fields) {
 			if (StringUtil.isBlank(string)) {
 				continue;
@@ -131,7 +124,7 @@ public class MemoryIndex<T> {
 		return hs;
 	}
 
-	public double score(T value, Double score) {
+	public double score(final T value, final Double score) {
 		if (score != null) {
 			return score;
 		}
@@ -146,13 +139,13 @@ public class MemoryIndex<T> {
 		private double score;
 		private T t;
 
-		public Entry(T t, Double score) {
+		public Entry(final T t, final Double score) {
 			this.t = t;
 			this.score = score;
 		}
 
 		@Override
-		public int compareTo(Entry o) {
+		public int compareTo(final Entry o) {
 			if (this.t.equals(o.t)) {
 				return 0;
 			}
@@ -195,7 +188,7 @@ public class MemoryIndex<T> {
 	 * @param str
 	 * @return
 	 */
-	public String str2QP(String str) {
+	public String str2QP(final String str) {
 		return Pinyin.list2String(Pinyin.pinyin(str),"");
 	}
 
@@ -225,7 +218,6 @@ public class MemoryIndex<T> {
 	 * @return
 	 */
 	public List<T> smartSuggest(String key) {
-
 		if (StringUtil.isBlank(key)) {
 			return Collections.emptyList();
 		}
@@ -272,5 +264,4 @@ public class MemoryIndex<T> {
 
 		return result.subList(0, size);
 	}
-
 }

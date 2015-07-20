@@ -1,7 +1,6 @@
 package org.nlpcn.commons.lang.tire.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -11,246 +10,108 @@ import java.util.List;
  *
  * @author ansj
  */
-public class AppendForest<T> implements Comparable<AppendForest<T>>, WoodInterface {
+public class AppendForest<P> extends AbstractWood<List<P>, AppendForest<P>> {
 
-	/**
-	 * status 此字的状态1，继续 2，是个词语但是还可以继续 ,3确定 nature 词语性质
-	 */
-	public AppendForest<T>[] branches = null;
-	// 单独查找出来的对象
-	AppendForest<T> branch = null;
-	private char c;
-	// 状态
-	private byte status = 1;
-	// 词典后的参数
-	private List<T> param = null;
+    // root
+    public AppendForest() {
+    }
 
-	// root
-	public AppendForest() {
-	}
+    // for search
+    private AppendForest(final char c) {
+        this.c = c;
+    }
 
-	// temp branch
-	private AppendForest(char c) {
-		this.c = c;
-	}
+    public AppendForest(char c, int status, List<P> param) {
+        this.c = c;
+        this.status = (byte) status;
+        this.param = new ArrayList<>();
+        this.param.addAll(param);
+    }
 
-	public AppendForest(char c, int status, T t) {
-		this.c = c;
-		this.status = (byte) status;
-		this.param = new ArrayList<T>();
-		this.param.add(t);
-	}
+    public boolean contains(char c) {
+        return this.containsBinarySearch(c);
+    }
 
-	public static void main(String[] args) {
-		AppendForest<Integer> sf = new AppendForest<Integer>();
-		sf.append("java", 1);
-		sf.append("java", 2);
-		sf.append("java", 3);
-		sf.append("php", 2);
-		sf.append("python", 3);
-		sf.append("ruby", 4);
-		sf.append(".net", 5);
+    public void addParam(P p) {
+        this.param.add(p);
+    }
 
-		AppendForest<Integer> branch2 = sf.getBranch("java");
-		System.out.println(branch2.getParam());
+    /**
+     * 根据一个词获得所取的参数,没有就返回null
+     *
+     * @param keyWord
+     */
+    public AppendForest<P> getBranch(final String keyWord) {
+        return this.getBranchOfSameType(keyWord.toCharArray(), null);
+    }
 
-		sf.add("java", 1);
-		branch2 = sf.getBranch("java");
-		System.out.println(branch2.getParam());
+    @Override
+    public AppendForest<P> getBranch(final char c) {
+        return this.getBranch(c, null);
+    }
 
-	}
+    /**
+     * 增加新词
+     */
+    public void append(final String keyWord, final P param) {
+        final List<P> params = new ArrayList<>();
+        params.add(param);
+        this.addBranchOfSameType((Class<AppendForest<P>>) this.getClass(), keyWord, params, null, true);
+    }
 
-	/**
-	 * 增加子页节点
-	 *
-	 * @param branch2
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	private AppendForest<T> addOrAppend(WoodInterface branch2, boolean append) {
-		AppendForest<T> branch = (AppendForest<T>) branch2;
-		if (branches == null) {
-			branches = new AppendForest[0];
-		}
-		int bs = search(branch.getC());
-		if (bs > -1) {
-			this.branch = this.branches[bs];
-			switch (branch.getStatus()) {
-				case -1:
-					this.branch.setStatus(1);
-					break;
-				case 1:
-					if (this.branch.getStatus() == 3) {
-						this.branch.setStatus(2);
-					}
-					break;
-				case 3:
-					if (this.branch.getStatus() != 3) {
-						this.branch.setStatus(2);
-					}
-					if (append) {
-						this.branch.param.addAll(branch.getParam());
-					} else {
-						this.branch.param = branch.getParam();
-					}
-			}
-			return this.branch;
-		}
+    /**
+     * 增加新词
+     */
+    public void addBranch(final String keyWord, final P param) {
+        final List<P> params = new ArrayList<>();
+        params.add(param);
+        this.addBranchOfSameType((Class<AppendForest<P>>) this.getClass(), keyWord, params, null, false);
+    }
 
-		if (bs < 0) {
-			AppendForest<T>[] newBranches = new AppendForest[branches.length + 1];
-			int insert = -(bs + 1);
-			System.arraycopy(this.branches, 0, newBranches, 0, insert);
-			System.arraycopy(branches, insert, newBranches, insert + 1, branches.length - insert);
-			newBranches[insert] = branch;
-			this.branches = newBranches;
-		}
-		return branch;
-	}
+    @Override
+    public AppendForest<P> addBranch(final AppendForest<P> b) {
+        return this.addBranch((Class<AppendForest<P>>) this.getClass(), b, null, false);
+    }
 
-	public int search(char c) {
-		if (branches == null)
-			return -1;
-		int i = Arrays.binarySearch(this.branches, new AppendForest<T>(c));
-		return i;
-	}
+    @Override
+    protected int getBranchIndex(char c, Integer maxSize) {
+        return this.getBranchIndexByJdkArrays(c, maxSize);
+    }
 
-	/**
-	 * 二分查找是否包含
-	 *
-	 * @param c
-	 * @return
-	 */
-	public boolean contains(char c) {
-		if (this.branches == null) {
-			return false;
-		}
-		return Arrays.binarySearch(this.branches, c) > -1;
-	}
+    @Override
+    protected AppendForest<P> forSearch(char c) {
+        return new AppendForest<>(c);
+    }
 
-	public int compareTo(char c) {
-		if (this.c > c)
-			return 1;
-		if (this.c < c) {
-			return -1;
-		}
-		return 0;
-	}
+    @Override
+    protected void onNatureIdentified(final List<P> param, final boolean append) {
+        if (append) {
+            this.branch.getParam().addAll(param);
+        } else {
+            this.branch.setParam(param);
+        }
+    }
 
-	public boolean equals(char c) {
-		return this.c == c;
-	}
+    @Override
+    protected AppendForest<P> newBranch(final char c, final int status, final List<P> param) {
+        return new AppendForest<>(c, status, param);
+    }
 
-	@Override
-	public int hashCode() {
-		return this.c;
-	}
+    public static void main(final String[] args) {
+        final AppendForest<Integer> sf = new AppendForest<>();
+        sf.append("java", 1);
+        sf.append("java", 2);
+        sf.append("java", 3);
+        sf.append("php", 2);
+        sf.append("python", 3);
+        sf.append("ruby", 4);
+        sf.append(".net", 5);
 
-	public byte getStatus() {
-		return this.status;
-	}
+        AppendForest<Integer> branch2 = sf.getBranch("java");
+        System.out.println(branch2.getParam());
 
-	public void setStatus(int status) {
-		this.status = (byte) status;
-	}
-
-	public char getC() {
-		return this.c;
-	}
-
-	public List<T> getParam() {
-		return this.param;
-	}
-
-	@Override
-	public void setParam(String[] paramArrayOfString) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void setParam(T t) {
-		this.param.add(t);
-	}
-
-	/**
-	 * 增加新词
-	 *
-	 * @param value
-	 */
-	public void add(String keyWord, T t) {
-		AppendForest<T> tempBranch = this;
-		for (int i = 0; i < keyWord.length(); i++) {
-			if (keyWord.length() == i + 1) {
-				tempBranch.addOrAppend(new AppendForest<T>(keyWord.charAt(i), 3, t), false);
-			} else {
-				tempBranch.addOrAppend(new AppendForest<T>(keyWord.charAt(i), 1, null), false);
-			}
-			tempBranch = tempBranch.branches[tempBranch.search(keyWord.charAt(i))];
-		}
-	}
-
-	/**
-	 * 增加新词
-	 *
-	 * @param value
-	 */
-	public void append(String keyWord, T t) {
-		AppendForest<T> tempBranch = this;
-		for (int i = 0; i < keyWord.length(); i++) {
-			if (keyWord.length() == i + 1) {
-				tempBranch.addOrAppend(new AppendForest<T>(keyWord.charAt(i), 3, t), true);
-			} else {
-				tempBranch.addOrAppend(new AppendForest<T>(keyWord.charAt(i), 1, null), true);
-			}
-			tempBranch = tempBranch.branches[tempBranch.search(keyWord.charAt(i))];
-		}
-	}
-
-	public int compareTo(AppendForest<T> o) {
-		// TODO Auto-generated method stub
-		if (this.c > o.c)
-			return 1;
-		if (this.c < o.c) {
-			return -1;
-		}
-		return 0;
-	}
-
-	/**
-	 * 根据一个词获得所取的参数,没有就返回null
-	 *
-	 * @param keyWord
-	 */
-	public AppendForest<T> getBranch(String keyWord) {
-		AppendForest<T> tempBranch = this;
-		int index = 0;
-		for (int j = 0; j < keyWord.length(); j++) {
-			index = tempBranch.search(keyWord.charAt(j));
-			if (index < 0) {
-				return null;
-			}
-			tempBranch = tempBranch.branches[index];
-		}
-		return tempBranch;
-	}
-
-	@Override
-	public WoodInterface add(WoodInterface branch) {
-		// TODO Auto-generated method stub
-		return this.addOrAppend(branch, false);
-	}
-
-	@Override
-	public String[] getParams() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public WoodInterface get(char paramChar) {
-		// TODO Auto-generated method stub
-		return this.branches[this.search(paramChar)];
-	}
-
-
+        sf.addBranch("java", 1);
+        branch2 = sf.getBranch("java");
+        System.out.println(branch2.getParam());
+    }
 }

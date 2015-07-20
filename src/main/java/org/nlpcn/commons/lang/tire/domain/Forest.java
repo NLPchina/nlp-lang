@@ -1,108 +1,106 @@
 package org.nlpcn.commons.lang.tire.domain;
 
-
 import org.nlpcn.commons.lang.tire.GetWord;
 
-public class Forest implements WoodInterface {
-	private WoodInterface[] chars = new WoodInterface[65536];
+public class Forest extends AbstractWood<String[], Branch> {
 
+    public Forest() {
+        this.branches = new Branch[MAX_SIZE];
+    }
 
-	public WoodInterface add(WoodInterface branch) {
-		WoodInterface temp = this.chars[branch.getC()];
-		if (temp == null)
-			this.chars[branch.getC()] = branch;
-		else {
-			switch (branch.getStatus()) {
-				case 1:
-					if (temp.getStatus() == 3) {
-						temp.setStatus(2);
-					}
-					break;
-				case 3:
-					if (temp.getStatus() == 1) {
-						temp.setStatus(2);
-					}
-					temp.setParam(branch.getParams());
-			}
-		}
+    public int getNature() {
+        return 0;
+    }
 
-		return this.chars[branch.getC()];
-	}
+    public void setNature(final int nature) {
+    }
 
-	public boolean contains(char c) {
-		return this.chars[c] != null;
-	}
+    /**
+     * 得到一个分词对象
+     */
+    public GetWord getWord(final String content) {
+        return new GetWord(this, content);
+    }
 
-	public WoodInterface get(char c) {
-		if (c > 66535) {
-			System.out.println(c);
-			return null;
-		}
-		return this.chars[c];
-	}
+    /**
+     * 得到一个分词对象
+     */
+    public GetWord getWord(char[] chars) {
+        return new GetWord(this, chars);
+    }
 
+    /**
+     * 清空树释放内存
+     */
+    public void clear() {
+        this.branches = new Branch[MAX_SIZE];
+    }
 
-	public int compareTo(char c) {
-		return 0;
-	}
+    @Override
+    public boolean contains(final char c) {
+        return this.branches[c] != null;
+    }
 
-	public boolean equals(char c) {
-		return false;
-	}
+    @Override
+    public int compareTo(final char c) {
+        return 0;
+    }
 
-	public char getC() {
-		return '\000';
-	}
+    @Override
+    public boolean equals(final char c) {
+        return false;
+    }
 
-	public int getNature() {
-		return 0;
-	}
+    @Override
+    public void setParam(final String[] param) {
+    }
 
-	public void setNature(int nature) {
-	}
+    @Override
+    public Branch getBranch(final char c) {
+        return c < MAX_SIZE ? this.branches[c] : null;
+    }
 
-	public byte getStatus() {
-		return 0;
-	}
+    @Override
+    public Branch addBranch(final Branch branch) {
+        WoodInterface<String[], Branch> temp = this.branches[branch.getC()];
+        if (temp == null)
+            this.branches[branch.getC()] = branch;
+        else {
+            switch (branch.getStatus()) {
+                case 1:
+                    if (temp.getStatus() == 3) {
+                        temp.setStatus(2);
+                    }
+                    break;
+                case 3:
+                    if (temp.getStatus() == 1) {
+                        temp.setStatus(2);
+                    }
+                    temp.setParam(branch.getParam());
+                    break;
+            }
+        }
 
-	public void setStatus(int status) {
-	}
+        return this.branches[branch.getC()];
+    }
 
-	public int getSize() {
-		return this.chars.length;
-	}
+    @Override
+    protected int getBranchIndex(char c, Integer maxSize) {
+        throw new UnsupportedOperationException();
+    }
 
-	public String[] getParams() {
-		return null;
-	}
+    @Override
+    protected Branch forSearch(char c) {
+        throw new UnsupportedOperationException();
+    }
 
-	public void setParam(String[] param) {
-	}
+    @Override
+    protected void onNatureIdentified(final String[] param, final boolean append) {
+        throw new UnsupportedOperationException();
+    }
 
-	/**
-	 * 得到一个分词对象
-	 *
-	 * @param content
-	 * @return
-	 */
-	public GetWord getWord(String content) {
-		return new GetWord(this, content);
-	}
-
-	/**
-	 * 得到一个分词对象
-	 *
-	 * @param content
-	 * @return
-	 */
-	public GetWord getWord(char[] chars) {
-		return new GetWord(this, chars);
-	}
-
-	/**
-	 * 清空树释放内存
-	 */
-	public void clear() {
-		chars = new WoodInterface[65535];
-	}
+    @Override
+    protected Branch newBranch(final char c, final int status, final String[] param) {
+        throw new UnsupportedOperationException();
+    }
 }

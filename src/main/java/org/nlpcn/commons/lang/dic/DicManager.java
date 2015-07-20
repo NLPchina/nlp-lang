@@ -14,9 +14,8 @@ import java.util.HashMap;
  */
 public class DicManager {
 
-	private static final HashMap<String, Forest> forestMap = new HashMap<String, Forest>();
+	private static final HashMap<String, Forest> forestMap = new HashMap<>();
 
-	
 	private static Forest initRev(String dicName, InputStream is) {
 		BufferedReader reader = null;
 		try {
@@ -74,7 +73,7 @@ public class DicManager {
 	 * 构建一个tire书辞典
 	 * 
 	 * @param dicName
-	 * @param filePath
+	 * @param dicName
 	 * @return
 	 * @throws Exception
 	 */
@@ -111,6 +110,4 @@ public class DicManager {
 	public static Forest getForest(String dicName) {
 		return forestMap.get(dicName);
 	}
-
-
 }

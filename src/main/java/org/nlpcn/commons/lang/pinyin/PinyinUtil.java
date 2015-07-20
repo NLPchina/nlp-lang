@@ -98,7 +98,7 @@ enum PinyinUtil {
                 }
                 maxLen = maxLen < pair[0].length() ? pair[0].length() : maxLen;
 
-                polyphoneDict.add(pair[0], pair[1].split(SPACE));
+                polyphoneDict.addBranch(pair[0], pair[1].split(SPACE));
 
             }
 
@@ -192,6 +192,6 @@ enum PinyinUtil {
      * @param pinyins
      */
     public void insertPinyin(String word, String[] pinyins){
-        polyphoneDict.add(word, pinyins);
+        polyphoneDict.addBranch(word, pinyins);
     }
 }

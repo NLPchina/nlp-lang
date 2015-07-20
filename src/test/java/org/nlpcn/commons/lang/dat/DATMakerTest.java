@@ -2,9 +2,11 @@ package org.nlpcn.commons.lang.dat;
 
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
+
 public class DATMakerTest {
 
-	@Test
+	@Test(expected = FileNotFoundException.class)
 	public void test() throws Exception {
 		//构建词典列表
 		//加载词典路径。一行一个词。后面参数用\t隔开。
@@ -25,8 +27,7 @@ public class DATMakerTest {
 		
 	}
 	
-	
-	@Test
+	@Test(expected = FileNotFoundException.class)
 	public void loadTest() throws Exception {
 		DoubleArrayTire load = DoubleArrayTire.load("生成模型的路径"); 
 		Item item = load.getItem("中国"); //相当于每一个词语都在数组中又个id。可以通过这个id快速的获取词典
@@ -36,5 +37,4 @@ public class DATMakerTest {
 //		item2.check
 //		item2.status
 	}
-
 }
