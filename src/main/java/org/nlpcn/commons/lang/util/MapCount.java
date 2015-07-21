@@ -1,8 +1,10 @@
 package org.nlpcn.commons.lang.util;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 
 /**
@@ -44,6 +46,7 @@ public class MapCount<T> implements Serializable {
 
 	/**
 	 * 兼容旧的api
+	 * 
 	 * @param t
 	 * @param n
 	 */
@@ -104,5 +107,38 @@ public class MapCount<T> implements Serializable {
 			sb.append("\n");
 		}
 		return sb.toString();
+	}
+
+	/**
+	 * 批量增加
+	 * 
+	 * @param hs
+	 */
+	public void addAll(Collection<T> collection) {
+		for (T t : collection) {
+			this.add(t);
+		}
+	}
+
+	/**
+	 * 批量增加
+	 * 
+	 * @param hs
+	 */
+	public void addAll(Collection<T> collection, double weight) {
+		for (T t : collection) {
+			this.add(t, weight);
+		}
+	}
+
+	/**
+	 * 批量增加
+	 * 
+	 * @param hs
+	 */
+	public void addAll(Map<T, Double> map) {
+		for (Entry<T, Double> e : map.entrySet()) {
+			this.add(e.getKey(), e.getValue());
+		}
 	}
 }
