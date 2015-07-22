@@ -61,6 +61,7 @@ public class IOUtil {
 
 	/**
 	 * 将输入流转化为字节流
+	 * 
 	 * @param inputStream
 	 * @param charEncoding
 	 * @return
@@ -72,6 +73,7 @@ public class IOUtil {
 
 	/**
 	 * 读取文件获得正文
+	 * 
 	 * @param path
 	 * @param charEncoding
 	 * @return
@@ -82,6 +84,7 @@ public class IOUtil {
 
 	/**
 	 * 从流中读取正文内容
+	 * 
 	 * @param is
 	 * @param charEncoding
 	 * @return
@@ -108,6 +111,7 @@ public class IOUtil {
 
 	/**
 	 * 从文件中读取正文内容
+	 * 
 	 * @param file
 	 * @param charEncoding
 	 * @return
@@ -139,7 +143,7 @@ public class IOUtil {
 				sb.append(temp);
 				sb.append("\n");
 			}
-		}finally {
+		} finally {
 			close(reader);
 		}
 		return sb.toString();
@@ -254,9 +258,15 @@ public class IOUtil {
 			iteartor = instanceFileIterator(path, charEncoding);
 			hm = new HashMap<K, V>();
 			String[] split = null;
+			int index = 0;
 			while (iteartor.hasNext()) {
+				index++;
 				String readLine = iteartor.next();
 				split = readLine.split("\t");
+				if (split.length < 2) {
+					System.err.println(path + " line:" + index + " has err :" + readLine + " err to load !");
+					continue;
+				}
 				hm.put((K) ReflectUtil.conversion(split[0], key), (V) ReflectUtil.conversion(split[1], value));
 			}
 		} finally {
