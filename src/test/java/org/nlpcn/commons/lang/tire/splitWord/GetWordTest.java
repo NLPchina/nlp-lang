@@ -36,7 +36,7 @@ public class GetWordTest {
 
 			String temp = null;
 			while ((temp = udg.getFrontWords()) != null) {
-				System.out.println(temp + "\t\t" + udg.getParam(0) + "\t\t" + udg.getParam(1));
+				System.out.println(temp + "\t\t" + udg.getParam()[0] + "\t\t" + udg.getParam()[1]);
 				System.out.println(udg.offe);
 			}
 		}

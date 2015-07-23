@@ -1,9 +1,9 @@
 package org.nlpcn.commons.lang.util;
 
-import org.nlpcn.commons.lang.tire.domain.WoodInterface;
-
 import java.lang.reflect.Array;
 import java.util.Arrays;
+
+import org.nlpcn.commons.lang.tire.domain.SmartForest;
 
 @SuppressWarnings("all")
 public class AnsjArrays {
@@ -12,12 +12,14 @@ public class AnsjArrays {
 	/**
 	 * 二分法查找.摘抄了jdk的东西..只不过把他的自动装箱功能给去掉了
 	 *
-	 * @param branches branches
-	 * @param c        char
+	 * @param branches
+	 *            branches
+	 * @param c
+	 *            char
 	 * @return idx
 	 */
-	
-	public static <T extends WoodInterface> int binarySearch(T[] branches, char c) {
+
+	public static <T extends SmartForest<T>> int binarySearch(T[] branches, char c) {
 		int high = branches.length - 1;
 		if (branches.length < 1) {
 			return high;
@@ -39,7 +41,7 @@ public class AnsjArrays {
 
 	public static void main(String[] args) {
 
-		int[] chars = {1, 2, 3, 4, 5, 6, 8, 7};
+		int[] chars = { 1, 2, 3, 4, 5, 6, 8, 7 };
 		chars = Arrays.copyOf(chars, 100);
 		System.out.println(chars.length);
 		for (int i = 0; i < chars.length; i++) {
@@ -47,14 +49,14 @@ public class AnsjArrays {
 		}
 	}
 
-	public static void sort(WoodInterface[] a) {
-		WoodInterface[] aux = a.clone();
+	public static void sort(SmartForest[] a) {
+		SmartForest[] aux = a.clone();
 		mergeSort(aux, a, 0, a.length, 0);
 	}
 
-	public static void sort(WoodInterface[] a, int fromIndex, int toIndex) {
+	public static void sort(SmartForest[] a, int fromIndex, int toIndex) {
 		rangeCheck(a.length, fromIndex, toIndex);
-		WoodInterface[] aux = copyOfRange(a, fromIndex, toIndex);
+		SmartForest[] aux = copyOfRange(a, fromIndex, toIndex);
 		mergeSort(aux, a, fromIndex, toIndex, -fromIndex);
 	}
 
@@ -67,7 +69,7 @@ public class AnsjArrays {
 			throw new ArrayIndexOutOfBoundsException(toIndex);
 	}
 
-	private static void mergeSort(WoodInterface[] src, WoodInterface[] dest, int low, int high, int off) {
+	private static void mergeSort(SmartForest[] src, SmartForest[] dest, int low, int high, int off) {
 		int length = high - low;
 
 		// Insertion sort on smallest arrays
@@ -106,8 +108,8 @@ public class AnsjArrays {
 	/**
 	 * Swaps x[a] with x[b].
 	 */
-	private static void swap(WoodInterface[] x, int a, int b) {
-		WoodInterface t = x[a];
+	private static void swap(SmartForest[] x, int a, int b) {
+		SmartForest t = x[a];
 		x[a] = x[b];
 		x[b] = t;
 	}

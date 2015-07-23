@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.nlpcn.commons.lang.tire.GetWord;
 import org.nlpcn.commons.lang.tire.SmartGetWord;
 import org.nlpcn.commons.lang.tire.domain.SmartForest;
 import org.nlpcn.commons.lang.util.StringUtil;
@@ -25,173 +26,176 @@ import org.nlpcn.commons.lang.util.StringUtil;
  * @author ansj
  */
 enum PinyinUtil {
-   
-    INSTANCE;
 
-    public static final String PINYIN_MAPPING_FILE = "/pinyin.txt";
-    public static final String POLYPHONE_MAPPING_FILE = "/polyphone.txt";
+	INSTANCE;
 
-    public static final String EMPTY = "";
-    public static final String SHARP = "#";
-    public static final String EQUAL = "=";
-    public static final String COMMA = ",";
-    public static final String SPACE = " ";
+	public static final String PINYIN_MAPPING_FILE = "/pinyin.txt";
+	public static final String POLYPHONE_MAPPING_FILE = "/polyphone.txt";
 
-    public static final char CJK_UNIFIED_IDEOGRAPHS_START = '\u4E00';
-    public static final char CJK_UNIFIED_IDEOGRAPHS_END = '\u9FA5';
+	public static final String EMPTY = "";
+	public static final String SHARP = "#";
+	public static final String EQUAL = "=";
+	public static final String COMMA = ",";
+	public static final String SPACE = " ";
 
-    private List<String> pinyinDict = null;
+	public static final char CJK_UNIFIED_IDEOGRAPHS_START = '\u4E00';
+	public static final char CJK_UNIFIED_IDEOGRAPHS_END = '\u9FA5';
 
-    private SmartForest<String[]> polyphoneDict = null;
+	private List<String> pinyinDict = null;
 
-    private int maxLen = 2;
+	private SmartForest<String[]> polyphoneDict = null;
 
-    PinyinUtil() {
-        loadPinyinMapping();
-        loadPolyphoneMapping();
-    }
+	private int maxLen = 2;
 
-    public void loadPinyinMapping() {
+	PinyinUtil() {
+		loadPinyinMapping();
+		loadPolyphoneMapping();
+	}
 
-        pinyinDict = new ArrayList<String>();
+	public void loadPinyinMapping() {
 
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(new BufferedInputStream(getClass().getResourceAsStream(PINYIN_MAPPING_FILE)), StandardCharsets.UTF_8));
-            String line = null;
-            while (null != (line = in.readLine())) {
-                if (line.length() == 0 || line.startsWith(SHARP)) {
-                    continue;
-                }
-                String[] pair = line.split(EQUAL);
+		pinyinDict = new ArrayList<String>();
 
-                if (pair.length < 2) {
-                    pinyinDict.add(EMPTY);
-                } else {
-                    pinyinDict.add(pair[1]);
-                }
-            }
+		try {
+			BufferedReader in = new BufferedReader(
+					new InputStreamReader(new BufferedInputStream(getClass().getResourceAsStream(PINYIN_MAPPING_FILE)), StandardCharsets.UTF_8));
+			String line = null;
+			while (null != (line = in.readLine())) {
+				if (line.length() == 0 || line.startsWith(SHARP)) {
+					continue;
+				}
+				String[] pair = line.split(EQUAL);
 
-            in.close();
+				if (pair.length < 2) {
+					pinyinDict.add(EMPTY);
+				} else {
+					pinyinDict.add(pair[1]);
+				}
+			}
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+			in.close();
 
-    public void loadPolyphoneMapping() {
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-        polyphoneDict = new SmartForest<String[]>();
+	public void loadPolyphoneMapping() {
 
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(new BufferedInputStream(getClass().getResourceAsStream(POLYPHONE_MAPPING_FILE)), StandardCharsets.UTF_8));
+		polyphoneDict = new SmartForest<String[]>();
 
-            String line = null;
-            while (null != (line = in.readLine())) {
-                // line = line.trim();
-                if (line.length() == 0 || line.startsWith(SHARP)) {
-                    continue;
-                }
-                String[] pair = line.split(EQUAL);
+		try {
+			BufferedReader in = new BufferedReader(
+					new InputStreamReader(new BufferedInputStream(getClass().getResourceAsStream(POLYPHONE_MAPPING_FILE)), StandardCharsets.UTF_8));
 
-                if (pair.length < 2) {
-                    continue;
-                }
-                maxLen = maxLen < pair[0].length() ? pair[0].length() : maxLen;
+			String line = null;
+			while (null != (line = in.readLine())) {
+				// line = line.trim();
+				if (line.length() == 0 || line.startsWith(SHARP)) {
+					continue;
+				}
+				String[] pair = line.split(EQUAL);
 
-                polyphoneDict.addBranch(pair[0], pair[1].split(SPACE));
+				if (pair.length < 2) {
+					continue;
+				}
+				maxLen = maxLen < pair[0].length() ? pair[0].length() : maxLen;
 
-            }
+				polyphoneDict.add(pair[0], pair[1].split(SPACE));
 
-            in.close();
+			}
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+			in.close();
 
-    public String[] toUnformattedPinyin(char ch) {
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-        if (ch >= CJK_UNIFIED_IDEOGRAPHS_START && ch <= CJK_UNIFIED_IDEOGRAPHS_END) {
-            String pinyinStr = pinyinDict.get(ch - CJK_UNIFIED_IDEOGRAPHS_START);
-            return pinyinStr.split(COMMA);
+	public String[] toUnformattedPinyin(char ch) {
 
-        } else {
-            return null;
-        }
-    }
+		if (ch >= CJK_UNIFIED_IDEOGRAPHS_START && ch <= CJK_UNIFIED_IDEOGRAPHS_END) {
+			String pinyinStr = pinyinDict.get(ch - CJK_UNIFIED_IDEOGRAPHS_START);
+			return pinyinStr.split(COMMA);
 
-    public String[] toFormattedPinyin(char ch, PinyinFormat format) {
-        String[] pinyinStrArray = toUnformattedPinyin(ch);
-        if (null != pinyinStrArray) {
-            for (int i = 0; i < pinyinStrArray.length; i++) {
-                pinyinStrArray[i] = PinyinFormatter.formatPinyin(pinyinStrArray[i], format);
-            }
-            return pinyinStrArray;
-        } else
-            return null;
-    }
+		} else {
+			return null;
+		}
+	}
 
-    public String toPinyin(char ch) {
-        String[] pinyinStrArray = toUnformattedPinyin(ch);
+	public String[] toFormattedPinyin(char ch, PinyinFormat format) {
+		String[] pinyinStrArray = toUnformattedPinyin(ch);
+		if (null != pinyinStrArray) {
+			for (int i = 0; i < pinyinStrArray.length; i++) {
+				pinyinStrArray[i] = PinyinFormatter.formatPinyin(pinyinStrArray[i], format);
+			}
+			return pinyinStrArray;
+		} else
+			return null;
+	}
 
-        if (null != pinyinStrArray && pinyinStrArray.length > 0) {
-            return pinyinStrArray[0];
-        }
-        return null;
-    }
+	public String toPinyin(char ch) {
+		String[] pinyinStrArray = toUnformattedPinyin(ch);
 
-    public String toPinyin(char ch, PinyinFormat format) {
+		if (null != pinyinStrArray && pinyinStrArray.length > 0) {
+			return pinyinStrArray[0];
+		}
+		return null;
+	}
 
-        String[] pinyinStrArray = null;
+	public String toPinyin(char ch, PinyinFormat format) {
 
-        pinyinStrArray = toFormattedPinyin(ch, format);
+		String[] pinyinStrArray = null;
 
-        if (null != pinyinStrArray && pinyinStrArray.length > 0) {
-            return pinyinStrArray[0];
-        }
-        return null;
-    }
+		pinyinStrArray = toFormattedPinyin(ch, format);
 
-    public List<String> convert(String str, PinyinFormat format) {
+		if (null != pinyinStrArray && pinyinStrArray.length > 0) {
+			return pinyinStrArray[0];
+		}
+		return null;
+	}
 
-        if (StringUtil.isBlank(str)) {
-            return Collections.emptyList();
-        }
+	public List<String> convert(String str, PinyinFormat format) {
 
-        SmartGetWord<String[]> word = polyphoneDict.getWord(str);
+		if (StringUtil.isBlank(str)) {
+			return Collections.emptyList();
+		}
 
-        List<String> lists = new LinkedList<String>();
+		SmartGetWord<String[]> word = polyphoneDict.getWord(str);
 
-        String temp = null;
-        int beginOffe = 0;
-        while ((temp = word.getFrontWords()) != null) {
+		List<String> lists = new LinkedList<String>();
 
-            for (int i = beginOffe; i < word.offe; i++) {
-                lists.add(toPinyin(str.charAt(i), format));
-            }
+		String temp = null;
+		int beginOffe = 0;
+		while ((temp = word.getFrontWords()) != null) {
 
-            for (String t : word.getParam()) {
-                lists.add(PinyinFormatter.formatPinyin(t, format));
+			for (int i = beginOffe; i < word.offe; i++) {
+				lists.add(toPinyin(str.charAt(i), format));
+			}
 
-            }
-            beginOffe = word.offe + temp.length();
-        }
+			for (String t : word.getParam()) {
+				lists.add(PinyinFormatter.formatPinyin(t, format));
 
-        if (beginOffe < str.length()) {
-            for (int i = beginOffe; i < str.length(); i++) {
-                lists.add(toPinyin(str.charAt(i), format));
-            }
-        }
-        return lists;
+			}
+			beginOffe = word.offe + temp.length();
+		}
 
-    }
-    
-    /**
-     * 动态增加拼音到词典
-     * @param word
-     * @param pinyins
-     */
-    public void insertPinyin(String word, String[] pinyins){
-        polyphoneDict.addBranch(word, pinyins);
-    }
+		if (beginOffe < str.length()) {
+			for (int i = beginOffe; i < str.length(); i++) {
+				lists.add(toPinyin(str.charAt(i), format));
+			}
+		}
+		return lists;
+
+	}
+
+	/**
+	 * 动态增加拼音到词典
+	 * 
+	 * @param word
+	 * @param pinyins
+	 */
+	public void insertPinyin(String word, String[] pinyins) {
+		polyphoneDict.add(word, pinyins);
+	}
 }

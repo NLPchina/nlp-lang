@@ -1,16 +1,13 @@
 package org.nlpcn.commons.lang.tire.library;
 
-import org.nlpcn.commons.lang.tire.domain.Branch;
-import org.nlpcn.commons.lang.tire.domain.Forest;
-import org.nlpcn.commons.lang.tire.domain.Value;
-import org.nlpcn.commons.lang.tire.domain.WoodInterface;
-import org.nlpcn.commons.lang.util.IOUtil;
-import org.nlpcn.commons.lang.util.StringUtil;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
+
+import org.nlpcn.commons.lang.tire.domain.Forest;
+import org.nlpcn.commons.lang.tire.domain.Value;
+import org.nlpcn.commons.lang.util.IOUtil;
 
 public class Library {
 
@@ -30,6 +27,7 @@ public class Library {
 	 * 传入value数组.构造树
 	 *
 	 * @param values
+	 * @param forest
 	 * @return
 	 */
 	public static Forest makeForest(List<Value> values) {
@@ -51,11 +49,16 @@ public class Library {
 	private static Forest makeLibrary(BufferedReader br, Forest forest) throws Exception {
 		if (br == null)
 			return forest;
-		String temp = null;
-		while ((temp = br.readLine()) != null) {
-			insertWord(forest, temp);
+		try {
+			String temp = null;
+			while ((temp = br.readLine()) != null) {
+				insertWord(forest, temp);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			br.close();
 		}
-
 		return forest;
 	}
 
@@ -70,11 +73,10 @@ public class Library {
 	 * @param temp
 	 */
 	public static void insertWord(Forest forest, String temp) {
-		if (StringUtil.isBlank(temp)) {
-			return;
-		}
 		String[] param = temp.split("\t");
+
 		temp = param[0];
+
 		String[] resultParams = new String[param.length - 1];
 		for (int j = 1; j < param.length; j++) {
 			resultParams[j - 1] = param[j];
@@ -84,13 +86,13 @@ public class Library {
 	}
 
 	private static void insertWord(Forest forest, String temp, String[] param) {
-		WoodInterface<String[], Branch> branch = forest;
+		Forest branch = forest;
 		char[] chars = temp.toCharArray();
 		for (int i = 0; i < chars.length; i++) {
 			if (chars.length == i + 1) {
-				branch.addBranch(new Branch(chars[i], 3, param));
+				branch.add(new Forest(chars[i], 3, param));
 			} else {
-				branch.addBranch(new Branch(chars[i], 1, null));
+				branch.add(new Forest(chars[i], 1, null));
 			}
 			branch = branch.getBranch(chars[i]);
 		}
@@ -100,17 +102,17 @@ public class Library {
 	 * 删除一个词
 	 *
 	 * @param forest
-	 * @param word
+	 * @param temp
 	 */
 	public static void removeWord(Forest forest, String word) {
-		WoodInterface<String[], Branch> branch = forest;
+		Forest branch = forest;
 		char[] chars = word.toCharArray();
 
 		for (int i = 0; i < chars.length; i++) {
 			if (branch == null)
 				return;
 			if (chars.length == i + 1) {
-				branch.addBranch(new Branch(chars[i], -1, null));
+				branch.add(new Forest(chars[i], -1, null));
 			}
 			branch = branch.getBranch(chars[i]);
 		}

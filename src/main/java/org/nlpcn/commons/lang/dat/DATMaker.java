@@ -64,7 +64,7 @@ public class DATMaker {
                 final Item item = cla.newInstance();
                 final String[] split = temp.split("\t");
                 item.init(split);
-                forest.addBranch(split[0], item);
+                forest.add(split[0], item);
             }
         } finally {
             it.close();
