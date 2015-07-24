@@ -1,7 +1,6 @@
 package org.nlpcn.commons.lang.tire.splitWord;
 
 import org.junit.Test;
-import org.nlpcn.commons.lang.tire.GetWord;
 import org.nlpcn.commons.lang.tire.SmartGetWord;
 import org.nlpcn.commons.lang.tire.domain.SmartForest;
 import org.nlpcn.commons.lang.util.StringUtil;
