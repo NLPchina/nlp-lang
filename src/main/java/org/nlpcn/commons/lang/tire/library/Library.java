@@ -85,7 +85,7 @@ public class Library {
 		insertWord(forest, temp, resultParams);
 	}
 
-	private static void insertWord(Forest forest, String temp, String[] param) {
+	private static void insertWord(Forest forest, String temp, String... param) {
 		Forest branch = forest;
 		char[] chars = temp.toCharArray();
 		for (int i = 0; i < chars.length; i++) {
