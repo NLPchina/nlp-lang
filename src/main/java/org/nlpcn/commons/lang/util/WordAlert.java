@@ -68,125 +68,10 @@ public class WordAlert {
 			} else if (i >= 'a' && i <= 'z') {
 				CHARCOVER[i] = (char) i;
 			}
+
+			CHARCOVER['﹩'] = '$';
+			CHARCOVER['　'] = ' ';
 		}
-		CHARCOVER['-'] = '·';
-		CHARCOVER['．'] = '.';
-		CHARCOVER['•'] = '·';
-		CHARCOVER[','] = '。';
-		CHARCOVER['，'] = '。';
-		CHARCOVER['！'] = '。';
-		CHARCOVER['!'] = '。';
-		CHARCOVER['？'] = '。';
-		CHARCOVER['?'] = '。';
-		CHARCOVER['；'] = '。';
-		CHARCOVER['`'] = '。';
-		CHARCOVER['﹑'] = '。';
-		CHARCOVER['^'] = '。';
-		CHARCOVER['…'] = '。';
-		CHARCOVER['“'] = '"';
-		CHARCOVER['”'] = '"';
-		CHARCOVER['〝'] = '"';
-		CHARCOVER['〞'] = '"';
-		CHARCOVER['~'] = '"';
-		CHARCOVER['\\'] = '。';
-		CHARCOVER['∕'] = '。';
-		CHARCOVER['|'] = '。';
-		CHARCOVER['¦'] = '。';
-		CHARCOVER['‖'] = '。';
-		CHARCOVER['—'] = '。';
-		CHARCOVER['('] = '《';
-		CHARCOVER[')'] = '》';
-		CHARCOVER['〈'] = '《';
-		CHARCOVER['〉'] = '》';
-		CHARCOVER['﹞'] = '》';
-		CHARCOVER['﹝'] = '《';
-		CHARCOVER['「'] = '《';
-		CHARCOVER['」'] = '》';
-		CHARCOVER['‹'] = '《';
-		CHARCOVER['›'] = '》';
-		CHARCOVER['〖'] = '《';
-		CHARCOVER['〗'] = '"';
-		CHARCOVER['】'] = '》';
-		CHARCOVER['【'] = '《';
-		CHARCOVER['»'] = '》';
-		CHARCOVER['«'] = '《';
-		CHARCOVER['』'] = '》';
-		CHARCOVER['『'] = '《';
-		CHARCOVER['〕'] = '》';
-		CHARCOVER['〔'] = '《';
-		CHARCOVER['}'] = '》';
-		CHARCOVER['{'] = '《';
-		CHARCOVER[']'] = '》';
-		CHARCOVER['['] = '《';
-		CHARCOVER['﹐'] = '。';
-		CHARCOVER['¸'] = '。';
-		CHARCOVER['︰'] = '﹕';
-		CHARCOVER['﹔'] = '。';
-		CHARCOVER[';'] = '。';
-		CHARCOVER['！'] = '。';
-		CHARCOVER['¡'] = '。';
-		CHARCOVER['？'] = '。';
-		CHARCOVER['¿'] = '。';
-		CHARCOVER['﹖'] = '。';
-		CHARCOVER['﹌'] = '。';
-		CHARCOVER['﹏'] = '。';
-		CHARCOVER['﹋'] = '。';
-		CHARCOVER['＇'] = '。';
-		CHARCOVER['´'] = '。';
-		CHARCOVER['ˊ'] = '。';
-		CHARCOVER['ˋ'] = '。';
-		CHARCOVER['―'] = '。';
-		CHARCOVER['﹫'] = '@';
-		CHARCOVER['︳'] = '。';
-		CHARCOVER['︴'] = '。';
-		CHARCOVER['﹢'] = '+';
-		CHARCOVER['﹦'] = '=';
-		CHARCOVER['﹤'] = '《';
-		CHARCOVER['<'] = '《';
-		CHARCOVER['˜'] = '。';
-		CHARCOVER['~'] = '。';
-		CHARCOVER['﹟'] = '。';
-		CHARCOVER['#'] = '。';
-		CHARCOVER['﹩'] = '$';
-		CHARCOVER['﹠'] = '。';
-		CHARCOVER['&'] = '。';
-		CHARCOVER['﹪'] = '%';
-		CHARCOVER['﹡'] = '。';
-		CHARCOVER['*'] = '。';
-		CHARCOVER['﹨'] = '。';
-		CHARCOVER['\\'] = '。';
-		CHARCOVER['﹍'] = '。';
-		CHARCOVER['﹉'] = '。';
-		CHARCOVER['﹎'] = '。';
-		CHARCOVER['﹊'] = '。';
-		CHARCOVER['ˇ'] = '。';
-		CHARCOVER['︵'] = '《';
-		CHARCOVER['︶'] = '》';
-		CHARCOVER['︷'] = '《';
-		CHARCOVER['︸'] = '》';
-		CHARCOVER['︹'] = '《';
-		CHARCOVER['︿'] = '《';
-		CHARCOVER['﹀'] = '》';
-		CHARCOVER['︺'] = '》';
-		CHARCOVER['︽'] = '《';
-		CHARCOVER['︾'] = '》';
-		CHARCOVER['_'] = '。';
-		CHARCOVER['ˉ'] = '。';
-		CHARCOVER['﹁'] = '《';
-		CHARCOVER['﹂'] = '》';
-		CHARCOVER['﹃'] = '《';
-		CHARCOVER['﹄'] = '》';
-		CHARCOVER['︻'] = '《';
-		CHARCOVER['︼'] = '》';
-		CHARCOVER['/'] = '。';
-		CHARCOVER['（'] = '《';
-		CHARCOVER['>'] = '》';
-		CHARCOVER['）'] = '》';
-		CHARCOVER['<'] = '《';
-		CHARCOVER[' '] = ' ';
-		CHARCOVER['\t'] = '\t';
-		CHARCOVER['。'] = '。';
-		CHARCOVER['@'] = '@';
 	}
 
 	/**
@@ -284,7 +169,7 @@ public class WordAlert {
 		char c;
 		for (int i = 0; i < length; i++) {
 			c = word.charAt(i);
-			if ((c >= 'a' && c <= 'z') || (c >= MIN_LOWER && c <= MAX_LOWER) || (c >= MIN_UPPER && c <= MAX_UPPER) || (c >= MIN_UPPER_E && c <= MAX_UPPER_E) ) {
+			if ((c >= 'a' && c <= 'z') || (c >= MIN_LOWER && c <= MAX_LOWER) || (c >= MIN_UPPER && c <= MAX_UPPER) || (c >= MIN_UPPER_E && c <= MAX_UPPER_E)) {
 			} else {
 				return false;
 			}
@@ -319,10 +204,6 @@ public class WordAlert {
 	 */
 	public static char CharCover(char c) {
 		return CHARCOVER[c];
-	}
-
-	public static void main(String[] args) {
-		System.out.println(WordAlert.isEnglish("abc"));
 	}
 
 }
