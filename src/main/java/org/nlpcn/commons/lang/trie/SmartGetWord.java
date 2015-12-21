@@ -1,6 +1,6 @@
-package org.nlpcn.commons.lang.tire;
+package org.nlpcn.commons.lang.trie;
 
-import org.nlpcn.commons.lang.tire.domain.SmartForest;
+import org.nlpcn.commons.lang.trie.domain.SmartForest;
 
 public class SmartGetWord<T> {
 	private static final String EMPTYSTRING = "";

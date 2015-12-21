@@ -1,6 +1,6 @@
-package org.nlpcn.commons.lang.tire.domain;
+package org.nlpcn.commons.lang.trie.domain;
 
-import org.nlpcn.commons.lang.tire.GetWord;
+import org.nlpcn.commons.lang.trie.GetWord;
 
 public class Forest extends SmartForest<String[]> {
 

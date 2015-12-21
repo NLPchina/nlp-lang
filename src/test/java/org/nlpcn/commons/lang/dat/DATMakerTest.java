@@ -29,7 +29,7 @@ public class DATMakerTest {
 	
 	@Test(expected = FileNotFoundException.class)
 	public void loadTest() throws Exception {
-		DoubleArrayTire load = DoubleArrayTire.load("生成模型的路径"); 
+		DoubleArrayTrie load = DoubleArrayTrie.load("生成模型的路径"); 
 		Item item = load.getItem("中国"); //相当于每一个词语都在数组中又个id。可以通过这个id快速的获取词典
 		Item item2 = load.getItem(5); //相当于每一个词语都在数组中又个id。可以通过这个id快速的获取词典
 		

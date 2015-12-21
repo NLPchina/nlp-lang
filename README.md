@@ -31,8 +31,8 @@ http://maven.nlpcn.org/org/nlpcn/nlp-lang/
 
 > 工具
 * √ 词语标准化
-* √ tire树结构
-* √ 双数组tire树
+* √ trie树结构
+* √ 双数组trie树
 * √ 文本断句
 * √ html标签清理
 

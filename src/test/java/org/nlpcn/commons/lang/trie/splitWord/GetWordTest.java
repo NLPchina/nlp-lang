@@ -1,8 +1,8 @@
-package org.nlpcn.commons.lang.tire.splitWord;
+package org.nlpcn.commons.lang.trie.splitWord;
 
-import org.nlpcn.commons.lang.tire.GetWord;
-import org.nlpcn.commons.lang.tire.domain.Forest;
-import org.nlpcn.commons.lang.tire.library.Library;
+import org.nlpcn.commons.lang.trie.GetWord;
+import org.nlpcn.commons.lang.trie.domain.Forest;
+import org.nlpcn.commons.lang.trie.library.Library;
 import org.nlpcn.commons.lang.util.StringUtil;
 
 import java.io.BufferedReader;

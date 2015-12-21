@@ -1,8 +1,8 @@
-package org.nlpcn.commons.lang.tire.domain;
+package org.nlpcn.commons.lang.trie.domain;
 
 import java.util.Arrays;
 
-import org.nlpcn.commons.lang.tire.SmartGetWord;
+import org.nlpcn.commons.lang.trie.SmartGetWord;
 
 /**
  * 一个小树,和Forest的区别是.这个在首字也是用二分查找,做过一次优化.达到到达一定量级自动扩展为hash定位 在ansj分词中这个应用是在自适应分词
