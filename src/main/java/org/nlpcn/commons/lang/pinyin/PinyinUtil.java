@@ -15,9 +15,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.nlpcn.commons.lang.tire.GetWord;
-import org.nlpcn.commons.lang.tire.SmartGetWord;
-import org.nlpcn.commons.lang.tire.domain.SmartForest;
+import org.nlpcn.commons.lang.trie.GetWord;
+import org.nlpcn.commons.lang.trie.SmartGetWord;
+import org.nlpcn.commons.lang.trie.domain.SmartForest;
 import org.nlpcn.commons.lang.util.StringUtil;
 
 /**

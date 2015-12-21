@@ -12,10 +12,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-import org.nlpcn.commons.lang.tire.GetWord;
-import org.nlpcn.commons.lang.tire.domain.Forest;
-import org.nlpcn.commons.lang.tire.domain.Value;
-import org.nlpcn.commons.lang.tire.library.Library;
+import org.nlpcn.commons.lang.trie.GetWord;
+import org.nlpcn.commons.lang.trie.domain.Forest;
+import org.nlpcn.commons.lang.trie.domain.Value;
+import org.nlpcn.commons.lang.trie.library.Library;
 import org.nlpcn.commons.lang.util.StringUtil;
 
 /**

@@ -1,6 +1,6 @@
-package org.nlpcn.commons.lang.tire;
+package org.nlpcn.commons.lang.trie;
 
-import org.nlpcn.commons.lang.tire.domain.Forest;
+import org.nlpcn.commons.lang.trie.domain.Forest;
 
 /**
  * 基本的string【】 类

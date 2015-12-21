@@ -11,13 +11,13 @@ import java.io.*;
  *
  * @author ansj
  */
-public class DoubleArrayTire {
+public class DoubleArrayTrie {
 
     private Item[] dat;
 
     public int arrayLength;
 
-    private DoubleArrayTire() {
+    private DoubleArrayTrie() {
     }
 
     /**
@@ -73,9 +73,9 @@ public class DoubleArrayTire {
     }
 
 
-    public static DoubleArrayTire load(final String filePath) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static DoubleArrayTrie load(final String filePath) throws FileNotFoundException, IOException, ClassNotFoundException {
         try (final ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filePath)))) {
-            final DoubleArrayTire instance = new DoubleArrayTire();
+            final DoubleArrayTrie instance = new DoubleArrayTrie();
             instance.dat = new Item[ois.readInt()];
             instance.arrayLength = ois.readInt();
             for (int i = 0; i < instance.arrayLength; i++) {
@@ -92,7 +92,7 @@ public class DoubleArrayTire {
      * @throws InstantiationException 
      * @throws FileNotFoundException 
      */
-    public static DoubleArrayTire loadText(String filePath, Class<? extends Item> cla) throws FileNotFoundException, InstantiationException, IllegalAccessException {
+    public static DoubleArrayTrie loadText(String filePath, Class<? extends Item> cla) throws FileNotFoundException, InstantiationException, IllegalAccessException {
         return loadText(IOUtil.getInputStream(filePath), cla);
     }
 
@@ -102,8 +102,8 @@ public class DoubleArrayTire {
      * @throws IllegalAccessException 
      * @throws InstantiationException 
      */
-    public static DoubleArrayTire loadText(InputStream is, Class<? extends Item> cla) throws FileNotFoundException, InstantiationException, IllegalAccessException {
-        final DoubleArrayTire obj = new DoubleArrayTire();
+    public static DoubleArrayTrie loadText(InputStream is, Class<? extends Item> cla) throws FileNotFoundException, InstantiationException, IllegalAccessException {
+        final DoubleArrayTrie obj = new DoubleArrayTrie();
         final FileIterator it = IOUtil.instanceFileIterator(is, IOUtil.UTF8);
         if (it == null) {
             throw new FileNotFoundException();
@@ -126,7 +126,7 @@ public class DoubleArrayTire {
      * @throws InstantiationException 
      * @throws FileNotFoundException 
      */
-    public static DoubleArrayTire loadText(String filePath) throws FileNotFoundException, InstantiationException, IllegalAccessException {
+    public static DoubleArrayTrie loadText(String filePath) throws FileNotFoundException, InstantiationException, IllegalAccessException {
         return loadText(filePath, BasicItem.class);
     }
 }

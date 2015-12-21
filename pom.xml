@@ -8,7 +8,7 @@
 	<name>nlp-lang</name>
 	<version>1.0.2</version>
 	<description>basic TEXT NLP process util  ! </description>
-	<url>https://github.com/ansjsun/ansj_seg</url>
+	<url>https://github.com/NLPchina/nlp-lang</url>
 
 
 	<licenses>
@@ -32,6 +32,11 @@
 			<id>ansj</id>
 			<name>ansj</name>
 			<email>ansj-sun@163.com</email>
+		</developer>
+		<developer>
+			<id>node</id>
+			<name>Gentle Yang</name>
+			<email>nodexy@gmail.com</email>
 		</developer>
 	</developers>
 

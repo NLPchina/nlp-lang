@@ -1,8 +1,8 @@
-package org.nlpcn.commons.lang.tire.splitWord;
+package org.nlpcn.commons.lang.trie.splitWord;
 
 import org.junit.Test;
-import org.nlpcn.commons.lang.tire.SmartGetWord;
-import org.nlpcn.commons.lang.tire.domain.SmartForest;
+import org.nlpcn.commons.lang.trie.SmartGetWord;
+import org.nlpcn.commons.lang.trie.domain.SmartForest;
 import org.nlpcn.commons.lang.util.StringUtil;
 
 /**

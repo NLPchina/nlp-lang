@@ -3,7 +3,7 @@ package org.nlpcn.commons.lang.util;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
-import org.nlpcn.commons.lang.tire.domain.SmartForest;
+import org.nlpcn.commons.lang.trie.domain.SmartForest;
 
 @SuppressWarnings("all")
 public class AnsjArrays {

@@ -1,12 +1,12 @@
-package org.nlpcn.commons.lang.tire.library;
+package org.nlpcn.commons.lang.trie.library;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
 
-import org.nlpcn.commons.lang.tire.domain.Forest;
-import org.nlpcn.commons.lang.tire.domain.Value;
+import org.nlpcn.commons.lang.trie.domain.Forest;
+import org.nlpcn.commons.lang.trie.domain.Value;
 import org.nlpcn.commons.lang.util.IOUtil;
 
 public class Library {

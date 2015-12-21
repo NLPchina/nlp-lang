@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.nlpcn.commons.lang.tire.domain.SmartForest;
+import org.nlpcn.commons.lang.trie.domain.SmartForest;
 import org.nlpcn.commons.lang.util.FileIterator;
 import org.nlpcn.commons.lang.util.IOUtil;
 import org.nlpcn.commons.lang.util.StringUtil;
@@ -47,7 +47,7 @@ public class DATMaker {
      */
     public void maker(final String dicPath, final Class<? extends Item> cla) throws FileNotFoundException, InstantiationException, IllegalAccessException {
         long start = System.currentTimeMillis();
-        LOG.info("make basic tire begin !");
+        LOG.info("make basic trie begin !");
 
         final SmartForest<Item> forest = new SmartForest<>();
         final FileIterator it = IOUtil.instanceFileIterator(dicPath, IOUtil.UTF8);
@@ -69,17 +69,17 @@ public class DATMaker {
         } finally {
             it.close();
         }
-        LOG.info("make basic tire over use time " + (System.currentTimeMillis() - start) + " ms");
+        LOG.info("make basic trie over use time " + (System.currentTimeMillis() - start) + " ms");
 
         start = System.currentTimeMillis();
-        LOG.info("make dat tire begin !");
+        LOG.info("make dat trie begin !");
         makeDAT(tree2List(cla, forest));
-        LOG.info("make dat tire over use time " + (System.currentTimeMillis() - start) + " ms! dat len is " + datArrLen() + "! dat size is " + datItemSize());
+        LOG.info("make dat trie over use time " + (System.currentTimeMillis() - start) + " ms! dat len is " + datArrLen() + "! dat size is " + datItemSize());
 
     }
 
     private void makeDAT(final List<Item> all) {
-        // all 就是tire树中没一个前缀集合
+        // all 就是trie树中没一个前缀集合
         for (int i = 0; i < all.size(); i++) {
             final Item item = all.get(i);
             final char[] chars = item.name.toCharArray();// 每个节点中的词.
@@ -185,7 +185,7 @@ public class DATMaker {
     }
 
     /**
-     * 将tire树 广度遍历为List
+     * 将trie树 广度遍历为List
      * @throws InstantiationException 
      */
     private List<Item> tree2List(final Class<? extends Item> cla, final SmartForest<Item> forest) throws InstantiationException, IllegalAccessException {

@@ -3,8 +3,8 @@ package org.nlpcn.commons.lang.dic;
 import java.io.BufferedReader;
 import java.util.HashMap;
 
-import org.nlpcn.commons.lang.tire.domain.Forest;
-import org.nlpcn.commons.lang.tire.library.Library;
+import org.nlpcn.commons.lang.trie.domain.Forest;
+import org.nlpcn.commons.lang.trie.library.Library;
 
 /**
  * Created by ansj on 4/1/14.
@@ -14,7 +14,7 @@ public class DicManager {
 	private static final HashMap<String, Forest> forestMap = new HashMap<>();
 
 	/**
-	 * 构建一个tire书辞典
+	 * 构建一个trie书辞典
 	 * 
 	 * @param dicName
 	 * @param dicName

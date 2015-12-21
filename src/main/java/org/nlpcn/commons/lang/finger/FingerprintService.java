@@ -8,9 +8,9 @@ import java.util.TreeSet;
 
 import org.nlpcn.commons.lang.dic.DicManager;
 import org.nlpcn.commons.lang.finger.pojo.MyFingerprint;
-import org.nlpcn.commons.lang.tire.GetWord;
-import org.nlpcn.commons.lang.tire.domain.Forest;
-import org.nlpcn.commons.lang.tire.library.Library;
+import org.nlpcn.commons.lang.trie.GetWord;
+import org.nlpcn.commons.lang.trie.domain.Forest;
+import org.nlpcn.commons.lang.trie.library.Library;
 import org.nlpcn.commons.lang.util.MD5;
 import org.nlpcn.commons.lang.util.StringUtil;
 
