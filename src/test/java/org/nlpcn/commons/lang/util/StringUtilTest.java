@@ -12,6 +12,8 @@ public class StringUtilTest {
 		//html清理
 		System.out.println(StringUtil.rmHtmlTag("<a>hello ansj</a>")); //result -->hello ansj
 		
+		System.out.println(StringUtil.rmHtmlTag("hello ansj hello kk "));
+		
 		 //将用都好隔开的字符转换为sql中的in查询
 		System.out.println(StringUtil.makeSqlInString("ansj,2134,123,123,123"));
 		//result --> 'ansj','2134','123','123','123'
