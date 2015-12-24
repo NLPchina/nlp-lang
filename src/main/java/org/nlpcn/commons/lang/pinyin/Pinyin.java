@@ -2,98 +2,122 @@ package org.nlpcn.commons.lang.pinyin;
 
 import java.util.List;
 
-import com.google.common.base.Joiner;
-
 public class Pinyin {
 
-    /**
-     * 拼音返回
-     *
-     * @param str
-     * @return [chang, jiang, cheng, zhang]
-     */
+	/**
+	 * 拼音返回
+	 *
+	 * @param str
+	 * @return [chang, jiang, cheng, zhang]
+	 */
 
-    public static List<String> pinyin(String str) {
-        return PinyinUtil.INSTANCE.convert(str, PinyinFormat.TONELESS_PINYIN_FORMAT);
-    }
+	public static List<String> pinyin(String str) {
+		return PinyinUtil.INSTANCE.convert(str, PinyinFormat.TONELESS_PINYIN_FORMAT);
+	}
 
-    /**
-     * 取得每个字的首字符
-     *
-     * @param str
-     * @return [c, j, c, z]
-     */
-    public static List<String> firstChar(String str) {
-        return PinyinUtil.INSTANCE.convert(str, PinyinFormat.ABBR_PINYIN_FORMAT);
-    }
+	/**
+	 * 取得每个字的首字符
+	 *
+	 * @param str
+	 * @return [c, j, c, z]
+	 */
+	public static List<String> firstChar(String str) {
+		return PinyinUtil.INSTANCE.convert(str, PinyinFormat.ABBR_PINYIN_FORMAT);
+	}
 
-    /**
-     * 取得每个字的帶音標
-     *
-     * @param str
-     * @return [cháng, jiāng, chéng, zhăng]
-     */
-    public static List<String> unicodePinyin(String str) {
-        return PinyinUtil.INSTANCE.convert(str, PinyinFormat.UNICODE_PINYIN_FORMAT);
-    }
+	/**
+	 * 取得每个字的帶音標
+	 *
+	 * @param str
+	 * @return [cháng, jiāng, chéng, zhăng]
+	 */
+	public static List<String> unicodePinyin(String str) {
+		return PinyinUtil.INSTANCE.convert(str, PinyinFormat.UNICODE_PINYIN_FORMAT);
+	}
 
-    /**
-     * 要音標的拼音
-     *
-     * @param str
-     * @return [chang2, jiang1, cheng2, zhang3]
-     */
-    public static List<String> tonePinyin(String str) {
-        return PinyinUtil.INSTANCE.convert(str, PinyinFormat.DEFAULT_PINYIN_FORMAT);
-    }
+	/**
+	 * 要音標的拼音
+	 *
+	 * @param str
+	 * @return [chang2, jiang1, cheng2, zhang3]
+	 */
+	public static List<String> tonePinyin(String str) {
+		return PinyinUtil.INSTANCE.convert(str, PinyinFormat.DEFAULT_PINYIN_FORMAT);
+	}
 
-    /**
-     * list 转换为字符串
-     * @param list
-     * @param spearator
-     * @return
-     */
-    public static String list2String(List<String> list, String spearator) {
-        return Joiner.on(spearator).useForNull("NULL").join(list);
-    }
+	/**
+	 * list 转换为字符串
+	 * 
+	 * @param list
+	 * @param spearator
+	 * @return
+	 */
+	public static String list2String(List<String> list, String spearator) {
 
-    /**
-     * list 转换为字符串 默认空格
-     * @param list
-     * @return
-     */
-    public static String list2String(List<String> list) {
-        return list2String(list, " ");
-    }
+		StringBuilder sb = new StringBuilder();
 
-    /**
-     * 动态增加到拼音词典中
-     *
-     * @param word
-     *            大长今
-     * @param pinyins
-     *            ['da4', 'chang2' ,'jing1']
-     */
-    public static void insertPinyin(String word, String[] pinyins) {
-        PinyinUtil.INSTANCE.insertPinyin(word, pinyins);
-    }
+		for (String string : list) {
+			if (sb.length() > 0) {
+				sb.append(spearator);
+			}
+			sb.append(String.valueOf(string));
+		}
 
-    /**
-     * list 转换为字符串 默认空格,忽略null
-     * @param list
-     * @return
-     */
-    public static String list2StringSkipNull(List<String> list) {
-        return list2StringSkipNull(list, " ");
-    }
+		return sb.toString();
+	}
 
-    /**
-     * list 转换为字符串
-     * @param list
-     * @param spearator
-     * @return
-     */
-    public static String list2StringSkipNull(List<String> list, String spearator) {
-        return Joiner.on(spearator).skipNulls().join(list);
-    }
+	/**
+	 * list 转换为字符串 默认空格
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public static String list2String(List<String> list) {
+		return list2String(list, " ");
+	}
+
+	/**
+	 * 动态增加到拼音词典中
+	 *
+	 * @param word
+	 *            大长今
+	 * @param pinyins
+	 *            ['da4', 'chang2' ,'jing1']
+	 */
+	public static void insertPinyin(String word, String[] pinyins) {
+		PinyinUtil.INSTANCE.insertPinyin(word, pinyins);
+	}
+
+	/**
+	 * list 转换为字符串 默认空格,忽略null
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public static String list2StringSkipNull(List<String> list) {
+		return list2StringSkipNull(list, " ");
+	}
+
+	/**
+	 * list 转换为字符串
+	 * 
+	 * @param list
+	 * @param spearator
+	 * @return
+	 */
+	public static String list2StringSkipNull(List<String> list, String spearator) {
+		StringBuilder sb = new StringBuilder();
+
+		for (String string : list) {
+			if (sb.length() > 0) {
+				sb.append(spearator);
+			}
+			if(string==null){
+				continue ;
+			}
+			sb.append(String.valueOf(string));
+		}
+
+		return sb.toString();
+	}
 }
