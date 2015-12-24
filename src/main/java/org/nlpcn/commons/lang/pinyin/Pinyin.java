@@ -53,16 +53,22 @@ public class Pinyin {
 	 * @return
 	 */
 	public static String list2String(List<String> list, String spearator) {
-
 		StringBuilder sb = new StringBuilder();
-
+		boolean flag = true;
 		for (String string : list) {
-			if (sb.length() > 0) {
-				sb.append(spearator);
+			if (string == null) {
+				string = "NULL";
 			}
-			sb.append(String.valueOf(string));
-		}
 
+			if (flag) {
+				sb.append(string);
+				flag = false;
+			} else {
+				sb.append(spearator);
+				sb.append(string);
+			}
+
+		}
 		return sb.toString();
 	}
 
@@ -107,17 +113,21 @@ public class Pinyin {
 	 */
 	public static String list2StringSkipNull(List<String> list, String spearator) {
 		StringBuilder sb = new StringBuilder();
-
+		boolean flag = true;
 		for (String string : list) {
-			if (sb.length() > 0) {
-				sb.append(spearator);
+			if (string == null) {
+				continue;
 			}
-			if(string==null){
-				continue ;
-			}
-			sb.append(String.valueOf(string));
-		}
 
+			if (flag) {
+				sb.append(string);
+				flag = false;
+			} else {
+				sb.append(spearator);
+				sb.append(string);
+			}
+
+		}
 		return sb.toString();
 	}
 }
