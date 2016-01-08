@@ -18,7 +18,7 @@ nlp-lang
         <dependency>
             <groupId>org.nlpcn</groupId>
             <artifactId>nlp-lang</artifactId>
-            <version>0.2</version>
+            <version>1.1</version>
         </dependency>
     </dependencies>
     
@@ -45,5 +45,6 @@ http://maven.nlpcn.org/org/nlpcn/nlp-lang/
 * √ 指纹去重 
 * √ 词共现统计
 * √ 基于内存的搜索提示 
+* √ WordWeight词频统计,词idf统计,词类别相关度统计 
 
 
