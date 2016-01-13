@@ -43,7 +43,7 @@ public class FileIterator implements Iterator<String> {
 		}
 	}
 
-	private String readLine() {
+	public String readLine() {
 		try {
 			if (temp == null) {
 				temp = br.readLine();

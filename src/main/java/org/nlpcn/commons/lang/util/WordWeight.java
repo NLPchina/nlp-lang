@@ -18,7 +18,7 @@ public class WordWeight {
 
 	private HashMap<String, MapCount<String>> x2mat = new HashMap<String, MapCount<String>>();
 
-	private MapCount<String> x2mc = new MapCount<>();
+	private MapCount<String> x2mc = new MapCount<String>();
 
 	private Integer maxCount;
 
@@ -98,7 +98,7 @@ public class WordWeight {
 
 	public HashMap<String, MapCount<String>> exportChiSquare() {
 
-		HashMap<String, MapCount<String>> x2final = new HashMap<>();
+		HashMap<String, MapCount<String>> x2final = new HashMap<String, MapCount<String>>();
 
 		double sum = allFreq;
 
