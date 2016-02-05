@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.nlpcn.commons.lang.tire.domain.Forest;
+import org.nlpcn.commons.lang.tire.domain.SmartForest;
 import org.nlpcn.commons.lang.tire.domain.Value;
 import org.nlpcn.commons.lang.util.IOUtil;
 
@@ -86,7 +87,7 @@ public class Library {
 	}
 
 	private static void insertWord(Forest forest, String temp, String... param) {
-		Forest branch = forest;
+		SmartForest<String[]> branch = forest;
 		char[] chars = temp.toCharArray();
 		for (int i = 0; i < chars.length; i++) {
 			if (chars.length == i + 1) {
@@ -105,7 +106,7 @@ public class Library {
 	 * @param temp
 	 */
 	public static void removeWord(Forest forest, String word) {
-		Forest branch = forest;
+		SmartForest<String[]> branch = forest;
 		char[] chars = word.toCharArray();
 
 		for (int i = 0; i < chars.length; i++) {
