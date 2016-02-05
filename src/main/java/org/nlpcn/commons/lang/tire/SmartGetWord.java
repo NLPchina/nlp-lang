@@ -30,10 +30,71 @@ public class SmartGetWord<T> {
 
 	public String getAllWords() {
 		String temp = this.allWords();
+
+		temp = checkNumberOrEnglish(temp);
+
 		while (EMPTYSTRING.equals(temp)) {
 			temp = this.allWords();
+			temp = checkNumberOrEnglish(temp);
 		}
 		return temp;
+	}
+
+	/**
+	 * 验证一个词语的左右边.不是英文和数字
+	 * 
+	 * @param temp
+	 * @return
+	 */
+	private String checkNumberOrEnglish(String temp) {
+
+		if (temp == null || temp == EMPTYSTRING) {
+			return temp;
+		}
+
+		// 先验证最左面
+
+		char l = temp.charAt(0);
+
+		if (l < 127 && offe > 0) {
+			if (checkSame(l, chars[offe - 1])) {
+				return EMPTYSTRING;
+			}
+		}
+
+		char r = l;
+
+		if (temp.length() > 1) {
+			r = temp.charAt(temp.length() - 1);
+		}
+
+		if (r < 127 && (offe + temp.length()) < chars.length) {
+			if (checkSame(r, chars[offe + temp.length()])) {
+				return EMPTYSTRING;
+			}
+		}
+
+		return temp;
+	}
+
+	/**
+	 * 验证两个char是否都是数字或者都是英文
+	 * 
+	 * @param l
+	 * @param c
+	 * @return
+	 */
+	private boolean checkSame(char l, char c) {
+
+		if (isE(l) && isE(c)) {
+			return true;
+		}
+
+		if (isNum(l) && isNum(c)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public String getFrontWords() {
@@ -44,37 +105,57 @@ public class SmartGetWord<T> {
 		return temp;
 	}
 
+	private Integer tempJLen = null;
+
 	private String allWords() {
-		if ((!this.isBack) || (this.i == this.chars.length - 1)) {
-			this.i = (this.root - 1);
-		}
-		for (this.i += 1; this.i < this.chars.length; this.i = (this.i + 1)) {
-			this.branch = this.branch.getBranch(this.chars[this.i]);
-			if (this.branch == null) {
-				this.root += 1;
-				this.branch = this.forest;
-				this.i = (this.root - 1);
-				this.isBack = false;
-			} else {
-				switch (this.branch.getStatus()) {
-				case 2:
-					this.isBack = true;
-					this.offe = (this.tempOffe + this.root);
-					this.param = this.branch.getParam();
-					return new String(this.chars, this.root, this.i - this.root + 1);
-				case 3:
-					this.offe = (this.tempOffe + this.root);
-					this.str = new String(this.chars, this.root, this.i - this.root + 1);
-					this.param = this.branch.getParam();
-					this.branch = this.forest;
-					this.isBack = false;
-					this.root += 1;
-					return this.str;
-				}
+
+		for (; i < chars.length;) {
+			if (tempJLen == null) {
+				branch = branch.getBranch(chars[i]);
 			}
+			if (branch == null) {
+				branch = forest;
+				i++;
+				continue;
+			}
+
+			for (int j = i + (tempJLen == null ? 0 : tempJLen); j < chars.length; j++) {
+				if (j > i) {
+					branch = branch.getBranch(chars[j]);
+				}
+				if (branch == null) {
+					branch = forest;
+					i++;
+					tempJLen = null;
+					return EMPTYSTRING;
+				}
+
+				switch (branch.getStatus()) {
+				case 2:
+					offe = i;
+					param = branch.getParam();
+					tempJLen = j - i + 1;
+					return new String(chars, i, j - i + 1);
+				case 3:
+					offe = i;
+					param = branch.getParam();
+					branch = forest;
+					tempJLen = null;
+					i++;
+					return new String(chars, i - 1, j - i + 2);
+				}
+
+			}
+
+			i++;
+			branch = forest;
+			tempJLen = null;
+			return EMPTYSTRING;
+
 		}
-		this.tempOffe += this.chars.length;
+
 		return null;
+
 	}
 
 	private String frontWords() {
@@ -93,7 +174,8 @@ public class SmartGetWord<T> {
 						this.str = EMPTYSTRING;
 					}
 
-					if ((this.str.length() != 0) && (this.root + this.tempOffe < this.chars.length) && (isE(this.str.charAt(this.str.length() - 1)))
+					if ((this.str.length() != 0) && (this.root + this.tempOffe < this.chars.length)
+							&& (isE(this.str.charAt(this.str.length() - 1)))
 							&& (isE(this.chars[(this.root + this.tempOffe)]))) {
 						this.str = EMPTYSTRING;
 					}
@@ -129,8 +211,8 @@ public class SmartGetWord<T> {
 						this.str = EMPTYSTRING;
 					}
 
-					if ((this.str.length() != 0) && (this.i + 1 < this.chars.length) && (isE(this.str.charAt(this.str.length() - 1)))
-							&& (isE(this.chars[(this.i + 1)]))) {
+					if ((this.str.length() != 0) && (this.i + 1 < this.chars.length)
+							&& (isE(this.str.charAt(this.str.length() - 1))) && (isE(this.chars[(this.i + 1)]))) {
 						this.str = EMPTYSTRING;
 					}
 					this.param = this.branch.getParam();
@@ -154,11 +236,19 @@ public class SmartGetWord<T> {
 	}
 
 	public boolean isE(char c) {
-		if (c == '.' || ((c >= 'a') && (c <= 'z'))) {
+		if ((c >= 'A') && (c <= 'z')) {
 			return true;
 		}
 		return false;
 	}
+
+	public boolean isNum(char c) {
+		if ((c >= '0') && (c <= '9')) {
+			return true;
+		}
+		return false;
+	}
+	
 
 	public void reset(String content) {
 		this.offe = 0;
