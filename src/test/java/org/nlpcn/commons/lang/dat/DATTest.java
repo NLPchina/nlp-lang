@@ -26,6 +26,8 @@ public class DATTest {
 			System.out.println("" + load.getItem("中国"));
 			System.out.println("load obj use time " + (System.currentTimeMillis() - start));
 			
+			Thread.sleep(3000L);
+
 			new File("dat.txt").deleteOnExit();
 			new File("dat.obj").deleteOnExit();
 		} catch (Exception e) {
