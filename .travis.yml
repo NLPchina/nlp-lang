@@ -3,7 +3,10 @@ language: java
 jdk:
   - oraclejdk8
   - oraclejdk7
-  - oraclejdk6
+  - oraclejdk1.6
+  - openjdk8
+  - openjdk7
+  - openjdk6
 
 script:
   - mvn test
