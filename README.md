@@ -1,8 +1,11 @@
 nlp-lang
 ========
 
+[![1.X Build Status](https://travis-ci.org/NLPchina/nlp-lang.svg?branch=master)](https://travis-ci.org/NLPchina/nlp-lang)
+
 文档地址:http://www.nlpcn.org/docs/7 
 部分演示:http://www.nlpcn.org/demo
+
 
 
 ##MAVEN
