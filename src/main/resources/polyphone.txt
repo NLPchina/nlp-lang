@@ -5554,8 +5554,6 @@
 #曝=pu4
 
 #曝=bao4
-曝隐私=bao4 yin3 si1
-曝光=bao4 guang1
 
 #曲=qu3,qu1
 #曲=qu3
