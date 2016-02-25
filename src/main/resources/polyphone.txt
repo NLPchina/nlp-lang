@@ -2302,7 +2302,7 @@
 #哪=na5
 
 #哪=ne2
-
+哪吒=ne2 zha1
 #哪=nai3
 
 
@@ -5554,7 +5554,8 @@
 #曝=pu4
 
 #曝=bao4
-
+曝隐私=bao4 yin3 si1
+曝光=bao4 guang1
 
 #曲=qu3,qu1
 #曲=qu3
@@ -5884,6 +5885,7 @@
 校场=jiao4 chang3
 校勘=jiao4 kan1
 校对=jiao4 dui4
+
 
 
 #栢=bo2,bai3
@@ -10653,6 +10655,7 @@
 交行=jiao1 hang2
 建行=jian4 hang2
 招行=zhao1 hang2
+分行=fen1 hang2
 
 #行=hang4
 树行子=shu4 hang4 zi5
@@ -11261,6 +11264,7 @@
 调戏=tiao2 xi4
 调情=tiao2 qing2
 调试=tiao2 shi4
+调侃=tiao2 kan1
 
 
 #谜=mi2,mei4
@@ -12122,6 +12126,9 @@
 重叠=chong2 die2
 重唱=chong2 chang4
 重峦叠嶂=chong2 luan2 die2 zhang4
+重新=chong2 xin1
+谍影重重=die1 ying3 chong2 chong2
+重建=chong2 jian4
 
 
 #量=liang4,liang2,liang5
@@ -12746,6 +12753,10 @@
 司长=si1 zhang3
 厂长=chang3 zhang3
 班长=ban1 zhang3
+关长=guan1 zhang3
+长得=zhang3 de
+经济增长=zheng1 ji1 zeng1 zhang3
+校长=xiao4 zhang3
 
 
 #閆=yan4,yan2
