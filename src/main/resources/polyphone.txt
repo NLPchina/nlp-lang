@@ -11264,7 +11264,7 @@
 调戏=tiao2 xi4
 调情=tiao2 qing2
 调试=tiao2 shi4
-调侃=tiao2 kan1
+调侃=tiao2 kan3
 
 
 #谜=mi2,mei4
@@ -12754,7 +12754,7 @@
 厂长=chang3 zhang3
 班长=ban1 zhang3
 关长=guan1 zhang3
-长得=zhang3 de
+长得=zhang3 de1
 经济增长=zheng1 ji1 zeng1 zhang3
 校长=xiao4 zhang3
 
