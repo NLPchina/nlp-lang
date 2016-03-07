@@ -98,10 +98,11 @@ public class SmartGetWord<T> {
 	}
 
 	public String getFrontWords() {
-		String temp = this.frontWords();
-		while (EMPTYSTRING.equals(temp)) {
+		String temp = null;
+		do {
 			temp = this.frontWords();
-		}
+			temp = checkNumberOrEnglish(temp);
+		} while (EMPTYSTRING.equals(temp));
 		return temp;
 	}
 
@@ -170,15 +171,6 @@ public class SmartGetWord<T> {
 				if (this.isBack) {
 					this.offe = this.root;
 					this.str = new String(this.chars, this.root, this.tempOffe);
-					if ((this.root > 0) && (isE(this.chars[(this.root - 1)])) && (isE(this.str.charAt(0)))) {
-						this.str = EMPTYSTRING;
-					}
-
-					if ((this.str.length() != 0) && (this.root + this.tempOffe < this.chars.length)
-							&& (isE(this.str.charAt(this.str.length() - 1)))
-							&& (isE(this.chars[(this.root + this.tempOffe)]))) {
-						this.str = EMPTYSTRING;
-					}
 					if (this.str.length() == 0) {
 						this.root += 1;
 						this.i = this.root;
@@ -187,10 +179,6 @@ public class SmartGetWord<T> {
 						this.root = this.i;
 					}
 					this.isBack = false;
-
-					if (EMPTYSTRING.equals(this.str)) {
-						return EMPTYSTRING;
-					}
 					return this.str;
 				}
 				this.i = this.root;
@@ -206,15 +194,6 @@ public class SmartGetWord<T> {
 					this.offe = this.root;
 					this.str = new String(this.chars, this.root, this.i - this.root + 1);
 					String temp = this.str;
-
-					if ((this.root > 0) && (isE(this.chars[(this.root - 1)])) && (isE(this.str.charAt(0)))) {
-						this.str = EMPTYSTRING;
-					}
-
-					if ((this.str.length() != 0) && (this.i + 1 < this.chars.length)
-							&& (isE(this.str.charAt(this.str.length() - 1))) && (isE(this.chars[(this.i + 1)]))) {
-						this.str = EMPTYSTRING;
-					}
 					this.param = this.branch.getParam();
 					this.branch = this.forest;
 					this.isBack = false;
@@ -223,9 +202,6 @@ public class SmartGetWord<T> {
 						this.root = this.i;
 					} else {
 						this.i = (this.root + 1);
-					}
-					if (EMPTYSTRING.equals(this.str)) {
-						return EMPTYSTRING;
 					}
 					return this.str;
 				}
@@ -248,7 +224,6 @@ public class SmartGetWord<T> {
 		}
 		return false;
 	}
-	
 
 	public void reset(String content) {
 		this.offe = 0;

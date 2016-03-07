@@ -69,12 +69,12 @@ public class WordAlert {
 				CHARCOVER[i] = (char) i;
 			}
 
-			CHARCOVER['﹩'] = '$';
-			CHARCOVER['　'] = ' ';
-			CHARCOVER['，'] = ',';
-			CHARCOVER['？'] = '?';
-			CHARCOVER['“'] = '"' ;
-			CHARCOVER['”'] = '"' ;
+//			CHARCOVER['﹩'] = '$';
+//			CHARCOVER['　'] = ' ';
+//			CHARCOVER['，'] = ',';
+//			CHARCOVER['？'] = '?';
+//			CHARCOVER['“'] = '"' ;
+//			CHARCOVER['”'] = '"' ;
 			
 			
 		}
