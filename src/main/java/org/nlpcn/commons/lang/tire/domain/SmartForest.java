@@ -1,6 +1,8 @@
 package org.nlpcn.commons.lang.tire.domain;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.nlpcn.commons.lang.tire.SmartGetWord;
 
@@ -24,6 +26,8 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> {
 	private byte status = 1;
 	// 词典后的参数
 	private T param = null;
+
+	private int size = 0;
 
 	// root
 	public SmartForest() {
@@ -74,10 +78,16 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> {
 				}
 				break;
 			case 3:
+
+				if (this.branch.getStatus() == 1) {
+					size++;
+				}
+
 				if (this.branch.getStatus() != 3) {
 					this.branch.setStatus(2);
 				}
 				this.branch.setParam(branch.getParam());
+
 			}
 			return this.branch;
 		}
@@ -99,6 +109,10 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> {
 				System.arraycopy(branches, insert, newBranches, insert + 1, branches.length - insert);
 				newBranches[insert] = branch;
 				this.branches = newBranches;
+			}
+
+			if (branch.getStatus() == 3) {
+				size++;
 			}
 		}
 		return branch;
@@ -182,12 +196,17 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> {
 		}
 	}
 
+	/**
+	 * 增加一个元素到节点
+	 * 
+	 * @param keyWord
+	 * @param t
+	 */
 	public void addBranch(String keyWord, T t) {
 		this.add(keyWord, t);
 	}
 
 	public int compareTo(SmartForest<T> o) {
-		// TODO Auto-generated method stub
 		if (this.c > o.c)
 			return 1;
 		if (this.c < o.c) {
@@ -280,6 +299,10 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> {
 	 * @param string
 	 */
 	public void remove(String word) {
+		int before = getBranch(word).status;
+		if (before == 2 || before == 3) {
+			size--;
+		}
 		getBranch(word).status = 1;
 	}
 
@@ -289,5 +312,48 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> {
 	@SuppressWarnings("unchecked")
 	public void clear() {
 		branches = new SmartForest[MAX_SIZE];
+	}
+
+	/**
+	 * 将树转换为map
+	 * 
+	 * @return map<String,Object>
+	 */
+	public Map<String, T> toMap() {
+
+		HashMap<String, T> result = new HashMap<String, T>();
+
+		if (this.branches == null) {
+			return result;
+		}
+
+		putMap(result, "", this.branches);
+
+		return result;
+	}
+
+	
+	private void putMap(HashMap<String, T> result, String pre, SmartForest<T>[] branches) {
+		if (branches == null) {
+			return;
+		}
+
+		String key = null;
+		SmartForest<T> sf = null;
+		for (int i = 0; i < branches.length; i++) {
+			sf = branches[i];
+			if (sf == null) {
+				continue;
+			}
+			key = pre + branches[i].c;
+			if (branches[i].getStatus() == 3) {
+				result.put(key, branches[i].getParam());
+			} else if (branches[i].getStatus() == 2) {
+				result.put(key, branches[i].getParam());
+				putMap(result, key, sf.branches);
+			} else {
+				putMap(result, key, sf.branches);
+			}
+		}
 	}
 }

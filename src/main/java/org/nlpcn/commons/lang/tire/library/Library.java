@@ -16,8 +16,16 @@ public class Library {
 		return makeForest(new FileInputStream(path));
 	}
 
+	public static Forest makeForest(String path, String encoding) throws Exception {
+		return makeForest(new FileInputStream(path), encoding);
+	}
+
 	public static Forest makeForest(InputStream inputStream) throws Exception {
 		return makeForest(IOUtil.getReader(inputStream, "UTF-8"));
+	}
+
+	public static Forest makeForest(InputStream inputStream, String encoding) throws Exception {
+		return makeForest(IOUtil.getReader(inputStream, encoding));
 	}
 
 	public static Forest makeForest(BufferedReader br) throws Exception {
