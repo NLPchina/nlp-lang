@@ -1,9 +1,9 @@
 package org.nlpcn.commons.lang.tire.splitWord;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -11,6 +11,7 @@ import org.nlpcn.commons.lang.dic.DicManager;
 import org.nlpcn.commons.lang.tire.GetWord;
 import org.nlpcn.commons.lang.tire.domain.Forest;
 import org.nlpcn.commons.lang.tire.library.Library;
+import org.nlpcn.commons.lang.util.IOUtil;
 
 public class ForestTest {
 
@@ -29,7 +30,6 @@ public class ForestTest {
 		f.addBranch("解放军", null);
 		f.addBranch("解放", null);
 		f.addBranch("解放军强渡长江", null);
-		
 
 		GetWord word = f.getWord("　　5月20日，解放军强渡渭河123abc123");
 
@@ -39,11 +39,18 @@ public class ForestTest {
 		Assert.assertEquals(word.getFrontWords(), null);
 
 	}
-	
+
 	@Test
-	public void toMapTest() throws Exception{
-		Forest makeForest = Library.makeForest(DicManager.class.getResourceAsStream("/finger.dic"));
+	public void toMapTest() throws Exception {
 		
+		Forest makeForest = Library.makeForest(DicManager.class.getResourceAsStream("/finger.dic"));
+
+		List<String> readFile2List = IOUtil.readFile2List(new BufferedReader(new InputStreamReader(DicManager.class.getResourceAsStream("/finger.dic"), "utf-8")));
+
+		Map<String, String[]> map = makeForest.toMap();
+
+		Assert.assertTrue(readFile2List.size() == map.size());
+
 	}
 
 }

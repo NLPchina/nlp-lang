@@ -27,8 +27,6 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> {
 	// 词典后的参数
 	private T param = null;
 
-	private int size = 0;
-
 	// root
 	public SmartForest() {
 	}
@@ -78,11 +76,6 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> {
 				}
 				break;
 			case 3:
-
-				if (this.branch.getStatus() == 1) {
-					size++;
-				}
-
 				if (this.branch.getStatus() != 3) {
 					this.branch.setStatus(2);
 				}
@@ -111,9 +104,6 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> {
 				this.branches = newBranches;
 			}
 
-			if (branch.getStatus() == 3) {
-				size++;
-			}
 		}
 		return branch;
 	}
@@ -299,10 +289,6 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> {
 	 * @param string
 	 */
 	public void remove(String word) {
-		int before = getBranch(word).status;
-		if (before == 2 || before == 3) {
-			size--;
-		}
 		getBranch(word).status = 1;
 	}
 
@@ -357,8 +343,4 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> {
 		}
 	}
 
-	public int getSize() {
-		return size;
-	}
-	
 }
