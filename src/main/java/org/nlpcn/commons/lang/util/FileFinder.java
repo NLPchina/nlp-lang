@@ -22,6 +22,16 @@ public class FileFinder {
 		fileDir.add(new File("").getAbsoluteFile()) ;
 	}
 
+	
+	/**
+	 * 输入一个文件名或者文件的最后路径寻找文件
+	 * default deep Integer.max
+	 * @param
+	 * @return
+	 */
+	public static File find(String lastPath) {
+		return find(lastPath,Integer.MAX_VALUE) ;
+	}
 
 	/**
 	 * 输入一个文件名或者文件的最后路径寻找文件
@@ -29,11 +39,12 @@ public class FileFinder {
 	 * @param
 	 * @return
 	 */
-	public static File find(String lastPath) {
+	public static File find(String lastPath , int deep) {
+		
 		// 先深度查找
 		for (File file : fileDir) {
 			if (file.exists() && file.canRead()) {
-				file = findByFile(file, lastPath);
+				file = findByFile(file, lastPath,deep);
 				if (file != null) {
 					return file;
 				}
@@ -45,7 +56,7 @@ public class FileFinder {
 			for (String path : propertyPath) {
 				File file = new File(path);
 				if (file.exists() && file.canRead()) {
-					file = findByFile(file, lastPath);
+					file = findByFile(file, lastPath,deep);
 					if (file != null) {
 						return file;
 					}
@@ -54,16 +65,29 @@ public class FileFinder {
 		}
 		return null;
 	}
+	
+	/**
+	 * 根据一个文件深度查找
+	 *
+	 * @param file
+	 * @param lastPath
+	 * @param deep integer.max
+	 * @return
+	 */
+	public static File findByFile(File file, String lastPath){
+		return findByFile(file, lastPath, Integer.MAX_VALUE) ;
+	}
 
 	/**
 	 * 根据一个文件深度查找
 	 *
 	 * @param file
 	 * @param lastPath
+	 * @param deep
 	 * @return
 	 */
-	public static File findByFile(File file, String lastPath) {
-		if (!file.exists() || !file.canRead()) {
+	public static File findByFile(File file, String lastPath,int deep) {
+		if (deep==0||!file.exists() || !file.canRead()) {
 			return null;
 		}
 		if (file.getAbsolutePath().endsWith(lastPath)) {
@@ -74,7 +98,7 @@ public class FileFinder {
 			File[] listFiles = file.listFiles();
 			if (listFiles != null && listFiles.length > 0) {
 				for (File file2 : listFiles) {
-					File temp = findByFile(file2, lastPath);			
+					File temp = findByFile(file2, lastPath, deep-1);			
 					if (temp != null) {
 						return temp;
 					}

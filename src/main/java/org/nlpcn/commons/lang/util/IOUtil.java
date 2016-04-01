@@ -275,6 +275,13 @@ public class IOUtil {
 		return hm;
 	}
 
+	/**
+	 * 將一個map寫入到文件
+	 * @param hm
+	 * @param path
+	 * @param charEncoding
+	 * @throws IOException
+	 */
 	public static <K, V> void writeMap(Map<K, V> hm, String path, String charEncoding) throws IOException {
 		Iterator<Entry<K, V>> iterator = hm.entrySet().iterator();
 		FileOutputStream fos = null;
@@ -283,9 +290,33 @@ public class IOUtil {
 			fos = new FileOutputStream(path);
 			while (iterator.hasNext()) {
 				next = iterator.next();
-				fos.write(next.getKey().toString().getBytes());
+				fos.write(next.getKey().toString().getBytes(charEncoding));
 				fos.write(TABBYTE);
-				fos.write(next.getValue().toString().getBytes());
+				fos.write(next.getValue().toString().getBytes(charEncoding));
+				fos.write(LINEBYTE);
+			}
+			fos.flush();
+		} finally {
+			fos.close();
+		}
+	}
+	
+	/**
+	 * 講一個list寫入到文件
+	 * @param list
+	 * @param path
+	 * @param charEncoding
+	 * @throws IOException
+	 */
+	public static <T> void writeList(List<T> list, String path, String charEncoding) throws IOException {
+		Iterator<T> iterator = list.iterator();
+		FileOutputStream fos = null;
+		T next = null;
+		try {
+			fos = new FileOutputStream(path);
+			while (iterator.hasNext()) {
+				next = iterator.next();
+				fos.write(next.toString().getBytes(charEncoding));
 				fos.write(LINEBYTE);
 			}
 			fos.flush();

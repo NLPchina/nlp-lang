@@ -6,7 +6,7 @@
 	<artifactId>nlp-lang</artifactId>
 	<packaging>jar</packaging>
 	<name>nlp-lang</name>
-	<version>1.3</version>
+	<version>1.5</version>
 	<description>basic TEXT NLP process util  ! </description>
 	<url>https://github.com/ansjsun/ansj_seg</url>
 
@@ -47,14 +47,33 @@
 		</repository>
 	</distributionManagement>
 
-	<repositories>
-		<repository>
-			<id>mvn-repo</id>
-			<url>http://maven.ansj.org/</url>
-		</repository>
-	</repositories>
-
 	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.7</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
