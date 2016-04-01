@@ -356,4 +356,9 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> {
 			}
 		}
 	}
+
+	public int getSize() {
+		return size;
+	}
+	
 }
