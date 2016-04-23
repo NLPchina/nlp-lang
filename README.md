@@ -46,6 +46,7 @@ http://maven.nlpcn.org/org/nlpcn/nlp-lang/
 * √ 简繁体转换
 * √ bloomfilter
 * √ 指纹去重 
+* √ SimHash文章相似度计算 
 * √ 词共现统计
 * √ 基于内存的搜索提示 
 * √ WordWeight词频统计,词idf统计,词类别相关度统计 
