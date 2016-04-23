@@ -11,6 +11,7 @@ public class StringUtil {
 	private static int[] filter = new int[128];
 	private static int[] filterEnd = new int[128];
 	private static final String EMPTY = "";
+	private static final String NULL = "null";
 
 	static {
 		filter['<'] = Integer.MAX_VALUE / 2;
@@ -154,6 +155,81 @@ public class StringUtil {
 		return chars;
 	}
 
+	public static String joiner(int[] ints, String split) {
+
+		if (ints.length == 0) {
+			return EMPTY;
+		}
+
+		StringBuilder sb = new StringBuilder(String.valueOf(ints[0]));
+
+		for (int i = 1; i < ints.length; i++) {
+			sb.append(split);
+			sb.append(ints[i]);
+		}
+
+		return sb.toString();
+	}
+	
+	public static String joiner(double[] doubles, String split) {
+
+		if (doubles.length == 0) {
+			return EMPTY;
+		}
+
+		StringBuilder sb = new StringBuilder(String.valueOf(doubles[0]));
+
+		for (int i = 1; i < doubles.length; i++) {
+			sb.append(split);
+			sb.append(doubles[i]);
+		}
+
+		return sb.toString();
+	}
+	
+
+	public static String joiner(float[] floats, String split) {
+
+		if (floats.length == 0) {
+			return EMPTY;
+		}
+
+		StringBuilder sb = new StringBuilder(String.valueOf(floats[0]));
+
+		for (int i = 1; i < floats.length; i++) {
+			sb.append(split);
+			sb.append(floats[i]);
+		}
+
+		return sb.toString();
+	}
+	
+
+	public static String joiner(long[] longs, String split) {
+
+		if (longs.length == 0) {
+			return EMPTY;
+		}
+
+		StringBuilder sb = new StringBuilder(String.valueOf(longs[0]));
+
+		for (int i = 1; i < longs.length; i++) {
+			sb.append(split);
+			sb.append(longs[i]);
+		}
+
+		return sb.toString();
+	}
+
+
+	public static String toString(Object obj) {
+		if (obj == null) {
+			return NULL;
+		} else {
+			return obj.toString();
+		}
+	}
+
 	public static String joiner(Collection<?> c, String split) {
 
 		Iterator<?> iterator = c.iterator();
@@ -166,7 +242,7 @@ public class StringUtil {
 
 		while (iterator.hasNext()) {
 			sb.append(split);
-			sb.append(iterator.next().toString());
+			sb.append(toString(iterator.next()).toString());
 		}
 
 		return sb.toString();
