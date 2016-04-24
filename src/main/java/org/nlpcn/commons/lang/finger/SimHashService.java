@@ -177,7 +177,7 @@ public class SimHashService extends AbsService {
 
 			int hmDistance = 64;
 			for (Long hc : sets) {
-				hmDistance = Integer.min(hmDistance(hashCode, hc), hmDistance);
+				hmDistance = Math.min(hmDistance(hashCode, hc), hmDistance);
 				if (hmDistance == 0) {
 					return hmDistance;
 				}
