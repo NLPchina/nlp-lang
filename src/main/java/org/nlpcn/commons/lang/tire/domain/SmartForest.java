@@ -56,7 +56,7 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public SmartForest<T> add(SmartForest<T> branch) {
+	public synchronized SmartForest<T> add(SmartForest<T> branch) {
 		if (branches == null) {
 			branches = new SmartForest[0];
 		}
