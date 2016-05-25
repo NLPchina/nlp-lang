@@ -267,7 +267,7 @@ public class IOUtil {
 					System.err.println(path + " line:" + index + " has err :" + readLine + " err to load !");
 					continue;
 				}
-				hm.put((K) ReflectUtil.conversion(split[0], key), (V) ReflectUtil.conversion(split[1], value));
+				hm.put((K) ObjConver.conversion(split[0], key), (V) ObjConver.conversion(split[1], value));
 			}
 		} finally {
 			iteartor.close();

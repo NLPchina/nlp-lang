@@ -31,14 +31,21 @@ public class StringUtilTest {
 	public void joinerTest() {
 		int[] ints = new int[] { 1, 2, 3, 4, 5, 6, 7 };
 		Assert.assertEquals(StringUtil.joiner(ints, ","), "1,2,3,4,5,6,7");
-		
-		List<Integer> list = new ArrayList<Integer>() ;
-		
+
+		List<Integer> list = new ArrayList<Integer>();
+
 		for (int i : ints) {
-			list.add(i) ;
+			list.add(i);
 		}
-		
+
 		Assert.assertEquals(StringUtil.joiner(list, ","), "1,2,3,4,5,6,7");
+	}
+
+	@Test
+	public void trimTest(){
+		String str = new String(new char[]{(char)65279,'\u00A0','\u3000'}) ;
+		
+		Assert.assertEquals(StringUtil.trim(str).length(), 0);
 	}
 
 }

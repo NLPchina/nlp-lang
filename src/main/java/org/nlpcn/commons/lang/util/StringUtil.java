@@ -1,8 +1,12 @@
 package org.nlpcn.commons.lang.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringUtil {
 
@@ -170,7 +174,7 @@ public class StringUtil {
 
 		return sb.toString();
 	}
-	
+
 	public static String joiner(double[] doubles, String split) {
 
 		if (doubles.length == 0) {
@@ -186,7 +190,6 @@ public class StringUtil {
 
 		return sb.toString();
 	}
-	
 
 	public static String joiner(float[] floats, String split) {
 
@@ -203,7 +206,6 @@ public class StringUtil {
 
 		return sb.toString();
 	}
-	
 
 	public static String joiner(long[] longs, String split) {
 
@@ -220,7 +222,6 @@ public class StringUtil {
 
 		return sb.toString();
 	}
-
 
 	public static String toString(Object obj) {
 		if (obj == null) {
@@ -260,5 +261,77 @@ public class StringUtil {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * 正则匹配第一个
+	 * 
+	 * @param regex
+	 * @param input
+	 * @return
+	 */
+	public static String matcherFirst(String regex, String input) {
+		Matcher matcher = Pattern.compile(regex).matcher(input); // 读取特征个数
+		if (matcher.find()) {
+			return input.substring(matcher.start(), matcher.end());
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * trim 一个字符串.扩展了string类原生的trim.对BOM和中文空格进行trim
+	 * 
+	 * @return
+	 */
+	public static String trim(String value) {
+
+		if (value == null) {
+			return value;
+		}
+
+		int len = value.length();
+
+		int st = 0;
+
+		while ((st < len) && (Character.isWhitespace(value.charAt(st)) || value.charAt(st) == 65279 || value.charAt(st) == 160 || value.charAt(st) == 12288)) {
+			st++;
+		}
+		while ((st < len) && (Character.isWhitespace(value.charAt(len - 1)) || value.charAt(st) == 160 || value.charAt(st) == 12288)) {
+			len--;
+		}
+		return ((st > 0) || (len < value.length())) ? value.substring(st, len) : value;
+	}
+
+	/**
+	 * 正则匹配全部
+	 * 
+	 * @param regex
+	 * @param input
+	 * @return
+	 */
+	public static List<String> matcherAll(String regex, String input) {
+		List<String> result = new ArrayList<String>();
+		Matcher matcher = Pattern.compile(regex).matcher(input); // 读取特征个数
+		while (matcher.find()) {
+			result.add(input.substring(matcher.start(), matcher.end()));
+		}
+		return result;
+	}
+
+	/**
+	 * 正则匹配全部
+	 * 
+	 * @param regex
+	 * @param input
+	 * @return
+	 */
+	public static String matcherLast(String regex, String input) {
+		List<String> result = matcherAll(regex, input);
+		if (result.size() == 0) {
+			return null;
+		} else {
+			return result.get(result.size() - 1);
+		}
 	}
 }
