@@ -1,5 +1,6 @@
 package org.nlpcn.commons.lang.tire.domain;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,8 +12,10 @@ import org.nlpcn.commons.lang.tire.SmartGetWord;
  *
  * @author ansj
  */
-public class SmartForest<T> implements Comparable<SmartForest<T>> {
+public class SmartForest<T> implements Comparable<SmartForest<T>> , Serializable {
 
+	private static final long serialVersionUID = -6088248882078972772L;
+	
 	private static final int MAX_SIZE = 65536;
 	/**
 	 * status 此字的状态1，继续 2，是个词语但是还可以继续 ,3确定 nature 词语性质

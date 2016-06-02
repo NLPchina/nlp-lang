@@ -4,6 +4,8 @@ import org.nlpcn.commons.lang.tire.GetWord;
 
 public class Forest extends SmartForest<String[]> {
 
+	private static final long serialVersionUID = -4616310486272978650L;
+
 	public Forest() {
 	};
 
