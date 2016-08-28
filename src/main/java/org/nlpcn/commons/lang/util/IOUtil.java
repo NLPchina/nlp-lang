@@ -30,7 +30,7 @@ public class IOUtil {
 		return getReader(new File(path), charEncoding);
 	}
 
-	private static BufferedReader getReader(File file, String charEncoding) throws FileNotFoundException, UnsupportedEncodingException {
+	public static BufferedReader getReader(File file, String charEncoding) throws FileNotFoundException, UnsupportedEncodingException {
 		// TODO Auto-generated method stub
 		InputStream is = new FileInputStream(file);
 		return new BufferedReader(new InputStreamReader(is, charEncoding));
@@ -267,7 +267,7 @@ public class IOUtil {
 					System.err.println(path + " line:" + index + " has err :" + readLine + " err to load !");
 					continue;
 				}
-				hm.put((K) ReflectUtil.conversion(split[0], key), (V) ReflectUtil.conversion(split[1], value));
+				hm.put((K) ObjConver.conversion(split[0], key), (V) ObjConver.conversion(split[1], value));
 			}
 		} finally {
 			iteartor.close();
@@ -277,6 +277,7 @@ public class IOUtil {
 
 	/**
 	 * 將一個map寫入到文件
+	 * 
 	 * @param hm
 	 * @param path
 	 * @param charEncoding
@@ -300,9 +301,10 @@ public class IOUtil {
 			fos.close();
 		}
 	}
-	
+
 	/**
 	 * 講一個list寫入到文件
+	 * 
 	 * @param list
 	 * @param path
 	 * @param charEncoding
@@ -331,6 +333,10 @@ public class IOUtil {
 
 	public static List<String> readFile2List(File file, String charEncoding) throws FileNotFoundException, UnsupportedEncodingException {
 		return readFile2List(getReader(file, charEncoding));
+	}
+
+	public static List<String> readFile2List(InputStream inputStream, String charEncoding) throws UnsupportedEncodingException {
+		return readFile2List(getReader(inputStream, charEncoding));
 	}
 
 	/**
