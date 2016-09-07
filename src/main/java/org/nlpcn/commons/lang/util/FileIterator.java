@@ -1,6 +1,7 @@
 package org.nlpcn.commons.lang.util;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +13,7 @@ import java.util.Iterator;
  * 
  * @author ansj
  */
-public class FileIterator implements Iterator<String> {
+public class FileIterator implements Iterator<String>, Closeable {
 	String temp = null;
 	private BufferedReader br = null;
 
@@ -58,12 +59,12 @@ public class FileIterator implements Iterator<String> {
 		}
 	}
 
+	@Override
 	public void close() {
 		if (br != null)
 			try {
 				br.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	}
