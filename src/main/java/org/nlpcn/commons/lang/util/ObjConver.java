@@ -248,6 +248,23 @@ public class ObjConver {
 		throw new ClassCastException("can not cast to int, value : " + value);
 	}
 
+	private static Character castToCharacter(Object value) {
+
+		if (value instanceof Character) {
+			return (Character) value;
+		}
+
+		if (value instanceof Number) {
+			return (char) ((Number) value).intValue();
+		}
+
+		if (value != null) {
+			return value.toString().trim().charAt(0);
+		}
+
+		return null;
+	}
+
 	/**
 	 * 将一个对象转换为对应的类
 	 * 
@@ -264,6 +281,8 @@ public class ObjConver {
 	public static <T> T conversion(Object value, Class<T> c) {
 		if (String.class.equals(c)) {
 			return (T) value;
+		} else if (Character.class.equals(c)) {
+			return (T) ObjConver.castToCharacter(value);
 		} else if (Integer.class.equals(c)) {
 			return (T) ObjConver.castToInteger(value);
 		} else if (Double.class.equals(c)) {
@@ -278,4 +297,5 @@ public class ObjConver {
 			throw new RuntimeException("not define this class by " + c);
 		}
 	}
+
 }
