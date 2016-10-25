@@ -293,6 +293,7 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> , Serializable
 	 */
 	public void remove(String word) {
 		getBranch(word).status = 1;
+		getBranch(word).param = null ;
 	}
 
 	/**
