@@ -114,7 +114,9 @@ public class ObjConver {
 		}
 		long longValue = -1;
 
-		if (value instanceof Number) {
+		if(value instanceof Date){
+			return (Date) value ;
+		}else if (value instanceof Number) {
 			longValue = ((Number) value).longValue();
 		} else if (value instanceof String) {
 			String strVal = (String) value;
