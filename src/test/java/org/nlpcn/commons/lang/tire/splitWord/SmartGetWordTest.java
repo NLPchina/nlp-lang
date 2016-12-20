@@ -16,7 +16,7 @@ public class SmartGetWordTest {
 		 * 词典的构造.一行一个词后面是参数.可以从文件读取.可以是read流.
 		 */
 		long start = System.currentTimeMillis();
-		SmartForest<Integer> forest = new SmartForest<>();
+		SmartForest<Integer> forest = new SmartForest<Integer>();
 
 		forest.add("中国", 3);
 

@@ -7,7 +7,7 @@ public class MemoryIndexTest {
 
 	@Test
 	public void test() {
-		MemoryIndex<String> mi = new MemoryIndex<>();
+		MemoryIndex<String> mi = new MemoryIndex<String>();
 		
 //		FileIterator instanceFileIterator = IOUtil.instanceFileIterator("/home/ansj/workspace/ansj_seg/library/default.dic", IOUtil.UTF8);
 //

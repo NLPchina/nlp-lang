@@ -6363,7 +6363,7 @@
 曚=meng2
 曛=xun1
 曜=yao4,yue4
-曝=pu4,bao4
+曝=bao4,pu4
 曞=li4
 曟=chen2
 曠=kuang4

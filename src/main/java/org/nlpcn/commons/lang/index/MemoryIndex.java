@@ -14,7 +14,7 @@ import org.nlpcn.commons.lang.util.StringUtil;
 
 public class MemoryIndex<T> {
 
-	private Map<String, TreeSet<Entry>> index = new HashMap<>();
+	private Map<String, TreeSet<Entry>> index = new HashMap<String, TreeSet<Entry>>();
 
 	private int size;
 
@@ -76,7 +76,7 @@ public class MemoryIndex<T> {
 			treeSet = index.get(key);
 
 			if (treeSet == null) {
-				treeSet = new TreeSet<>();
+				treeSet = new TreeSet<Entry>();
 				index.put(key, treeSet);
 			}
 			treeSet.add(new Entry(value, score(value, score)));
@@ -92,7 +92,7 @@ public class MemoryIndex<T> {
 	}
 
 	private Set<String> getAllSplit(final String[] fields) {
-		HashSet<String> hs = new HashSet<>();
+		HashSet<String> hs = new HashSet<String>();
 		for (String string : fields) {
 			if (StringUtil.isBlank(string)) {
 				continue;
@@ -108,7 +108,7 @@ public class MemoryIndex<T> {
 	}
 
 	private Set<String> getPrexSplit(final String[] fields) {
-		HashSet<String> hs = new HashSet<>();
+		HashSet<String> hs = new HashSet<String>();
 		for (String string : fields) {
 			if (StringUtil.isBlank(string)) {
 				continue;

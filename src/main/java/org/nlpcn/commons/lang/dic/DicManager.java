@@ -11,7 +11,7 @@ import org.nlpcn.commons.lang.tire.library.Library;
  */
 public class DicManager {
 
-	private static final HashMap<String, Forest> forestMap = new HashMap<>();
+	private static final HashMap<String, Forest> forestMap = new HashMap<String, Forest>();
 
 	/**
 	 * 构建一个tire书辞典

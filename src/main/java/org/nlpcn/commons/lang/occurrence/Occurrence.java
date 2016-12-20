@@ -228,7 +228,7 @@ public class Occurrence implements Serializable {
 	}
 
 	public Map<String, Count> getWord2Mc() {
-		return new HashMap<>(word2Mc);
+		return new HashMap<String, Count>(word2Mc);
 	}
 
 }

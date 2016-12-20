@@ -4,6 +4,8 @@ import org.nlpcn.commons.lang.tire.GetWord;
 
 public class Forest extends SmartForest<String[]> {
 
+	private static final long serialVersionUID = -4616310486272978650L;
+
 	public Forest() {
 	};
 
@@ -11,12 +13,12 @@ public class Forest extends SmartForest<String[]> {
 		super(c, status, param);
 	}
 
-	public Forest get(char c) {
+	public SmartForest<String[]> get(char c) {
 		return this.getBranch(c);
 	}
 
-	public Forest getBranch(char c) {
-		return (Forest) super.getBranch(c);
+	public SmartForest<String[]> getBranch(char c) {
+		return super.getBranch(c);
 	}
 
 	public GetWord getWord(String str) {

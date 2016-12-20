@@ -31,14 +31,14 @@ public class ObjConver {
 	}
 
 	public static Integer getInteger(String value) {
-		return castToInt(value);
+		return castToInteger(value);
 	}
 
 	public static int getIntValue(String value) {
 		if (StringUtil.isBlank(value)) {
 			return 0;
 		}
-		return castToInt(value);
+		return castToInteger(value);
 	}
 
 	public static Date getDate(String value) {
@@ -114,7 +114,9 @@ public class ObjConver {
 		}
 		long longValue = -1;
 
-		if (value instanceof Number) {
+		if(value instanceof Date){
+			return (Date) value ;
+		}else if (value instanceof Number) {
 			longValue = ((Number) value).longValue();
 		} else if (value instanceof String) {
 			String strVal = (String) value;
@@ -189,7 +191,7 @@ public class ObjConver {
 		throw new ClassCastException("can not cast to long, value : " + value);
 	}
 
-	public static final Integer castToInt(Object value) {
+	public static final Integer castToInteger(Object value) {
 		if (value == null) {
 			return null;
 		}
@@ -247,4 +249,55 @@ public class ObjConver {
 
 		throw new ClassCastException("can not cast to int, value : " + value);
 	}
+
+	private static Character castToCharacter(Object value) {
+
+		if (value instanceof Character) {
+			return (Character) value;
+		}
+
+		if (value instanceof Number) {
+			return (char) ((Number) value).intValue();
+		}
+
+		if (value != null) {
+			return value.toString().trim().charAt(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * 将一个对象转换为对应的类
+	 * 
+	 * @param <T>
+	 * 
+	 * @param <T>
+	 *
+	 * @param <T>
+	 * @param value
+	 * @param c
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T conversion(Object value, Class<T> c) {
+		if (String.class.equals(c)) {
+			return (T) value;
+		} else if (Character.class.equals(c)) {
+			return (T) ObjConver.castToCharacter(value);
+		} else if (Integer.class.equals(c)) {
+			return (T) ObjConver.castToInteger(value);
+		} else if (Double.class.equals(c)) {
+			return (T) ObjConver.castToDouble(value);
+		} else if (Float.class.equals(c)) {
+			return (T) ObjConver.castToFloat(value);
+		} else if (Long.class.equals(c)) {
+			return (T) ObjConver.castToLong(value);
+		} else if (Boolean.class.equals(c)) {
+			return (T) ObjConver.castToBoolean(value);
+		} else {
+			throw new RuntimeException("not define this class by " + c);
+		}
+	}
+
 }

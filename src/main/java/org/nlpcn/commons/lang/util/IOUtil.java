@@ -30,7 +30,7 @@ public class IOUtil {
 		return getReader(new File(path), charEncoding);
 	}
 
-	private static BufferedReader getReader(File file, String charEncoding) throws FileNotFoundException, UnsupportedEncodingException {
+	public static BufferedReader getReader(File file, String charEncoding) throws FileNotFoundException, UnsupportedEncodingException {
 		// TODO Auto-generated method stub
 		InputStream is = new FileInputStream(file);
 		return new BufferedReader(new InputStreamReader(is, charEncoding));
@@ -267,7 +267,7 @@ public class IOUtil {
 					System.err.println(path + " line:" + index + " has err :" + readLine + " err to load !");
 					continue;
 				}
-				hm.put((K) ReflectUtil.conversion(split[0], key), (V) ReflectUtil.conversion(split[1], value));
+				hm.put((K) ObjConver.conversion(split[0], key), (V) ObjConver.conversion(split[1], value));
 			}
 		} finally {
 			iteartor.close();
@@ -275,6 +275,14 @@ public class IOUtil {
 		return hm;
 	}
 
+	/**
+	 * 將一個map寫入到文件
+	 * 
+	 * @param hm
+	 * @param path
+	 * @param charEncoding
+	 * @throws IOException
+	 */
 	public static <K, V> void writeMap(Map<K, V> hm, String path, String charEncoding) throws IOException {
 		Iterator<Entry<K, V>> iterator = hm.entrySet().iterator();
 		FileOutputStream fos = null;
@@ -283,9 +291,34 @@ public class IOUtil {
 			fos = new FileOutputStream(path);
 			while (iterator.hasNext()) {
 				next = iterator.next();
-				fos.write(next.getKey().toString().getBytes());
+				fos.write(next.getKey().toString().getBytes(charEncoding));
 				fos.write(TABBYTE);
-				fos.write(next.getValue().toString().getBytes());
+				fos.write(next.getValue().toString().getBytes(charEncoding));
+				fos.write(LINEBYTE);
+			}
+			fos.flush();
+		} finally {
+			fos.close();
+		}
+	}
+
+	/**
+	 * 講一個list寫入到文件
+	 * 
+	 * @param list
+	 * @param path
+	 * @param charEncoding
+	 * @throws IOException
+	 */
+	public static <T> void writeList(List<T> list, String path, String charEncoding) throws IOException {
+		Iterator<T> iterator = list.iterator();
+		FileOutputStream fos = null;
+		T next = null;
+		try {
+			fos = new FileOutputStream(path);
+			while (iterator.hasNext()) {
+				next = iterator.next();
+				fos.write(next.toString().getBytes(charEncoding));
 				fos.write(LINEBYTE);
 			}
 			fos.flush();
@@ -300,6 +333,10 @@ public class IOUtil {
 
 	public static List<String> readFile2List(File file, String charEncoding) throws FileNotFoundException, UnsupportedEncodingException {
 		return readFile2List(getReader(file, charEncoding));
+	}
+
+	public static List<String> readFile2List(InputStream inputStream, String charEncoding) throws UnsupportedEncodingException {
+		return readFile2List(getReader(inputStream, charEncoding));
 	}
 
 	/**

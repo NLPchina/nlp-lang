@@ -1,8 +1,11 @@
 nlp-lang
 ========
 
+[![1.X Build Status](https://travis-ci.org/NLPchina/nlp-lang.svg?branch=master)](https://travis-ci.org/NLPchina/nlp-lang)
+
 文档地址:http://www.nlpcn.org/docs/7 
 部分演示:http://www.nlpcn.org/demo
+
 
 
 ##MAVEN
@@ -18,7 +21,7 @@ nlp-lang
         <dependency>
             <groupId>org.nlpcn</groupId>
             <artifactId>nlp-lang</artifactId>
-            <version>0.2</version>
+            <version>1.7</version>
         </dependency>
     </dependencies>
     
@@ -43,7 +46,9 @@ http://maven.nlpcn.org/org/nlpcn/nlp-lang/
 * √ 简繁体转换
 * √ bloomfilter
 * √ 指纹去重 
+* √ SimHash文章相似度计算 
 * √ 词共现统计
 * √ 基于内存的搜索提示 
+* √ WordWeight词频统计,词idf统计,词类别相关度统计 
 
 

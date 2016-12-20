@@ -20,5 +20,12 @@ public class CollectionUtil {
 		return orderList;
 	}
 
-
+	public static <K, V> Map<K, V> as(K k1, V v1) {
+		Map<K,V> result = new HashMap<K, V>() ;
+		result.put(k1, v1) ;
+		return result ;
+	}
+	
+	
+	
 }
