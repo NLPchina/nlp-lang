@@ -29,14 +29,7 @@ public class SimHashService extends AbsService {
 	 * @return
 	 */
 	public int hmDistance(long a, long b) {
-		int d = 0;
-		a = a ^ b;
-		for (int i = 0; i < BYTE_LEN; i++) {
-			if ((a & BITS[i]) != 0) {
-				d++;
-			}
-		}
-		return d;
+		return Long.bitCount(a ^ b);
 	}
 
 	/**
