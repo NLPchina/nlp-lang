@@ -19,7 +19,7 @@ public class BloomFilter {
 	Filter[] filters = new Filter[length];
 
 	public BloomFilter(int m) throws Exception {
-		float mNum = m / 5;
+		int mNum = m / 5;
 		long size = (long) (1L * mNum * 1024 * 1024 * 8);
 		filters[0] = new JavaFilter(size);
 		filters[1] = new PHPFilter(size);
