@@ -29,14 +29,7 @@ public class SimHashService extends AbsService {
 	 * @return
 	 */
 	public int hmDistance(long a, long b) {
-		int d = 0;
-		a = a ^ b;
-		for (int i = 0; i < BYTE_LEN; i++) {
-			if ((a & BITS[i]) != 0) {
-				d++;
-			}
-		}
-		return d;
+		return Long.bitCount(a ^ b);
 	}
 
 	/**
@@ -167,22 +160,18 @@ public class SimHashService extends AbsService {
 		public int nearest(long hashCode) {
 			int[] indexs = makeCodeIndex(hashCode);
 
-			Set<Long> sets = new HashSet<Long>();
+            int hmDistance = 64;
 			for (int i = 0; i < indexs.length; i++) {
 				List<Long> list = lists[indexs[i]];
 				if (list != null) {
-					sets.addAll(list);
+				    for (Long hc : list) {
+                        hmDistance = Math.min(hmDistance(hashCode, hc), hmDistance);
+                    }
+                    if (hmDistance == 0) {
+                        return hmDistance;
+                    }
 				}
 			}
-
-			int hmDistance = 64;
-			for (Long hc : sets) {
-				hmDistance = Math.min(hmDistance(hashCode, hc), hmDistance);
-				if (hmDistance == 0) {
-					return hmDistance;
-				}
-			}
-			
 			return hmDistance;
 		}
 
