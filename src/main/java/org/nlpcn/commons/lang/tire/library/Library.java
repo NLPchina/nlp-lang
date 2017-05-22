@@ -1,6 +1,7 @@
 package org.nlpcn.commons.lang.tire.library;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
@@ -11,13 +12,34 @@ import org.nlpcn.commons.lang.tire.domain.Value;
 import org.nlpcn.commons.lang.util.IOUtil;
 
 public class Library {
-
+	/**
+	 * 根据文件路径构造forest,若指定路径为空则返回空的forest
+	 * @param path 文件路径
+	 * @return
+	 * @throws Exception
+	 */
 	public static Forest makeForest(String path) throws Exception {
-		return makeForest(new FileInputStream(path));
+		File file = new File(path);
+		if(file.exists() && file.isFile()){
+			return makeForest(new FileInputStream(path));
+		}else{
+			return new Forest();
+		}
 	}
-
+	/**
+	 * 根据文件路径和文件编码构造forest,若指定路径为空则返回空的forest
+	 * @param path 文件路径
+	 * @param encoding 文件编码
+	 * @return
+	 * @throws Exception
+	 */
 	public static Forest makeForest(String path, String encoding) throws Exception {
-		return makeForest(new FileInputStream(path), encoding);
+		File file = new File(path);
+		if(file.exists() && file.isFile()){
+			return makeForest(new FileInputStream(path), encoding);
+		}else{
+			return new Forest();
+		}
 	}
 
 	public static Forest makeForest(InputStream inputStream) throws Exception {
