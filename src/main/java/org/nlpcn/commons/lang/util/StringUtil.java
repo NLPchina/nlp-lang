@@ -1,10 +1,6 @@
 package org.nlpcn.commons.lang.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,40 +56,40 @@ public class StringUtil {
 			}
 
 			switch (filter[c]) {
-			case -1:
-				break;
-			case 0:
-				sb.append(c);
-				break;
-			case 1:
-				if (sb.length() > 0 && sb.charAt(sb.length() - 1) != c)
+				case -1:
+					break;
+				case 0:
 					sb.append(c);
-				do {
-					i++;
-				} while (i < length && input.charAt(i) == c);
+					break;
+				case 1:
+					if (sb.length() > 0 && sb.charAt(sb.length() - 1) != c)
+						sb.append(c);
+					do {
+						i++;
+					} while (i < length && input.charAt(i) == c);
 
-				if (i < length || input.charAt(length - 1) != c)
-					i--;
-				break;
-			default:
-				tl = filter[c] + i;
-				int tempOff = i;
-				boolean flag = false;
-				char end = (char) filterEnd[c];
-				for (i++; i < length && i < tl; i++) {
-					c = input.charAt(i);
-					if (c > 127)
-						continue;
-					if (c == end) {
-						flag = true;
-						break;
+					if (i < length || input.charAt(length - 1) != c)
+						i--;
+					break;
+				default:
+					tl = filter[c] + i;
+					int tempOff = i;
+					boolean flag = false;
+					char end = (char) filterEnd[c];
+					for (i++; i < length && i < tl; i++) {
+						c = input.charAt(i);
+						if (c > 127)
+							continue;
+						if (c == end) {
+							flag = true;
+							break;
+						}
 					}
-				}
-				if (!flag) {
-					i = tempOff;
-					sb.append(input.charAt(i));
-				}
-				break;
+					if (!flag) {
+						i = tempOff;
+						sb.append(input.charAt(i));
+					}
+					break;
 			}
 		}
 		return sb.toString();
@@ -191,6 +187,22 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	public static String joiner(String[] strs, String split) {
+
+		if (strs.length == 0) {
+			return EMPTY;
+		}
+
+		StringBuilder sb = new StringBuilder(String.valueOf(strs[0]));
+
+		for (int i = 1; i < strs.length; i++) {
+			sb.append(split);
+			sb.append(strs[i]);
+		}
+
+		return sb.toString();
+	}
+
 	public static String joiner(float[] floats, String split) {
 
 		if (floats.length == 0) {
@@ -265,7 +277,7 @@ public class StringUtil {
 
 	/**
 	 * 正则匹配第一个
-	 * 
+	 *
 	 * @param regex
 	 * @param input
 	 * @return
@@ -281,7 +293,7 @@ public class StringUtil {
 
 	/**
 	 * trim 一个字符串.扩展了string类原生的trim.对BOM和中文空格进行trim
-	 * 
+	 *
 	 * @return
 	 */
 	public static String trim(String value) {
@@ -305,7 +317,7 @@ public class StringUtil {
 
 	/**
 	 * 正则匹配全部
-	 * 
+	 *
 	 * @param regex
 	 * @param input
 	 * @return
@@ -321,7 +333,7 @@ public class StringUtil {
 
 	/**
 	 * 正则匹配全部
-	 * 
+	 *
 	 * @param regex
 	 * @param input
 	 * @return
@@ -334,4 +346,5 @@ public class StringUtil {
 			return result.get(result.size() - 1);
 		}
 	}
+
 }

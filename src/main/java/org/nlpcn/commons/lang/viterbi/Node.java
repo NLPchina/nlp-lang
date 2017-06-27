@@ -17,7 +17,12 @@ public class Node<T> {
 	/**
 	 * 用以累计的分数
 	 */
-	private double score;
+	private Double score;
+
+	/**
+	 * 自身的分数
+	 */
+	private Double selfScore ;
 
 
 	/**
@@ -38,17 +43,27 @@ public class Node<T> {
 
 
 	public Node(int index, T t, Values<T> fun) {
-		this.t = t;
 		this.index = index;
-		this.toIndex = index + fun.step(t);
+		this.t = t;
+		this.toIndex = index + fun.step(this);
+		this.selfScore = fun.selfSscore(this) ;
 	}
 
 
-	public double getScore() {
+	public Double getScore() {
 		return score;
 	}
 
-	public void setScore(double score) {
+
+	public double getScoreWithoutNull(){
+		if(score == null){
+			return 0 ;
+		}else{
+			return score ;
+		}
+	}
+
+	public void setScore(Double score) {
 		this.score = score;
 	}
 
@@ -80,4 +95,19 @@ public class Node<T> {
 		return t;
 	}
 
+	public T getT() {
+		return t;
+	}
+
+	public void setT(T t) {
+		this.t = t;
+	}
+
+	public Double getSelfScore() {
+		return selfScore;
+	}
+
+	public void setSelfScore(Double selfScore) {
+		this.selfScore = selfScore;
+	}
 }

@@ -9,14 +9,15 @@ public interface Score<T> {
 
 	/**
 	 * 打分公式,用户自己实现
+	 *
 	 * @param from
-	 * @param node
 	 */
 	double score(Node<T> from, Node<T> to);
 
 	/**
 	 * 排序方式,true代表自然顺序,就是从小到大,false反之
+	 *
 	 * @return
 	 */
-	boolean sort() ;
+	boolean sort();
 }

@@ -1,5 +1,8 @@
 package org.nlpcn.commons.lang.util;
 
+import org.nlpcn.commons.lang.util.logging.Log;
+import org.nlpcn.commons.lang.util.logging.LogFactory;
+
 import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
@@ -10,6 +13,8 @@ import java.util.Map.Entry;
  * @author ansj
  */
 public class IOUtil {
+	private static final Log LOG =  LogFactory.getLog() ;
+
 	public static final String UTF8 = "utf-8";
 	public static final String GBK = "gbk";
 	public static final String TABLE = "\t";
@@ -264,7 +269,43 @@ public class IOUtil {
 				String readLine = iteartor.next();
 				split = readLine.split("\t");
 				if (split.length < 2) {
-					System.err.println(path + " line:" + index + " has err :" + readLine + " err to load !");
+					LOG.error(path + " line:" + index + " has err :" + readLine + " err to load !");
+					continue;
+				}
+				hm.put((K) ObjConver.conversion(split[0], key), (V) ObjConver.conversion(split[1], value));
+			}
+		} finally {
+			iteartor.close();
+		}
+		return hm;
+	}
+
+	/**
+	 * 加载一个文件到hashMap
+	 *
+	 * @param is
+	 * @param charEncoding
+	 * @param key
+	 * @param value
+	 * @return
+	 * @throws java.io.UnsupportedEncodingException
+	 */
+	@SuppressWarnings({ "unchecked" })
+	public static <K, V> HashMap<K, V> loadMap(InputStream is, String charEncoding, Class<K> key, Class<V> value) throws UnsupportedEncodingException {
+
+		FileIterator iteartor = null;
+		HashMap<K, V> hm = null;
+		try {
+			iteartor = instanceFileIterator(is, charEncoding);
+			hm = new HashMap<K, V>();
+			String[] split = null;
+			int index = 0;
+			while (iteartor.hasNext()) {
+				index++;
+				String readLine = iteartor.next();
+				split = readLine.split("\t");
+				if (split.length < 2) {
+					LOG.error(" line:" + index + " has err :" + readLine + " err to load !");
 					continue;
 				}
 				hm.put((K) ObjConver.conversion(split[0], key), (V) ObjConver.conversion(split[1], value));
