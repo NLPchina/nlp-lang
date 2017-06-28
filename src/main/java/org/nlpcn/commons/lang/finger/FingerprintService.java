@@ -58,7 +58,7 @@ public class FingerprintService extends AbsService {
 
         Iterator<MyFingerprint> iterator = set.iterator();
         int j = 0;
-        HashSet<String> hs = new HashSet<String>();
+        Set<String> hs = new TreeSet<String>();
         for (; j < size && iterator.hasNext(); j++) {
             myFingerprint = iterator.next();
             hs.add(myFingerprint.getName() + " ");
