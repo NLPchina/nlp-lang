@@ -10,24 +10,14 @@ nlp-lang
 
 ##MAVEN
     
-    <repositories>
-        <repository>
-            <id>mvn-repo</id>
-            <url>http://maven.nlpcn.org/</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>org.nlpcn</groupId>
             <artifactId>nlp-lang</artifactId>
-            <version>1.7</version>
+            <version>1.7.3</version>
         </dependency>
     </dependencies>
     
-##DWON
-
-http://maven.nlpcn.org/org/nlpcn/nlp-lang/
 
 
 #### 这个项目是一个基本包.封装了大多数nlp项目中常用工具
