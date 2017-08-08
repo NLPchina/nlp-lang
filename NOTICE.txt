@@ -1,0 +1,5 @@
+nlp-lang
+Copyright 2011-2017 nlp-lang
+
+This product includes software developed by The Apache Software
+Foundation (http://www.apache.org/).
