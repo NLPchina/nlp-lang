@@ -69,84 +69,84 @@ public class WordAlert {
 				CHARCOVER[i] = (char) i;
 			}
 
-//			CHARCOVER['﹩'] = '$';
-//			CHARCOVER['　'] = ' ';
-//			CHARCOVER['，'] = ',';
-//			CHARCOVER['？'] = '?';
-//			CHARCOVER['“'] = '"' ;
-//			CHARCOVER['”'] = '"' ;
-			
-			
 		}
 	}
 
 	/**
 	 * 对全角的字符串,大写字母进行转译.如ｓｄｆｓｄｆ
-	 * 
+	 *
 	 * @param chars
 	 * @param start
 	 * @param end
 	 * @return
 	 */
 	public static String alertEnglish(char[] chars, int start, int end) {
+		char[] result = new char[end];
+		char c = 0;
 		for (int i = start; i < start + end; i++) {
-			if (chars[i] >= MIN_LOWER && chars[i] <= MAX_LOWER) {
-				chars[i] = (char) (chars[i] - LOWER_GAP);
-			}
-			if (chars[i] >= MIN_UPPER && chars[i] <= MAX_UPPER) {
-				chars[i] = (char) (chars[i] - UPPER_GAP);
-			}
-			if (chars[i] >= MIN_UPPER_E && chars[i] <= MAX_UPPER_E) {
-				chars[i] = (char) (chars[i] - UPPER_GAP_E);
+			c = chars[i];
+			if (c >= MIN_LOWER && c <= MAX_LOWER) {
+				result[i - start] = (char) (chars[i] - LOWER_GAP);
+			} else if (c >= MIN_UPPER && c <= MAX_UPPER) {
+				result[i - start] = (char) (c - UPPER_GAP);
+			} else if (c >= MIN_UPPER_E && c <= MAX_UPPER_E) {
+				result[i - start] = (char) (c - UPPER_GAP_E);
+			} else {
+				result[i - start] = c;
 			}
 		}
-		return new String(chars, start, end);
+		return new String(result);
 	}
 
 	public static String alertEnglish(String temp, int start, int end) {
 		char c = 0;
-		StringBuilder sb = new StringBuilder();
+		char[] result = new char[end];
 		for (int i = start; i < start + end; i++) {
 			c = temp.charAt(i);
 			if (c >= MIN_LOWER && c <= MAX_LOWER) {
-				sb.append((char) (c - LOWER_GAP));
+				result[i - start] = (char) (c - LOWER_GAP);
 			} else if (c >= MIN_UPPER && c <= MAX_UPPER) {
-				sb.append((char) (c - UPPER_GAP));
+				result[i - start] = (char) (c - UPPER_GAP);
 			} else if (c >= MIN_UPPER_E && c <= MAX_UPPER_E) {
-				sb.append((char) (c - UPPER_GAP_E));
+				result[i - start] = (char) (c - UPPER_GAP_E);
 			} else {
-				sb.append(c);
+				result[i - start] = c;
 			}
 		}
-		return sb.toString();
+		return new String(result);
 	}
 
 	public static String alertNumber(char[] chars, int start, int end) {
+		char[] result = new char[end];
+		char c = 0;
 		for (int i = start; i < start + end; i++) {
-			if (chars[i] >= MIN_UPPER_N && chars[i] <= MAX_UPPER_N) {
-				chars[i] = (char) (chars[i] - UPPER_GAP_N);
+			c = chars[i];
+			if (c >= MIN_UPPER_N && c <= MAX_UPPER_N) {
+				result[i - start] = (char) (c - UPPER_GAP_N);
+			} else {
+				result[i - start] = c;
 			}
 		}
-		return new String(chars, start, end);
+		return new String(result);
 	}
 
 	public static String alertNumber(String temp, int start, int end) {
+		char[] result = new char[end];
 		char c = 0;
-		StringBuilder sb = new StringBuilder();
 		for (int i = start; i < start + end; i++) {
 			c = temp.charAt(i);
 			if (c >= MIN_UPPER_N && c <= MAX_UPPER_N) {
-				sb.append((char) (c - UPPER_GAP_N));
+				result[i - start] = ((char) (c - UPPER_GAP_N));
 			} else {
-				sb.append(c);
+				result[i - start] = c;
 			}
 		}
-		return sb.toString();
+		return new String(result);
 	}
 
 	/**
 	 * 将一个字符串标准化
-	 * 
+	 *
 	 * @param str
 	 * @return
 	 */
@@ -166,7 +166,7 @@ public class WordAlert {
 
 	/**
 	 * 判断一个字符串是否是english
-	 * 
+	 *
 	 * @param word
 	 * @return
 	 */
@@ -185,7 +185,7 @@ public class WordAlert {
 
 	/**
 	 * 判断一个字符串是否是数字
-	 * 
+	 *
 	 * @param word
 	 * @return
 	 */
@@ -204,7 +204,7 @@ public class WordAlert {
 
 	/**
 	 * 将一个char标准化
-	 * 
+	 *
 	 * @param c
 	 * @return
 	 */
