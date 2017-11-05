@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Viterbi<T> {
 
-	private static final Node[] EMPTY= new Node[0] ;
+	private static final Node[] EMPTY = new Node[0];
 
 	private Node[][] graph;
 
@@ -19,8 +19,14 @@ public class Viterbi<T> {
 		graph = new Node[objGraph.length][];
 		for (int i = 0; i < objGraph.length; i++) {
 			T[] arr = objGraph[i];
+			if (arr == null) {
+				continue;
+			}
 			graph[i] = new Node[arr.length];
 			for (int j = 0; j < arr.length; j++) {
+				if (arr[j] == null) {
+					continue;
+				}
 				graph[i][j] = new Node(i, arr[j], fun);
 				if (i == 0) {
 					graph[i][j].setScore(graph[i][j].getSelfScore());
@@ -53,7 +59,7 @@ public class Viterbi<T> {
 			arr = graph[i];
 			for (int j = 0; j < arr.length; j++) {
 				from = arr[j];
-				if(from.getToIndex()>=graph.length){
+				if (from==null || from.getToIndex() >= graph.length) {
 					continue;
 				}
 				toArr = graph[from.getToIndex()];
@@ -118,41 +124,42 @@ public class Viterbi<T> {
 		}
 	}
 
-	public Viterbi<T> rmLittlePath(){
+	public Viterbi<T> rmLittlePath() {
 		for (int i = 0; i < graph.length; i++) {
-			Node[] nodes = graph[i] ;
-			int maxIndex = -1 ;
-			Node maxNode = null ;
+			Node[] nodes = graph[i];
+			int maxIndex = -1;
+			Node maxNode = null;
 			for (int j = 0; j < nodes.length; j++) {
-				if(maxIndex<nodes[j].getToIndex()){
-					maxNode = nodes[j] ;
-					maxIndex = Math.min(maxNode.getToIndex(),graph.length-1) ;
+				if (maxIndex < nodes[j].getToIndex()) {
+					maxNode = nodes[j];
+					maxIndex = Math.min(maxNode.getToIndex(), graph.length - 1);
 				}
 			}
 
-			boolean flag = true ;
-			vd: for (int j = i+1; j < maxIndex; j++) {
-				Node[] tempNodes = graph[j] ;
-				for (Node node: tempNodes) {
-					if(node.getToIndex()>maxIndex){
-						flag = false ;
+			boolean flag = true;
+			vd:
+			for (int j = i + 1; j < maxIndex; j++) {
+				Node[] tempNodes = graph[j];
+				for (Node node : tempNodes) {
+					if (node.getToIndex() > maxIndex) {
+						flag = false;
 						break vd;
 					}
 				}
 
 			}
 
-			if(flag){
-				for (int j = i+1; j < maxIndex; j++){
+			if (flag) {
+				for (int j = i + 1; j < maxIndex; j++) {
 					graph[j] = EMPTY;
 				}
 			}
 
-			i = Math.max(i,maxIndex) ;
+			i = Math.max(i, maxIndex);
 
 		}
 
-		return this ;
+		return this;
 	}
 
 	public void printSelfScore() {
