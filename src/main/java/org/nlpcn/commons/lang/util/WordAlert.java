@@ -63,12 +63,9 @@ public class WordAlert {
 				CHARCOVER[i] = (char) (i - UPPER_GAP_E);
 			} else if (i >= MIN_UPPER_N && i <= MAX_UPPER_N) {
 				CHARCOVER[i] = (char) (i - UPPER_GAP_N);
-			} else if (i >= '0' && i <= '9') {
-				CHARCOVER[i] = (char) i;
-			} else if (i >= 'a' && i <= 'z') {
+			} else {
 				CHARCOVER[i] = (char) i;
 			}
-
 		}
 	}
 
@@ -154,12 +151,7 @@ public class WordAlert {
 		char[] chars = new char[str.length()];
 		char c = 0;
 		for (int i = 0; i < chars.length; i++) {
-			c = CHARCOVER[str.charAt(i)];
-			if (c > 0) {
-				chars[i] = c;
-			} else {
-				chars[i] = str.charAt(i);
-			}
+			chars[i] = CHARCOVER[str.charAt(i)];
 		}
 		return chars;
 	}

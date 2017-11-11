@@ -54,19 +54,22 @@ public class Viterbi<T> {
 		Node[] toArr = null;
 		Node from = null;
 		Node to = null;
+		Double newScore = null;
 
 		for (int i = 0; i < graph.length - 1; i++) {
 			arr = graph[i];
 			for (int j = 0; j < arr.length; j++) {
 				from = arr[j];
-				if (from==null || from.getToIndex() >= graph.length) {
+				if (from == null || from.getToIndex() >= graph.length) {
 					continue;
 				}
 				toArr = graph[from.getToIndex()];
 				for (int k = 0; k < toArr.length; k++) {
-					to = toArr[k];
-					double newScore = score.score(from, to);
-					if (to.getScore() == null || (newScore > to.getScore()) == score.sort()) {
+					if ((to = toArr[k]) == null) {
+						continue;
+					}
+					newScore = score.score(from, to);
+					if (newScore != null && (to.getScore() == null || (newScore > to.getScore()) == score.sort())) {
 						to.setScore(newScore);
 						to.setFrom(from);
 					}
@@ -81,12 +84,9 @@ public class Viterbi<T> {
 		//find max score node
 		int maxIndex = 0;
 
-		double maxScore = nodes[0].getScoreWithoutNull();
-		for (int i = 1; i < nodes.length; i++) {
-			if (nodes[i] == null) {
-				continue;
-			}
-			if ((nodes[i].getScoreWithoutNull() > maxScore) == score.sort()) {
+		double maxScore = score.sort() ? -Double.MAX_VALUE : Double.MAX_VALUE;
+		for (int i = 0; i < nodes.length; i++) {
+			if (nodes[i] != null && nodes[i].getScore() != null && (nodes[i].getScore() > maxScore) == score.sort()) {
 				maxScore = nodes[i].getScore();
 				maxIndex = i;
 			}
@@ -104,20 +104,36 @@ public class Viterbi<T> {
 		return result;
 	}
 
-	public void printScore() {
+	public Viterbi<T> printScore() {
 		for (Node[] nodes : graph) {
+			if (nodes == null) {
+				continue;
+			}
 			for (Node node : nodes) {
-				System.out.print(node.getScore());
+				if (node == null) {
+					System.out.print("null");
+				}else{
+					System.out.print(node.getScore());
+				}
 				System.out.print("\t");
 			}
 			System.out.println();
 		}
+		return this;
 	}
 
 	public void print() {
 		for (Node[] nodes : graph) {
+			if (nodes == null) {
+				continue;
+			}
 			for (Node node : nodes) {
-				System.out.print(node.getObj());
+				if (node == null) {
+					System.out.print("null");
+				}else{
+					System.out.print(node.getObj());
+				}
+
 				System.out.print("\t");
 			}
 			System.out.println();
@@ -164,8 +180,15 @@ public class Viterbi<T> {
 
 	public void printSelfScore() {
 		for (Node[] nodes : graph) {
+			if (nodes == null) {
+				continue;
+			}
 			for (Node node : nodes) {
-				System.out.print(node.getSelfScore());
+				if (node == null) {
+					System.out.print("null");
+				} else {
+					System.out.print(node.getSelfScore());
+				}
 				System.out.print("\t");
 			}
 			System.out.println();

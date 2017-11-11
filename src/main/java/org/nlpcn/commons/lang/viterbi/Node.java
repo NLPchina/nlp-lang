@@ -55,14 +55,6 @@ public class Node<T> {
 	}
 
 
-	public double getScoreWithoutNull(){
-		if(score == null){
-			return 0 ;
-		}else{
-			return score ;
-		}
-	}
-
 	public void setScore(Double score) {
 		this.score = score;
 	}
@@ -110,4 +102,5 @@ public class Node<T> {
 	public void setSelfScore(Double selfScore) {
 		this.selfScore = selfScore;
 	}
+
 }

@@ -4,6 +4,7 @@ import org.nlpcn.commons.lang.util.logging.Log;
 import org.nlpcn.commons.lang.util.logging.LogFactory;
 
 import java.io.*;
+import java.nio.file.FileSystemNotFoundException;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -339,6 +340,9 @@ public class IOUtil {
 			}
 			fos.flush();
 		} finally {
+			if(fos==null){
+				throw new FileNotFoundException(path) ;
+			}
 			fos.close();
 		}
 	}
@@ -364,6 +368,9 @@ public class IOUtil {
 			}
 			fos.flush();
 		} finally {
+			if(fos==null){
+				throw new FileNotFoundException(path) ;
+			}
 			fos.close();
 		}
 	}

@@ -12,7 +12,7 @@ public interface Score<T> {
 	 *
 	 * @param from
 	 */
-	double score(Node<T> from, Node<T> to);
+	Double score(Node<T> from, Node<T> to);
 
 	/**
 	 * 排序方式,true代表自然顺序,就是从小到大,false反之
