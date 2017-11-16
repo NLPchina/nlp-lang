@@ -112,6 +112,11 @@ public class ObjConver {
 		if (value == null) {
 			return null;
 		}
+
+		if(value instanceof Date){
+			return (Date) value;
+		}
+
 		long longValue = -1;
 
 		if(value instanceof Date){
