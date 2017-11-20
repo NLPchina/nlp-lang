@@ -14,7 +14,7 @@ nlp-lang
         <dependency>
             <groupId>org.nlpcn</groupId>
             <artifactId>nlp-lang</artifactId>
-            <version>1.7.3</version>
+            <version>1.7.6</version>
         </dependency>
     </dependencies>
     
