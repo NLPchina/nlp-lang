@@ -176,6 +176,16 @@ public class WordAlert {
 	}
 
 	/**
+	 * 判断一个字符是否是english
+	 *
+	 * @param c
+	 * @return
+	 */
+	public static boolean isEnglish(char c) {
+		return (c >= 'a' && c <= 'z') || (c >= MIN_LOWER && c <= MAX_LOWER) || (c >= MIN_UPPER && c <= MAX_UPPER) || (c >= MIN_UPPER_E && c <= MAX_UPPER_E) ;
+	}
+
+	/**
 	 * 判断一个字符串是否是数字
 	 *
 	 * @param word
@@ -192,6 +202,16 @@ public class WordAlert {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * 判断一个字符串是否是数字
+	 *
+	 * @param c
+	 * @return
+	 */
+	public static boolean isNumber(char c) {
+		return (c >= '0' && c <= '9') || c >= MIN_UPPER_N && c <= MAX_UPPER_N ;
 	}
 
 	/**
