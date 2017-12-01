@@ -20,6 +20,12 @@ public class DoubleArrayTire {
 	private DoubleArrayTire() {
 	}
 
+
+	public DoubleArrayTire(Item[] dat){
+		this.dat = dat ;
+		this.arrayLength = dat.length ;
+	}
+
 	/**
 	 * 获得dat数组
 	 */
