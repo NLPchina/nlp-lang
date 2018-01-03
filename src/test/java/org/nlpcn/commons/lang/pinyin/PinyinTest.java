@@ -86,5 +86,11 @@ public class PinyinTest {
 		System.out.println(result);
 		Assert.assertEquals(result.size(), str.length());
 	}
-	
+
+
+	@Test
+	public void testYinBiao(){
+		List<String> result = Pinyin.unicodePinyin("为核心目标与发展战略");
+		System.out.println(result);
+	}
 }
