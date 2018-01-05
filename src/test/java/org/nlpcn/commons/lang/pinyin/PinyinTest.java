@@ -90,7 +90,11 @@ public class PinyinTest {
 
 	@Test
 	public void testYinBiao(){
-		List<String> result = Pinyin.unicodePinyin("为核心目标与发展战略");
-		System.out.println(result);
+		String str = "河北乐亭核心目标与，，，，，，,@#$%^&*(发展战略都市绿" ;
+
+		System.out.println(Pinyin.pinyin(str));
+		System.out.println(Pinyin.firstChar(str));
+		System.out.println(Pinyin.tonePinyin(str));
+		System.out.println(Pinyin.unicodePinyin(str));
 	}
 }

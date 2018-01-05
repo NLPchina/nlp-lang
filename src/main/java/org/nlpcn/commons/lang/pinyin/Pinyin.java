@@ -12,7 +12,7 @@ public class Pinyin {
 	 */
 
 	public static List<String> pinyin(String str) {
-		return PinyinUtil.INSTANCE.convert(str, PinyinFormat.TONELESS_PINYIN_FORMAT);
+		return PinyinUtil.INSTANCE.convert(str, PinyinFormatter.TYPE.WITHOUT_NUM_PINYIN_FORMAT);
 	}
 
 	/**
@@ -22,7 +22,7 @@ public class Pinyin {
 	 * @return [c, j, c, z]
 	 */
 	public static List<String> firstChar(String str) {
-		return PinyinUtil.INSTANCE.convert(str, PinyinFormat.ABBR_PINYIN_FORMAT);
+		return PinyinUtil.INSTANCE.convert(str, PinyinFormatter.TYPE.FIRST_CHAR_PINYIN_FORMAT);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class Pinyin {
 	 * @return [cháng, jiāng, chéng, zhăng]
 	 */
 	public static List<String> unicodePinyin(String str) {
-		return PinyinUtil.INSTANCE.convert(str, PinyinFormat.UNICODE_PINYIN_FORMAT);
+		return PinyinUtil.INSTANCE.convert(str, PinyinFormatter.TYPE.UNICODE_PINYIN_FORMAT);
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class Pinyin {
 	 * @return [chang2, jiang1, cheng2, zhang3]
 	 */
 	public static List<String> tonePinyin(String str) {
-		return PinyinUtil.INSTANCE.convert(str, PinyinFormat.DEFAULT_PINYIN_FORMAT);
+		return PinyinUtil.INSTANCE.convert(str, PinyinFormatter.TYPE.DEFAULT_PINYIN_FORMAT);
 	}
 
 	/**

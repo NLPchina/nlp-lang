@@ -5,91 +5,40 @@
  */
 package org.nlpcn.commons.lang.pinyin;
 
+import org.nlpcn.commons.lang.util.StringUtil;
+
 /**
  * 
  * @author luhuiguo
  */
 public class PinyinFormatter {
 
-	public static String formatPinyin(String pinyinStr, PinyinFormat format) {
+	public static enum TYPE {
+		UNICODE_PINYIN_FORMAT, // biāo, yŭ , lǜ
+		DEFAULT_PINYIN_FORMAT, //biao1, yu3 , lv4
+		WITHOUT_NUM_PINYIN_FORMAT, //biao , yu , lv
+		FIRST_CHAR_PINYIN_FORMAT, //b, y, l
+	} ;
 
-		if (ToneType.WITH_ABBR == format.getToneType()) {
+	public static String formatPinyin(String pinyinStr, TYPE type) {
+		if(StringUtil.isBlank(pinyinStr)){
+			return pinyinStr ;
+		}
+		StringBuilder sb = null ;
 
-			pinyinStr = abbr(pinyinStr);
-
-		} else {
-
-			if ((ToneType.WITH_TONE_MARK == format.getToneType())
-					&& ((YuCharType.WITH_V == format.getYuCharType()) || (YuCharType.WITH_U_AND_COLON == format
-							.getYuCharType()))) {
-				// ToneType.WITH_TONE_MARK force YuCharType.WITH_U_UNICODE
-				format.setYuCharType(YuCharType.WITH_U_UNICODE);
-
-				// throw new BadPinyinFormatException(
-				// "tone marks cannot be added to v or u:");
-			}
-
-			switch (format.getToneType()) {
-			case WITHOUT_TONE:
-				pinyinStr = pinyinStr.replaceAll("[1-5]", "");
-				break;
-			case WITH_TONE_MARK:
-				pinyinStr = pinyinStr.replaceAll("u:", "v");
-				pinyinStr = convertToneNumber2ToneMark(pinyinStr);
-				break;
-
-			default:
-				break;
-
-			}
-
-			switch (format.getYuCharType()) {
-			case WITH_V:
-				pinyinStr = pinyinStr.replaceAll("u:", "v");
-				break;
-			case WITH_U_UNICODE:
-				pinyinStr = pinyinStr.replaceAll("u:", "ü");
-				break;
-
-			default:
-				break;
-
-			}
+		switch (type){
+			case UNICODE_PINYIN_FORMAT:
+				return convertToneNumber2ToneMark(pinyinStr) ;
+			case WITHOUT_NUM_PINYIN_FORMAT:
+				return pinyinStr.replaceAll("[1-5]", "");
+			case DEFAULT_PINYIN_FORMAT:
+				return pinyinStr ;
+			case FIRST_CHAR_PINYIN_FORMAT:
+				return String.valueOf(pinyinStr.charAt(0)) ;
 		}
 
-		switch (format.getCaseType()) {
-		case UPPERCASE:
-			pinyinStr = pinyinStr.toUpperCase();
-			break;
-		case CAPITALIZE:
-			pinyinStr = capitalize(pinyinStr);
-			break;
+		return pinyinStr ;
 
-		default:
-			break;
-
-		}
-
-		return pinyinStr;
-	}
-
-	public static String abbr(String str) {
-
-		if (str == null || str.length() == 0) {
-			return str;
-		}
-
-		return str.substring(0, 1);
-	}
-
-	public static String capitalize(String str) {
-		int strLen;
-		if (str == null || (strLen = str.length()) == 0) {
-			return str;
-		}
-		return new StringBuilder(strLen)
-				.append(Character.toTitleCase(str.charAt(0)))
-				.append(str.substring(1)).toString();
 	}
 
 	/**

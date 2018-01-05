@@ -1,26 +1,25 @@
-/** 
- * File    : Pinyin.java 
- * Created : 2014年1月22日 
- * By      : luhuiguo 
+/**
+ * File    : Pinyin.java
+ * Created : 2014年1月22日
+ * By      : luhuiguo
  */
 package org.nlpcn.commons.lang.pinyin;
+
+import org.nlpcn.commons.lang.tire.SmartGetWord;
+import org.nlpcn.commons.lang.tire.domain.SmartForest;
+import org.nlpcn.commons.lang.util.StringUtil;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.nlpcn.commons.lang.tire.SmartGetWord;
-import org.nlpcn.commons.lang.tire.domain.SmartForest;
-import org.nlpcn.commons.lang.util.StringUtil;
-
 /**
- * 
+ *
  * @author luhuiguo
  * @author ansj
  */
@@ -37,23 +36,17 @@ enum PinyinUtil {
 	public static final String COMMA = ",";
 	public static final String SPACE = " ";
 
-	public static final char CJK_UNIFIED_IDEOGRAPHS_START = '\u4E00';
-	public static final char CJK_UNIFIED_IDEOGRAPHS_END = '\u9FA5';
-
-	private List<String> pinyinDict = null;
-
 	private SmartForest<String[]> polyphoneDict = null;
 
 	private int maxLen = 2;
 
 	PinyinUtil() {
+		polyphoneDict = new SmartForest<String[]>();
 		loadPinyinMapping();
 		loadPolyphoneMapping();
 	}
 
 	public void loadPinyinMapping() {
-
-		pinyinDict = new ArrayList<String>();
 
 		try {
 			BufferedReader in = new BufferedReader(
@@ -64,12 +57,10 @@ enum PinyinUtil {
 					continue;
 				}
 				String[] pair = line.split(EQUAL);
-
-				if (pair.length < 2) {
-					pinyinDict.add(EMPTY);
-				} else {
-					pinyinDict.add(pair[1]);
+				if(pair.length==2&&StringUtil.isNotBlank(pair[1])){
+					polyphoneDict.add(pair[0], pair[1].split(","));
 				}
+
 			}
 
 			in.close();
@@ -81,7 +72,6 @@ enum PinyinUtil {
 
 	public void loadPolyphoneMapping() {
 
-		polyphoneDict = new SmartForest<String[]>();
 
 		try {
 			BufferedReader in = new BufferedReader(
@@ -111,50 +101,7 @@ enum PinyinUtil {
 		}
 	}
 
-	public String[] toUnformattedPinyin(char ch) {
-
-		if (ch >= CJK_UNIFIED_IDEOGRAPHS_START && ch <= CJK_UNIFIED_IDEOGRAPHS_END) {
-			String pinyinStr = pinyinDict.get(ch - CJK_UNIFIED_IDEOGRAPHS_START);
-			return pinyinStr.split(COMMA);
-
-		} else {
-			return null;
-		}
-	}
-
-	public String[] toFormattedPinyin(char ch, PinyinFormat format) {
-		String[] pinyinStrArray = toUnformattedPinyin(ch);
-		if (null != pinyinStrArray) {
-			for (int i = 0; i < pinyinStrArray.length; i++) {
-				pinyinStrArray[i] = PinyinFormatter.formatPinyin(pinyinStrArray[i], format);
-			}
-			return pinyinStrArray;
-		} else
-			return null;
-	}
-
-	public String toPinyin(char ch) {
-		String[] pinyinStrArray = toUnformattedPinyin(ch);
-
-		if (null != pinyinStrArray && pinyinStrArray.length > 0) {
-			return pinyinStrArray[0];
-		}
-		return null;
-	}
-
-	public String toPinyin(char ch, PinyinFormat format) {
-
-		String[] pinyinStrArray = null;
-
-		pinyinStrArray = toFormattedPinyin(ch, format);
-
-		if (null != pinyinStrArray && pinyinStrArray.length > 0) {
-			return pinyinStrArray[0];
-		}
-		return null;
-	}
-
-	public List<String> convert(String str, PinyinFormat format) {
+	public List<String> convert(String str,  PinyinFormatter.TYPE format) {
 
 		if (StringUtil.isBlank(str)) {
 			return Collections.emptyList();
@@ -169,28 +116,35 @@ enum PinyinUtil {
 		while ((temp = word.getFrontWords()) != null) {
 
 			for (int i = beginOffe; i < word.offe; i++) {
-				lists.add(toPinyin(str.charAt(i), format));
+				lists.add(null);
 			}
 
-			for (String t : word.getParam()) {
-				lists.add(PinyinFormatter.formatPinyin(t, format));
+			if(temp.length()==1){ //单个字取第一个拼音
+				lists.add(PinyinFormatter.formatPinyin(word.getParam()[0], format));
+			}else{
+				for (String t : word.getParam()) {
+					lists.add(PinyinFormatter.formatPinyin(t, format));
 
+				}
 			}
+
 			beginOffe = word.offe + temp.length();
 		}
 
 		if (beginOffe < str.length()) {
 			for (int i = beginOffe; i < str.length(); i++) {
-				lists.add(toPinyin(str.charAt(i), format));
+				lists.add(null);
 			}
 		}
+
+
 		return lists;
 
 	}
 
 	/**
 	 * 动态增加拼音到词典
-	 * 
+	 *
 	 * @param word
 	 * @param pinyins
 	 */
