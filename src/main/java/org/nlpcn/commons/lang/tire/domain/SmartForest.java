@@ -112,8 +112,9 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> , Serializable
 	}
 
 	public int getIndex(char c) {
-		if (branches == null)
+		if (branches == null) {
 			return -1;
+		}
 		if (branches.length == MAX_SIZE) {
 			return c;
 		}
@@ -135,8 +136,9 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> , Serializable
 	}
 
 	public int compareTo(char c) {
-		if (this.c > c)
+		if (this.c > c) {
 			return 1;
+		}
 		if (this.c < c) {
 			return -1;
 		}
@@ -199,9 +201,11 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> , Serializable
 		this.add(keyWord, t);
 	}
 
+	@Override
 	public int compareTo(SmartForest<T> o) {
-		if (this.c > o.c)
+		if (this.c > o.c) {
 			return 1;
+		}
 		if (this.c < o.c) {
 			return -1;
 		}

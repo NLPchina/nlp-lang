@@ -152,12 +152,14 @@ public final class LabelValue<A,B>
     }
 
 
-    public A getLabel() {
+    @Override
+	public A getLabel() {
         return this.label;
     }
 
 
-    public B getValue() {
+    @Override
+	public B getValue() {
         return this.value;
     }
 

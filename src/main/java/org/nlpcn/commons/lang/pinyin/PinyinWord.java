@@ -18,11 +18,13 @@ public class PinyinWord {
 		this.py = String.valueOf(c);
 	}
 
+	@Override
 	public String toString() {
-		if (tone > 0)
+		if (tone > 0) {
 			return this.py + tone;
-		else
+		} else {
 			return this.py;
+		}
 	}
 
 	public static void main(String[] args) {

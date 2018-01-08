@@ -29,12 +29,13 @@ public class AnsjArrays {
 			int mid = (low + high) >>> 1;
 			int cmp = branches[mid].compareTo(c);
 
-			if (cmp < 0)
+			if (cmp < 0) {
 				low = mid + 1;
-			else if (cmp > 0)
+			} else if (cmp > 0) {
 				high = mid - 1;
-			else
+			} else {
 				return mid; // key found
+			}
 		}
 		return -(low + 1); // key not found.
 	}
@@ -61,12 +62,15 @@ public class AnsjArrays {
 	}
 
 	private static void rangeCheck(int arrayLen, int fromIndex, int toIndex) {
-		if (fromIndex > toIndex)
+		if (fromIndex > toIndex) {
 			throw new IllegalArgumentException("fromIndex(" + fromIndex + ") > toIndex(" + toIndex + ")");
-		if (fromIndex < 0)
+		}
+		if (fromIndex < 0) {
 			throw new ArrayIndexOutOfBoundsException(fromIndex);
-		if (toIndex > arrayLen)
+		}
+		if (toIndex > arrayLen) {
 			throw new ArrayIndexOutOfBoundsException(toIndex);
+		}
 	}
 
 	private static void mergeSort(SmartForest[] src, SmartForest[] dest, int low, int high, int off) {
@@ -74,9 +78,11 @@ public class AnsjArrays {
 
 		// Insertion sort on smallest arrays
 		if (length < INSERTIONSORT_THRESHOLD) {
-			for (int i = low; i < high; i++)
-				for (int j = i; j > low && (dest[j - 1]).compareTo(dest[j].getC()) > 0; j--)
+			for (int i = low; i < high; i++) {
+				for (int j = i; j > low && (dest[j - 1]).compareTo(dest[j].getC()) > 0; j--) {
 					swap(dest, j, j - 1);
+				}
+			}
 			return;
 		}
 
@@ -98,10 +104,11 @@ public class AnsjArrays {
 
 		// Merge sorted halves (now in src) into dest
 		for (int i = destLow, p = low, q = mid; i < destHigh; i++) {
-			if (q >= high || p < mid && src[p].compareTo(src[q].getC()) <= 0)
+			if (q >= high || p < mid && src[p].compareTo(src[q].getC()) <= 0) {
 				dest[i] = src[p++];
-			else
+			} else {
 				dest[i] = src[q++];
+			}
 		}
 	}
 
@@ -121,8 +128,9 @@ public class AnsjArrays {
 
 	public static <T, U> T[] copyOfRange(U[] original, int from, int to, Class<? extends T[]> newType) {
 		int newLength = to - from;
-		if (newLength < 0)
+		if (newLength < 0) {
 			throw new IllegalArgumentException(from + " > " + to);
+		}
 		@SuppressWarnings("unchecked")
 		T[] copy = ((Object) newType == (Object) Object[].class) ? (T[]) new Object[newLength] : (T[]) Array.newInstance(newType.getComponentType(), newLength);
 		System.arraycopy(original, from, copy, 0, Math.min(original.length - from, newLength));

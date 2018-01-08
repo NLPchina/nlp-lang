@@ -34,26 +34,32 @@ public class JakartaCommonsLoggingImpl implements org.nlpcn.commons.lang.util.lo
         log = LogFactory.getLog(loggerName);
     }
 
+    @Override
     public boolean isDebugEnabled() {
         return log.isDebugEnabled();
     }
 
+    @Override
     public void error(String s, Throwable e) {
         log.error(s, e);
     }
 
+    @Override
     public void error(String s) {
         log.error(s);
     }
 
+    @Override
     public void debug(String s) {
         log.debug(s);
     }
 
+    @Override
     public void debug(String s, Throwable e) {
         log.debug(s, e);
     }
 
+    @Override
     public void warn(String s) {
         log.warn(s);
     }

@@ -232,32 +232,38 @@ public final class Sextet<A,B,C,D,E,F>
     }
 
 
-    public A getValue0() {
+    @Override
+	public A getValue0() {
         return this.val0;
     }
 
 
-    public B getValue1() {
+    @Override
+	public B getValue1() {
         return this.val1;
     }
 
 
-    public C getValue2() {
+    @Override
+	public C getValue2() {
         return this.val2;
     }
 
 
-    public D getValue3() {
+    @Override
+	public D getValue3() {
         return this.val3;
     }
 
 
-    public E getValue4() {
+    @Override
+	public E getValue4() {
         return this.val4;
     }
 
 
-    public F getValue5() {
+    @Override
+	public F getValue5() {
         return this.val5;
     }
 

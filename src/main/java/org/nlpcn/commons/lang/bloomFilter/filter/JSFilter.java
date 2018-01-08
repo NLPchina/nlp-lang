@@ -21,7 +21,9 @@ public class JSFilter extends Filter {
 			hash ^= ((hash << 5) + str.charAt(i) + (hash >> 2));
 		}
 		
-		if(hash<0) hash*=-1 ;
+		if(hash<0) {
+			hash *= -1;
+		}
 		
 		return hash % size;
 	}

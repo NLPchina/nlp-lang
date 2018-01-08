@@ -205,22 +205,26 @@ public final class Quartet<A,B,C,D>
     }
 
 
-    public A getValue0() {
+    @Override
+	public A getValue0() {
         return this.val0;
     }
 
 
-    public B getValue1() {
+    @Override
+	public B getValue1() {
         return this.val1;
     }
 
 
-    public C getValue2() {
+    @Override
+	public C getValue2() {
         return this.val2;
     }
 
 
-    public D getValue3() {
+    @Override
+	public D getValue3() {
         return this.val3;
     }
 

@@ -45,36 +45,43 @@ public class Log4jImpl implements Log {
         return log;
     }
 
-    public boolean isDebugEnabled() {
+    @Override
+	public boolean isDebugEnabled() {
         return log.isDebugEnabled();
     }
 
-    public void error(String s, Throwable e) {
+    @Override
+	public void error(String s, Throwable e) {
         errorCount++;
         log.log(callerFQCN, Level.ERROR, s, e);
     }
 
-    public void error(String s) {
+    @Override
+	public void error(String s) {
         errorCount++;
         log.log(callerFQCN, Level.ERROR, s, null);
     }
 
-    public void debug(String s) {
+    @Override
+	public void debug(String s) {
         debugCount++;
         log.log(callerFQCN, Level.DEBUG, s, null);
     }
 
-    public void debug(String s, Throwable e) {
+    @Override
+	public void debug(String s, Throwable e) {
         debugCount++;
         log.log(callerFQCN, Level.DEBUG, s, e);
     }
 
-    public void warn(String s) {
+    @Override
+	public void warn(String s) {
         log.log(callerFQCN, Level.WARN, s, null);
         warnCount++;
     }
 
-    public void warn(String s, Throwable e) {
+    @Override
+	public void warn(String s, Throwable e) {
         log.log(callerFQCN, Level.WARN, s, e);
         warnCount++;
     }
@@ -98,16 +105,19 @@ public class Log4jImpl implements Log {
         return debugCount;
     }
 
-    public boolean isInfoEnabled() {
+    @Override
+	public boolean isInfoEnabled() {
         return log.isInfoEnabled();
     }
 
-    public void info(String msg) {
+    @Override
+	public void info(String msg) {
         infoCount++;
         log.log(callerFQCN, Level.INFO, msg, null);
     }
 
-    public boolean isWarnEnabled() {
+    @Override
+	public boolean isWarnEnabled() {
         return log.isEnabledFor(Level.WARN);
     }
 
@@ -115,7 +125,8 @@ public class Log4jImpl implements Log {
         return infoCount;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         return log.toString();
     }
 }

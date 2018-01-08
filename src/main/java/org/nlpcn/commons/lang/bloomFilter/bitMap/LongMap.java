@@ -18,12 +18,14 @@ public class LongMap implements BitMap {
 
 	private long[] longs = null;
 
+	@Override
 	public void add(long i) {
 		int r = (int) (i / 64);
 		int c = (int) (i % 64);
 		longs[r] = (int) (longs[r] | (1 << c));
 	}
 
+	@Override
 	public boolean contains(long i) {
 		int r = (int) (i / 64);
 		int c = (int) (i % 64);
@@ -33,6 +35,7 @@ public class LongMap implements BitMap {
 		return false;
 	}
 
+	@Override
 	public void remove(long i) {
 		int r = (int) (i / 32);
 		int c = (int) (i % 32);

@@ -27,11 +27,13 @@ public class NoLoggingImpl implements Log {
         return this.loggerName;
     }
 
-    public boolean isDebugEnabled() {
+    @Override
+	public boolean isDebugEnabled() {
         return false;
     }
 
-    public void error(String s, Throwable e) {
+    @Override
+	public void error(String s, Throwable e) {
         error(s);
 
         if (e != null) {
@@ -39,21 +41,25 @@ public class NoLoggingImpl implements Log {
         }
     }
 
-    public void error(String s) {
+    @Override
+	public void error(String s) {
         if (s != null) {
             System.err.println(loggerName + " : " + s);
         }
     }
 
-    public void debug(String s) {
+    @Override
+	public void debug(String s) {
     	System.out.println(s);
     }
 
-    public void debug(String s, Throwable e) {
+    @Override
+	public void debug(String s, Throwable e) {
     	System.out.println(s+e!=null?e.getMessage():"");
     }
 
-    public void warn(String s) {
+    @Override
+	public void warn(String s) {
     	System.out.println(s);
     }
 

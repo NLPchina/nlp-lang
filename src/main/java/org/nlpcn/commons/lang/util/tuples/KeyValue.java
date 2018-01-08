@@ -19,11 +19,11 @@
  */
 package org.nlpcn.commons.lang.util.tuples;
 
-import java.util.Collection;
-import java.util.Iterator;
-
 import org.nlpcn.commons.lang.util.tuples.valueintf.IValueKey;
 import org.nlpcn.commons.lang.util.tuples.valueintf.IValueValue;
+
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * <p>
@@ -149,12 +149,12 @@ public final class KeyValue<A,B>
         this.value = value;
     }
 
-
+    @Override
     public A getKey() {
         return this.key;
     }
 
-
+    @Override
     public B getValue() {
         return this.value;
     }

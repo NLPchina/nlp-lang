@@ -145,8 +145,9 @@ public class Occurrence implements Serializable {
 	public List<Entry<String, Double>> distance(String word) {
 		Count count = word2Mc.get(word);
 
-		if (count == null)
+		if (count == null) {
 			return null;
+		}
 
 		Map<String, Double> map = new HashMap<String, Double>();
 		String word2 = null;
@@ -160,8 +161,9 @@ public class Occurrence implements Serializable {
 	public List<Entry<String, Double>> distanceLogFreq1(String word) {
 		Count count = word2Mc.get(word);
 
-		if (count == null)
+		if (count == null) {
 			return null;
+		}
 
 		Map<String, Double> map = new HashMap<String, Double>();
 		String word2 = null;
@@ -176,8 +178,9 @@ public class Occurrence implements Serializable {
 	public List<Entry<String, Double>> distanceLogFreq(String word) {
 		Count count = word2Mc.get(word);
 
-		if (count == null)
+		if (count == null) {
 			return null;
+		}
 
 		Map<String, Double> map = new HashMap<String, Double>();
 		String word2 = null;

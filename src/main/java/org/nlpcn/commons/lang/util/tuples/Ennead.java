@@ -19,18 +19,10 @@
  */
 package org.nlpcn.commons.lang.util.tuples;
 
+import org.nlpcn.commons.lang.util.tuples.valueintf.*;
+
 import java.util.Collection;
 import java.util.Iterator;
-
-import org.nlpcn.commons.lang.util.tuples.valueintf.IValue0;
-import org.nlpcn.commons.lang.util.tuples.valueintf.IValue1;
-import org.nlpcn.commons.lang.util.tuples.valueintf.IValue2;
-import org.nlpcn.commons.lang.util.tuples.valueintf.IValue3;
-import org.nlpcn.commons.lang.util.tuples.valueintf.IValue4;
-import org.nlpcn.commons.lang.util.tuples.valueintf.IValue5;
-import org.nlpcn.commons.lang.util.tuples.valueintf.IValue6;
-import org.nlpcn.commons.lang.util.tuples.valueintf.IValue7;
-import org.nlpcn.commons.lang.util.tuples.valueintf.IValue8;
 
 /**
  * <p>
@@ -266,47 +258,47 @@ public final class Ennead<A,B,C,D,E,F,G,H,I>
         this.val8 = value8;
     }
 
-
+    @Override
     public A getValue0() {
         return this.val0;
     }
 
-
+    @Override
     public B getValue1() {
         return this.val1;
     }
 
-
+    @Override
     public C getValue2() {
         return this.val2;
     }
 
-
+    @Override
     public D getValue3() {
         return this.val3;
     }
 
-
+    @Override
     public E getValue4() {
         return this.val4;
     }
 
-
+    @Override
     public F getValue5() {
         return this.val5;
     }
 
-
+    @Override
     public G getValue6() {
         return this.val6;
     }
 
-    
+    @Override
     public H getValue7() {
         return this.val7;
     }
 
-
+    @Override
     public I getValue8() {
         return this.val8;
     }

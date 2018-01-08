@@ -19,8 +19,9 @@ public class FNVFilter extends Filter {
 	@Override
 	public long myHashCode(String str) {
 		int hash = (int) 2166136261L;
-		for (int i = 0; i < str.length(); i++)
+		for (int i = 0; i < str.length(); i++) {
 			hash = (hash ^ str.charAt(i)) * p;
+		}
 		hash += hash << 13;
 		hash ^= hash >> 7;
 		hash += hash << 3;

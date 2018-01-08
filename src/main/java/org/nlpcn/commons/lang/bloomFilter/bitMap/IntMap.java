@@ -29,12 +29,14 @@ public class IntMap implements BitMap {
 
 	private int[] ints = null;
 
+	@Override
 	public void add(long i) {
 		int r = (int) (i / 32);
 		int c = (int) (i % 32);
 		ints[r] = (int) (ints[r] | (1 << c));
 	}
 
+	@Override
 	public boolean contains(long i) {
 		int r = (int) (i / 32);
 		int c = (int) (i % 32);
@@ -44,6 +46,7 @@ public class IntMap implements BitMap {
 		return false;
 	}
 
+	@Override
 	public void remove(long i) {
 		int r = (int) (i / 32);
 		int c = (int) (i % 32);

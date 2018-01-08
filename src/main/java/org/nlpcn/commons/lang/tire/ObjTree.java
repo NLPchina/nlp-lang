@@ -47,7 +47,9 @@ public class ObjTree<T> implements Serializable {
 	 */
 	public T get(Object... objs) {
 		ObjTree<T> objTree = getObjTree(objs);
-		if (objTree == null) return null;
+		if (objTree == null) {
+			return null;
+		}
 		return objTree.getObj();
 	}
 

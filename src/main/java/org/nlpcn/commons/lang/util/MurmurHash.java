@@ -112,7 +112,7 @@ public final class MurmurHash {
         final long m = 0xc6a4a7935bd1e995L;
         final int r = 47;
 
-        long h = (seed&0xffffffffl)^(length*m);
+        long h = (seed&0xffffffffL)^(length*m);
 
         int length8 = length/8;
 

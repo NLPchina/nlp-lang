@@ -21,8 +21,9 @@ public class SDBMFilter extends Filter {
 			hash = str.charAt(i) + (hash << 6) + (hash << 16) - hash;
 		}
 
-		if (hash < 0)
+		if (hash < 0) {
 			hash *= -1;
+		}
 
 		return hash % size;
 	}
