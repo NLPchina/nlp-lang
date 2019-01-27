@@ -2,6 +2,8 @@ nlp-lang
 ========
 
 [![1.X Build Status](https://travis-ci.org/NLPchina/nlp-lang.svg?branch=master)](https://travis-ci.org/NLPchina/nlp-lang)
+[![sourcegraph](https://sourcegraph.com/github.com/NLPchina/nlp-lang/-/badge.svg)](https://sourcegraph.com/github.com/NLPchina/nlp-lang?badge)
+
 
 文档地址:http://www.nlpcn.org/docs/7 
 部分演示:http://www.nlpcn.org/demo
