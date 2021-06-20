@@ -20,7 +20,7 @@ public class SmartForest<T> implements Comparable<SmartForest<T>> , Serializable
 	/**
 	 * status 此字的状态1，继续 2，是个词语但是还可以继续 ,3确定 nature 词语性质
 	 */
-	public SmartForest<T>[] branches = null;
+	public volatile SmartForest<T>[] branches = null;
 	// 单独查找出来的对象
 	SmartForest<T> branch = null;
 	private double rate = 0.9;
